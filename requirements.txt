@@ -159,7 +159,6 @@ networkx==3.0
 newspaper3k==0.2.8
 nh3==0.2.14
 nltk==3.8.1
-numba @ file:///D:/bld/numba_1687804884030/work
 numexpr==2.8.4
 numpy==1.24.0
 oauthlib==3.2.2
