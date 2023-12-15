@@ -16,7 +16,6 @@ autoviz==0.1.732
 backoff==2.2.1
 bcrypt==4.1.1
 bentoml==1.1.0
-bitsandbytes @ https://github.com/jllllll/bitsandbytes-windows-webui/releases/download/wheels/bitsandbytes-0.41.0-py3-none-win_amd64.whl#sha256=1b38312d8b00c21c65e13210ca9a80e2769f6fe236befbbbe5cf41e8f1469b93
 black==23.10.1
 blinker==1.7.0
 blis==0.7.11
