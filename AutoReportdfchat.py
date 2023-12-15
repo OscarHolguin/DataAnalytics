@@ -67,6 +67,35 @@ from reports_template import Reports
 
 reports = Reports()
 
+import hmac
+
+
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the passward is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
+
+
+if not check_password():
+    st.stop()  # Do not continue if check_password is not True.
 
 
 company = "CompanyA"
@@ -109,7 +138,7 @@ def read_sql(sqlServerName ,sqlDatabase,userName,password,tablename,sqlPort = 14
 sqldf = lambda table: read_sql(sqlServerName ,sqlDatabase,userName,password,table,sqlPort = 1433,pandas = True)
 tables = ["PROD_MxD_PDM_DeviceFailureV2DataTable","PROD_MxD_PDM_DeviceFailureV2PredictionTable","PROD_MxD_DDM_AssetDataTable","PROD_MxD_DDM_DowntimeDataTable"]
 
-dfs=[sqldf(table) for table in tables]
+# dfs=[sqldf(table) for table in tables]
 
 
 
@@ -149,9 +178,12 @@ def get_pyg_renderer(df) -> "StreamlitRenderer":
     return StreamlitRenderer(df,debug=False, use_kernel_calc=True,dark='dark',height = 1000)#, spec="./gw_config.json", debug=False)
 
 @st.cache_data(ttl=30)
-def generate_ner(_documents):
+def generate_ner(_documents,ntype):
         df = extract_info(_documents)
-        dfner = dfText2DfNE(df,huggingface=True)
+        if ntype == 'huggingface':
+            dfner = dfText2DfNE(df,huggingface=True)
+        elif ntype =='spacy':
+            dfner = dfText2DfNE(df,spacyf=True)
         dfne = dfner.groupby(['name','entity']).agg({"count":"sum","chunk_id":",".join}).reset_index()
         dfne.sort_values(by="count",ascending=False).reset_index()
         return dfne
@@ -290,7 +322,12 @@ elif file_ext =='pdf':
     
     if st.sidebar.toggle("Generate NER"):
         
-        dfne = generate_ner(documents)
+        nertype = st.radio(
+            "Select NER extraction type",
+            ["spacy","huggingface"],
+        captions = ["spacy model for NER","uses distil bert ner"])
+    
+        dfne = generate_ner(documents,nertype)
         dfne10 = dfne.sample(10)
         st.dataframe(dfne10)
         
