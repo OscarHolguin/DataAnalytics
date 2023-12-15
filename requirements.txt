@@ -300,9 +300,9 @@ tinysegmenter==0.3
 tldextract==3.4.4
 tokenizers==0.13.3
 toolz==0.12.0
-torch==2.0.1+cu118
-torchaudio==2.0.2+cu118
-torchvision==0.15.2+cu118
+torch==2.0.1
+torchaudio==2.0.2
+torchvision==0.15.2
 tornado==6.3.2
 transformers==4.31.0
 twine==4.0.2
