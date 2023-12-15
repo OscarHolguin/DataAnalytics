@@ -28,7 +28,6 @@ cachetools==5.3.2
 catalogue==2.0.10
 cattrs==23.1.2
 certifi==2022.12.7
-charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
 chroma-hnswlib==0.7.3
 chromadb==0.4.19
 circus==0.18.0
@@ -50,7 +49,7 @@ cymem==2.0.8
 Cython==3.0.0
 d3graph==2.5.0
 dask==2.30.0
-dataclasses @ file:///home/conda/feedstock_root/build_artifacts/dataclasses_1628958434797/work
+dataclasses
 dataclasses-json==0.5.12
 dataprep==0.4.1
 datasets==2.14.6
@@ -186,15 +185,11 @@ orjson==3.9.2
 overrides==7.4.0
 pandas==1.5.3
 pandas-dq==1.28
-pandocfilters @ file:///opt/conda/conda-bld/pandocfilters_1643405455980/work
 panel==0.14.4
 param==1.13.0
-parso @ file:///opt/conda/conda-bld/parso_1641458642106/work
 partd==1.4.1
 pathspec==0.11.1
 peft==0.4.0
-phik @ file:///D:/bld/phik_1697266391861/work
-pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
 Pillow==9.3.0
 pip-requirements-parser==32.0.1
 pip-tools==7.1.0
@@ -217,8 +212,8 @@ PyAutoGUI==0.9.54
 pyclipper==1.3.0.post5
 pycodestyle==2.11.1
 pyct==0.5.0
-pydantic @ file:///home/conda/feedstock_root/build_artifacts/pydantic_1700669197061/work
-pydantic_core @ file:///D:/bld/pydantic-core_1700664152457/work
+pydantic
+pydantic_core
 pydeck==0.8.1b0
 PyGetWindow==0.0.9
 pygwalker==0.3.17
@@ -251,16 +246,14 @@ pyvis==0.3.2
 pyviz_comms==3.0.0
 pywin32==305.1
 pywin32-ctypes==0.2.2
-
 PyYAML==6.0.1
-
 questionary==2.0.1
 rapidocr-onnxruntime==1.3.8
 ratelimiter==1.2.0.post0
 readme-renderer==42.0
 regex==2023.10.3
 replicate==0.11.0
-requests @ file:///C:/b/abs_316c2inijk/croot/requests_1690400295842/work
+requests
 requests-file==1.5.1
 requests-oauthlib==1.3.1
 requests-toolbelt==1.0.0
@@ -273,10 +266,9 @@ safetensors==0.3.1
 schema==0.7.5
 scikit-learn==1.3.0
 scipy==1.11.1
-seaborn @ file:///home/conda/feedstock_root/build_artifacts/seaborn-split_1672497695270/work
+seaborn
 segment-analytics-python==2.2.3
 semver==3.0.2
-Send2Trash @ file:///tmp/build/80754af9/send2trash_1632406701022/work
 sentence-transformers==2.2.2
 sentencepiece==0.1.99
 sgmllib3k==1.0.0
