@@ -17,7 +17,7 @@ import asyncio
 import plotly_express as px
 import streamlit as st
 import pandas as pd
-from langchain.document_loaders import PyPDFLoader
+from langchain.document_loaders import PyPDFLoader, UnstructuredPDFLoader, OnlinePDFLoader
 from langchain.embeddings import HuggingFaceEmbeddings
 import pyodbc
 from langchain.vectorstores import Chroma
@@ -43,6 +43,13 @@ from streamlit_d3graph import d3graph
 #import d3graph
 
 import networkx as nx
+
+
+from dataclasses import dataclass
+from langchain.text_splitter import RecursiveCharacterTextSplitter, TextSplitter
+import uuid
+import spacy
+
 
 #######################
 #THIS IS FOR TESTING

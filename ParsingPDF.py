@@ -9,7 +9,7 @@ Created on Mon Dec 11 18:45:22 2023
 from dataclasses import dataclass
 from langchain.document_loaders import PyPDFLoader, UnstructuredPDFLoader, OnlinePDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter, TextSplitter
-import spacy 
+
 @dataclass
 class PDFParser:
     """
