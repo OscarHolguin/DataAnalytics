@@ -16,5 +16,4 @@ streamlit_d3graph
 git+https://github.com/pejmanS21/streamlit-ydata-profiling.git
 wordcloud==1.9.3
 spacy-streamlit
-
-
+nltk
