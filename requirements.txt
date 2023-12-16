@@ -9,7 +9,7 @@ pygwalker==0.3.18
 pyodbc==5.0.1
 pyvis==0.3.2
 spacy==3.7.2
-en_core_web_sm @ [8](https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.5/en_core_web_sm-2.2.5.tar.gz)
+en_core_web_sm @ [12](https://huggingface.co/spacy/en_core_web_sm)
 streamlit==1.29.0
 streamlit_d3graph
 git+https://github.com/pejmanS21/streamlit-ydata-profiling.git
