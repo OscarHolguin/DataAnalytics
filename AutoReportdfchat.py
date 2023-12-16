@@ -33,8 +33,14 @@ import matplotlib
 import codecs
 import os
 import pygwalker as pyg
+
+
+
 from ParsingPDF import preprocess_text, PDFParser,get_pdf_url
 from InformationExtractionPDF import extract_info, dfText2DfNE,networkgraph
+
+
+
 import base64
 import streamlit.components.v1 as components
 
@@ -50,6 +56,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, TextSplitter
 import uuid
 import spacy
 
+
+     
 
 #######################
 #THIS IS FOR TESTING
