@@ -19,3 +19,4 @@ wordcloud==1.9.3
 spacy-streamlit
 nltk
 rapidocr-onnxruntime
+sweetviz 
