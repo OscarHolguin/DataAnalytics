@@ -77,32 +77,32 @@ reports = Reports()
 import hmac
 
 
-def check_password():
-    """Returns `True` if the user had the correct password."""
+# def check_password():
+#     """Returns `True` if the user had the correct password."""
 
-    def password_entered():
-        """Checks whether a password entered by the user is correct."""
-        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
-            st.session_state["password_correct"] = True
-            del st.session_state["password"]  # Don't store the password.
-        else:
-            st.session_state["password_correct"] = False
+#     def password_entered():
+#         """Checks whether a password entered by the user is correct."""
+#         if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+#             st.session_state["password_correct"] = True
+#             del st.session_state["password"]  # Don't store the password.
+#         else:
+#             st.session_state["password_correct"] = False
 
-    # Return True if the passward is validated.
-    if st.session_state.get("password_correct", False):
-        return True
+#     # Return True if the passward is validated.
+#     if st.session_state.get("password_correct", False):
+#         return True
 
-    # Show input for password.
-    st.text_input(
-        "Password", type="password", on_change=password_entered, key="password"
-    )
-    if "password_correct" in st.session_state:
-        st.error("😕 Password incorrect")
-    return False
+#     # Show input for password.
+#     st.text_input(
+#         "Password", type="password", on_change=password_entered, key="password"
+#     )
+#     if "password_correct" in st.session_state:
+#         st.error("😕 Password incorrect")
+#     return False
 
 
-if not check_password():
-    st.stop()  # Do not continue if check_password is not True.
+# if not check_password():
+#     st.stop()  # Do not continue if check_password is not True.
 
 
 company = "CompanyA"
@@ -227,7 +227,7 @@ def get_network(df,outname = "graph.html"):
 
 @st.cache_resource(experimental_allow_widgets=True)
 def profile_report(df,**kwargs):
-    r2 = reports.create_profiling_report(df, explorative=True,progress_bar = True,correlations = correlations,title="REPORT", config_file = 'config.yaml')
+    r2 = reports.create_profiling_report(df, explorative=True,progress_bar = True,correlations = correlations,title="REPORT",)# config_file = 'config.yaml')
     st_profile_report(r2, navbar=True,key = "Report")
 
 @st.cache_resource
@@ -244,9 +244,14 @@ if file_ext =='csv':
     st.sidebar.header('Select automatic report style')
 
     df= pd.read_csv(data_file)
+    st.session_state.df = df
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
-    option_chosen = st.sidebar.selectbox("Report Style:", menu)
+    chat_toggle = st.sidebar.toggle("Chat")
+    index = 0 if chat_toggle else None # Set index to 0 if toggle is True, otherwise None
+    
+    option_chosen = st.sidebar.selectbox("Report Style:", menu,index)
+    option_chosen = "Home" if option_chosen == None else option_chosen
 
     
     import streamlit.components.v1 as components 
@@ -295,6 +300,43 @@ if file_ext =='csv':
         pyg_html = pyg.to_html(df) 
         # # Embed the HTML into the Streamlit app
         components.html(pyg_html, height=2000, scrolling=True)
+    
+    ##chat section
+    
+    if st.session_state.df is not None and chat_toggle:
+
+        st.write("UNDER CONSTRUNCTION CHAT")
+        if "messages" in st.session_state:
+            print('messages found')
+            
+        else:
+           if "messages" not in st.session_state.keys():
+               st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your data?"}]
+
+      #PANDAS AI CHAT  
+      # st.subheader("Peek into the uploaded dataframe:")
+      # st.write(st.session_state.df.head(2))
+    
+      # with st.form("Question"):
+      #     question = st.text_area("Question", value="", help="Enter your queries here")
+      #     answer = st.text_area("Answer", value="")
+      #     submitted = st.form_submit_button("Submit")
+      #     if submitted:
+      #         
+      # with st.spinner():
+      #   llm = OpenAI(api_token=st.session_state.openai_key)
+      #   pandas_ai = PandasAI(llm)
+      #   x = pandas_ai.run(st.session_state.df, prompt=question)
+      # fig = plt.gcf()
+      # fig, ax = plt.subplots(figsize=(10, 6))
+      # plt.tight_layout()
+      # if fig.get_axes() and fig is not None:
+      #   st.pyplot(fig)
+      #   fig.savefig("plot.png")
+      # st.write(x)
+      # st.session_state.prompt_history.append(question)
+      # response_history.append(x) # Append the response to the list
+      # st.session_state.response_history = response_history
 
 
 elif file_ext =='pdf':

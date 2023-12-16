@@ -20,3 +20,4 @@ spacy-streamlit
 nltk
 rapidocr-onnxruntime
 sweetviz 
+transformers
