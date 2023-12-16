@@ -68,6 +68,7 @@ def preprocess_text(text):
     from string import punctuation
     import nltk
     nltk.download('stopwords')
+    nltk.download('punkt')
     from nltk.corpus import stopwords
     from nltk.tokenize import word_tokenize
     stop_words_en = set(stopwords.words("english"))
