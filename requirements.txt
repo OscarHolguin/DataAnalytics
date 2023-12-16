@@ -13,8 +13,8 @@ spacy==3.7.2
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz
 streamlit==1.29.0
 streamlit_d3graph
+ydata-profiling
 streamlit-ydata-profiling
-git+https://github.com/pejmanS21/streamlit-ydata-profiling.git
 wordcloud==1.9.3
 spacy-streamlit
 nltk
