@@ -21,4 +21,5 @@ nltk
 rapidocr-onnxruntime
 sweetviz 
 transformers
-seaborn
+cartography 
+torch
