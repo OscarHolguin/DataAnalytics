@@ -22,3 +22,4 @@ rapidocr-onnxruntime
 sweetviz 
 transformers
 cartography 
+pytorch
