@@ -128,7 +128,7 @@ st.set_page_config(page_title = pagetitle,
 
 
 st.title('Data Analysis')
-#st.image('https://djnsalesianos.mx/wp-content/uploads/2019/04/logodjnnuevo.png',width=800)
+#st.image()
 
 
 #@st.cache_data(ttl=10)
@@ -162,7 +162,6 @@ left,mid,right = st.columns([1,3,1],gap='large')
 
 
 
-# st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
 def st_display_sweetviz(report_html,width=2000,height=2000):
@@ -251,7 +250,7 @@ def generate_wordcloud(text):
 if file_ext =='csv':
     st.sidebar.header('Select automatic report style')
 
-    df= pd.read_csv(data_file)
+    df= pd.read_csv(data_file,encoding="utf-8")
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
     option_chosen = st.sidebar.selectbox("Report Style:", menu)

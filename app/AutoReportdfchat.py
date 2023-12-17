@@ -66,11 +66,13 @@ sqlServerName,sqlDatabase,userName,password = sqlServer.get('sqlServerName'),sql
 
 
 
+os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 
 
 ############################
 from reports_template import Reports
-
+#
+from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
 
 reports = Reports()
 
@@ -238,12 +240,19 @@ def generate_wordcloud(text):
     wordcloud = WordCloud().generate(text)
     return wordcloud
 
+
+
+
+
     
 
+
 if file_ext =='csv':
+    response_history = st.session_state.get("response_history", [])
+
     st.sidebar.header('Select automatic report style')
 
-    df= pd.read_csv(data_file)
+    df= pd.read_csv(data_file,encoding ="utf-8")
     st.session_state.df = df
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
@@ -304,6 +313,7 @@ if file_ext =='csv':
     ##chat section
     
     if st.session_state.df is not None and chat_toggle:
+        st.session_state.prompt_history = []
 
         st.write("UNDER CONSTRUNCTION CHAT")
         if "messages" in st.session_state:
@@ -312,6 +322,70 @@ if file_ext =='csv':
         else:
            if "messages" not in st.session_state.keys():
                st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your data?"}]
+        
+        if "messages" in st.session_state:
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.write(message["content"])
+            if prompt := st.chat_input():
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                with st.chat_message("user"):
+                    st.write(prompt)
+            
+            if st.session_state.messages[-1]["role"] != "assistant":
+                with st.chat_message("assistant"):
+                    with st.spinner("Thinking..."):
+                        response = generate_response(prompt,st.session_state.df)
+                        if "insights" in prompt.lower():
+                            insights = generate_insights_one(st.session_state.df)
+                            st.write(insights)
+                        elif "trends" in prompt.lower() or "patterns" in prompt.lower():
+                            trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
+                            for fig in trends_and_patterns:
+                                if fig is not None:
+                                    st.pyplot(fig)
+                        elif "aggregate" in prompt.lower():
+                            columns = prompt.lower().split("aggregate ")[1].split(" and ")
+                            aggregated_data = aggregate_data(st.session_state.df, columns)
+                            st.subheader("Aggregated Data:")
+                            st.write(aggregated_data)
+                        
+                        
+                        
+                        
+                        
+                    #To generate images if needed
+                    fig = plt.gcf()
+                    fig, ax = plt.subplots(figsize=(10, 6))
+                    plt.tight_layout()
+                    if fig.get_axes() and fig is not None:
+                      st.pyplot(fig)
+                      fig.savefig("plot.png")
+                    st.write(response)
+                    st.session_state.prompt_history.append(prompt)
+                    response_history.append(response)
+                    st.session_state.response_history = response_history
+                    
+        st.sidebar.subheader("Prompt history:")
+        st.write(st.session_state.prompt_history)
+        
+        st.sidebar.subheader("Prompt response:")
+        for response in response_history:
+            st.write(response)
+ 
+        if st.button("Clear"):
+            st.session_state.prompt_history = []
+            st.session_state.response_history = []
+            st.session_state.df = None
+        
+        if st.button("Save Results", key=0):
+            with open("historical_data.txt", "w") as f:
+                for response in response_history:
+                    f.write(response + "\n")
+            if fig is not None:
+                fig.savefig("plot.png")  
+                    
+   
 
       #PANDAS AI CHAT  
       # st.subheader("Peek into the uploaded dataframe:")
