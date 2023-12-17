@@ -21,3 +21,4 @@ nltk
 rapidocr-onnxruntime
 sweetviz 
 transformers
+cartography 
