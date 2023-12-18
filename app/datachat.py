@@ -81,13 +81,13 @@ def generate_response(df,prompt,model_id=model_id):
     pipe = pipeline('text2text-generation',
                 model=model,
                 tokenizer=tokenizer,
-                max_length = 2048
+                max_length = 512
                 )
     local_llm = HuggingFacePipeline(pipeline = pipe)
     
     prompt2 = generate_prompt(prompt)
     
-    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
+    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True, handle_parsing_errors=True)
     
     
     

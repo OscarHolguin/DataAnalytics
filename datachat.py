@@ -22,8 +22,9 @@ from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe
 
 ###
 import os
-from langchain import PromptTemplate, HuggingFaceHub, LLMChain, OpenAI, SQLDatabase, HuggingFacePipeline
-from langchain_experimental.agents import create_csv_agent
+from langchain import PromptTemplate, HuggingFaceHub, LLMChain, OpenAI, SQLDatabase
+from langchain.llms.huggingface_pipeline import HuggingFacePipeline
+from langchain_experimental.agents import create_csv_agent, create_pandas_dataframe_agent
 
 # from langchain.chains.sql_database.base import SQLDatabaseChain
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoConfig
@@ -31,24 +32,73 @@ import transformers
 from transformers import pipeline
 
 
-model_id = 'google/flan-t5-base'
-def generate_response(prompt,path,model_id=model_id):
+
+def generate_prompt(question):
+    promptquery = (
+       """
+          For the following query, if it requires drawing a table, reply as follows:
+           {{"table": {{"columns": ["column1", "column2", ...], "data": [[value1, value2, ...], [value1, value2, ...], ...]}}}
+
+           If the query requires creating a bar chart, reply as follows:
+           {{"bar": {{"columns": ["A", "B", "C", ...], "data": [25, 24, 10, ...]}}}
+
+           If the query requires creating a line chart, reply as follows:
+           {{"line": {{"columns": ["A", "B", "C", ...], "data": [25, 24, 10, ...]}}}
+
+           There can only be two types of chart, "bar" and "line".
+
+           If it is just asking a question that requires neither, reply as follows:
+           {{"answer": "answer"}}
+           Example:
+           {{"answer": "The title with the highest rating is 'Gilead'"}}
+
+           If you do not know the answer, reply as follows:
+           {{"answer": "I do not know."}}
+
+           Return all output as a string.
+
+           All strings in "columns" list and data list should be in double quotes,
+
+           For example: {{"columns": ["title", "ratings_count"], "data": [["Gilead", 361], ["Spider's Web", 5164]]}}
+
+           Lets think step by step.
+
+           Below is the query.
+           Query: 
+           
+       
+       """+str(question)
+   )
+    
+    
+    return promptquery
+
+model_id = 'google/flan-t5-small'#'-xxl'
+def generate_response(df,prompt,model_id=model_id):
     config = AutoConfig.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
     pipe = pipeline('text2text-generation',
                 model=model,
                 tokenizer=tokenizer,
-                max_length = 1024
+                max_length = 512
                 )
     local_llm = HuggingFacePipeline(pipeline = pipe)
-    agent = create_csv_agent(llm = local_llm, path = path, verbose=True)
+    
+    prompt2 = generate_prompt(prompt)
+    
+    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True, handle_parsing_errors=True)
+    
+    
+    
     try:
-        result = agent.run(prompt)
+        result = agent.run(prompt2)
+        result = result.__str__()
     except Exception as e:
         result = str(e)
         if result.startswith("Could not parse LLM output: `"):
              result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
+        result = result.__str__()
     return result
 
         

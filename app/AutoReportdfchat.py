@@ -333,6 +333,8 @@ if file_ext =='csv':
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 with st.chat_message("user"):
                     st.write(prompt)
+            else:
+                prompt = "Nothing for now"
             
             if st.session_state.messages[-1]["role"] != "assistant":
                 with st.chat_message("assistant"):  
