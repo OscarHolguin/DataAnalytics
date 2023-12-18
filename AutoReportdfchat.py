@@ -334,22 +334,23 @@ if file_ext =='csv':
 
             
             if st.session_state.messages[-1]["role"] != "assistant":
-                with st.chat_message("assistant"):
-                    with st.spinner("Thinking..."):
-                        response =  generate_response(df,prompt)
-                        if prompt and "insights" in prompt.lower():
-                            insights = generate_insights_one(st.session_state.df)
-                            st.write(insights)
-                        elif prompt and "trends" in prompt.lower() or "patterns" in prompt.lower():
-                            trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
-                            for fig in trends_and_patterns:
-                                if fig is not None:
-                                    st.pyplot(fig)
-                        elif prompt and "aggregate" in prompt.lower():
-                            columns = prompt.lower().split("aggregate ")[1].split(" and ")
-                            aggregated_data = aggregate_data(st.session_state.df, columns)
-                            st.subheader("Aggregated Data:")
-                            st.write(aggregated_data)
+                if prompt:
+                    with st.chat_message("assistant"):
+                        with st.spinner("Thinking..."):
+                            response =  generate_response(df,prompt)
+                            if "insights" in prompt.lower():
+                                insights = generate_insights_one(st.session_state.df)
+                                st.write(insights)
+                            elif "trends" in prompt.lower() or "patterns" in prompt.lower():
+                                trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
+                                for fig in trends_and_patterns:
+                                    if fig is not None:
+                                        st.pyplot(fig)
+                            elif "aggregate" in prompt.lower():
+                                columns = prompt.lower().split("aggregate ")[1].split(" and ")
+                                aggregated_data = aggregate_data(st.session_state.df, columns)
+                                st.subheader("Aggregated Data:")
+                                st.write(aggregated_data)
                         
                         
                         
