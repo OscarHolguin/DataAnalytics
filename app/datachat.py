@@ -16,20 +16,44 @@ import streamlit as st
 
 # from pandasai import SmartDataframe
 # from pandasai.llm import HuggingFace
+from langchain.agents.agent_types import AgentType
+from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 
-def generate_response(prompt,df):
-    # llm = Starcoder()
-    # pandas_ai = PandasAI(llm=llm)
-    llm = HuggingFace(model="gpt2")
-    dfchat = SmartDataframe(df, config={"llm": llm})
 
-    # Run PandasAI with user input prompt
-    result = dfchat.chat(prompt)#pandas_ai.run(df, prompt=prompt)
+###
+import os
+from langchain import PromptTemplate, HuggingFaceHub, LLMChain, OpenAI, SQLDatabase, HuggingFacePipeline
+from langchain_experimental.agents import create_csv_agent
+
+# from langchain.chains.sql_database.base import SQLDatabaseChain
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoConfig
+import transformers
+from transformers import pipeline
+
+
+model_id = 'google/flan-t5-xxl'
+def generate_response(prompt,path,model_id=model_id):
+    config = AutoConfig.from_pretrained(model_id)
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
+    pipe = pipeline('text2text-generation',
+                model=model,
+                tokenizer=tokenizer,
+                max_length = 1024
+                )
+    local_llm = HuggingFacePipeline(pipeline = pipe)
+    agent = create_csv_agent(llm = local_llm, path = path, verbose=True)
     try:
-        st.write(result.imshow())
-        return result
-    except:
-        return result
+        result = agent.run(prompt)
+    except Exception as e:
+        result = str(e)
+        if result.startswith("Could not parse LLM output: `"):
+             result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
+    return result
+
+        
+    
+
 
 
 def generate_insights(df):

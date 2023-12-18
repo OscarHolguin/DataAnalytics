@@ -248,6 +248,7 @@ def generate_wordcloud(text):
 
 
 if file_ext =='csv':
+    tmppath = os.path.join("/tmp", data_file.name)
     response_history = st.session_state.get("response_history", [])
 
     st.sidebar.header('Select automatic report style')
@@ -335,7 +336,7 @@ if file_ext =='csv':
             if st.session_state.messages[-1]["role"] != "assistant":
                 with st.chat_message("assistant"):
                     with st.spinner("Thinking..."):
-                        response = generate_response(prompt,st.session_state.df)
+                        response =  generate_response(prompt,tmppath)
                         if "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
                             st.write(insights)
@@ -373,12 +374,12 @@ if file_ext =='csv':
         for response in response_history:
             st.write(response)
  
-        if st.button("Clear"):
+        if st.sidebar.button("Clear"):
             st.session_state.prompt_history = []
             st.session_state.response_history = []
             st.session_state.df = None
         
-        if st.button("Save Results", key=0):
+        if st.sidebar.button("Save Results", key=0):
             with open("historical_data.txt", "w") as f:
                 for response in response_history:
                     f.write(response + "\n")
