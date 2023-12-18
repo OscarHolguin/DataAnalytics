@@ -103,6 +103,7 @@ def generate_response(df,prompt,model_id=model_id):
 
   
 def generate_responsedf(df,prompt):
+    print("USING PANDASAI")
     # #NEW VERSION
     # from pandasai import SmartDataframe
     # # from pandasai.llm import HuggingFace

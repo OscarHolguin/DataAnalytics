@@ -360,9 +360,9 @@ if file_ext =='csv':
                     fig = plt.gcf()
                     fig, ax = plt.subplots(figsize=(10, 6))
                     plt.tight_layout()
-                    if fig.get_axes() and fig is not None:
-                      st.pyplot(fig)
-                      fig.savefig("plot.png")
+#                    if fig.get_axes() and fig is not None:
+#                      st.pyplot(fig)
+#                      fig.savefig("plot.png")
                     st.write(response)
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
@@ -371,9 +371,9 @@ if file_ext =='csv':
         st.sidebar.subheader("Prompt history:")
         st.write(st.session_state.prompt_history)
         
-        st.sidebar.subheader("Prompt response:")
-        for response in response_history:
-            st.write(response)
+        #st.sidebar.subheader("Prompt response:")
+        #for response in response_history:
+        #    st.write(response)
  
         if st.sidebar.button("Clear"):
             st.session_state.prompt_history = []
