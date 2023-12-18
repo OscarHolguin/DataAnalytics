@@ -340,7 +340,9 @@ if file_ext =='csv':
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
                         response =  generate_responsedf(df,prompt)
-                        
+                        st.write(response)
+                        message = {"role": "assistant", "content": response}
+                        st.session_state.messages.append(message) 
                         if "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
                             st.write(insights)
@@ -368,7 +370,7 @@ if file_ext =='csv':
                             print('image will be displayed')
                             #st.pyplot(fig)
                             #fig.savefig("plot.png")
-                    st.write(response)
+                    # st.write(response)
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
                     st.session_state.response_history = response_history
