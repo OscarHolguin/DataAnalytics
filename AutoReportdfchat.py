@@ -411,10 +411,10 @@ if file_ext =='csv':
       # if fig.get_axes() and fig is not None:
       #   st.pyplot(fig)
       #   fig.savefig("plot.png")
-      # st.write(x)
-      # st.session_state.prompt_history.append(question)
-      # response_history.append(x) # Append the response to the list
-      # st.session_state.response_history = response_history
+      st.write(x)
+      st.session_state.prompt_history.append(question)
+      response_history.append(x) # Append the response to the list
+      st.session_state.response_history = response_history
 
 
 elif file_ext =='pdf':
