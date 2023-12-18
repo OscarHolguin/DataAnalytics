@@ -78,7 +78,7 @@ def generate_response(df,prompt,model_id=model_id):
     config = AutoConfig.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
-    pipe = pipeline('text-generation',
+    pipe = pipeline('text2text-generation',
                 model=model,
                 tokenizer=tokenizer,
                 max_length = 512
