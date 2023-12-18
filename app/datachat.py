@@ -32,7 +32,7 @@ import transformers
 from transformers import pipeline
 
 
-model_id = 'google/flan-t5-base'#'-xxl'
+model_id = 'google/flan-t5-small'#'-xxl'
 def generate_response(prompt,path,model_id=model_id):
     config = AutoConfig.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
