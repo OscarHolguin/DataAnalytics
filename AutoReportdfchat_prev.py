@@ -33,8 +33,14 @@ import matplotlib
 import codecs
 import os
 import pygwalker as pyg
+
+
+
 from ParsingPDF import preprocess_text, PDFParser,get_pdf_url
 from InformationExtractionPDF import extract_info, dfText2DfNE,networkgraph
+
+
+
 import base64
 import streamlit.components.v1 as components
 
@@ -51,6 +57,8 @@ import uuid
 import spacy
 
 
+     
+
 #######################
 #THIS IS FOR TESTING
 sqlServer = {'sqlServerName': 'euwdsrg03rsql01.database.windows.net',
@@ -66,45 +74,43 @@ sqlServerName,sqlDatabase,userName,password = sqlServer.get('sqlServerName'),sql
 
 
 
-os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 
 
 ############################
 from reports_template import Reports
-#
-from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+
 
 reports = Reports()
 
 import hmac
 
 
-# def check_password():
-#     """Returns `True` if the user had the correct password."""
+def check_password():
+    """Returns `True` if the user had the correct password."""
 
-#     def password_entered():
-#         """Checks whether a password entered by the user is correct."""
-#         if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
-#             st.session_state["password_correct"] = True
-#             del st.session_state["password"]  # Don't store the password.
-#         else:
-#             st.session_state["password_correct"] = False
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
 
-#     # Return True if the passward is validated.
-#     if st.session_state.get("password_correct", False):
-#         return True
+    # Return True if the passward is validated.
+    if st.session_state.get("password_correct", False):
+        return True
 
-#     # Show input for password.
-#     st.text_input(
-#         "Password", type="password", on_change=password_entered, key="password"
-#     )
-#     if "password_correct" in st.session_state:
-#         st.error("😕 Password incorrect")
-#     return False
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
 
 
-# if not check_password():
-#     st.stop()  # Do not continue if check_password is not True.
+if not check_password():
+    st.stop()  # Do not continue if check_password is not True.
 
 
 company = "CompanyA"
@@ -122,7 +128,7 @@ st.set_page_config(page_title = pagetitle,
 
 
 st.title('Data Analysis')
-#st.image('https://djnsalesianos.mx/wp-content/uploads/2019/04/logodjnnuevo.png',width=800)
+#st.image()
 
 
 #@st.cache_data(ttl=10)
@@ -156,7 +162,6 @@ left,mid,right = st.columns([1,3,1],gap='large')
 
 
 
-# st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
 def st_display_sweetviz(report_html,width=2000,height=2000):
@@ -229,7 +234,7 @@ def get_network(df,outname = "graph.html"):
 
 @st.cache_resource(experimental_allow_widgets=True)
 def profile_report(df,**kwargs):
-    r2 = reports.create_profiling_report(df, explorative=True,progress_bar = True,correlations = correlations,title="REPORT",)# config_file = 'config.yaml')
+    r2 = reports.create_profiling_report(df, explorative=True,progress_bar = True,correlations = correlations,title="REPORT", config_file = 'config.yaml')
     st_profile_report(r2, navbar=True,key = "Report")
 
 @st.cache_resource
@@ -240,28 +245,15 @@ def generate_wordcloud(text):
     wordcloud = WordCloud().generate(text)
     return wordcloud
 
-
-
-
-
     
-
 
 if file_ext =='csv':
-    tmppath = os.path.join("/tmp", data_file.name)
-    response_history = st.session_state.get("response_history", [])
-
     st.sidebar.header('Select automatic report style')
 
-    df= pd.read_csv(data_file,encoding ="utf-8")
-    st.session_state.df = df
+    df= pd.read_csv(data_file,encoding="utf-8")
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
-    chat_toggle = st.sidebar.toggle("Chat")
-    index = 0 if chat_toggle else None # Set index to 0 if toggle is True, otherwise None
-    
-    option_chosen = st.sidebar.selectbox("Report Style:", menu,index)
-    option_chosen = "Home" if option_chosen == None else option_chosen
+    option_chosen = st.sidebar.selectbox("Report Style:", menu)
 
     
     import streamlit.components.v1 as components 
@@ -310,108 +302,6 @@ if file_ext =='csv':
         pyg_html = pyg.to_html(df) 
         # # Embed the HTML into the Streamlit app
         components.html(pyg_html, height=2000, scrolling=True)
-    
-    ##chat section
-    
-    if st.session_state.df is not None and chat_toggle:
-        st.session_state.prompt_history = []
-
-        st.write("UNDER CONSTRUNCTION CHAT")
-        if "messages" in st.session_state:
-            print('messages found')
-            
-        else:
-           if "messages" not in st.session_state.keys():
-               st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your data?"}]
-        
-        if "messages" in st.session_state:
-            for message in st.session_state.messages:
-                with st.chat_message(message["role"]):
-                    st.write(message["content"])
-            if prompt := st.chat_input():
-                st.session_state.messages.append({"role": "user", "content": prompt})
-                with st.chat_message("user"):
-                    st.write(prompt)
-            
-            if st.session_state.messages[-1]["role"] != "assistant":
-                with st.chat_message("assistant"):
-                    with st.spinner("Thinking..."):
-                        response =  generate_response(prompt,tmppath)
-                        if "insights" in prompt.lower():
-                            insights = generate_insights_one(st.session_state.df)
-                            st.write(insights)
-                        elif "trends" in prompt.lower() or "patterns" in prompt.lower():
-                            trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
-                            for fig in trends_and_patterns:
-                                if fig is not None:
-                                    st.pyplot(fig)
-                        elif "aggregate" in prompt.lower():
-                            columns = prompt.lower().split("aggregate ")[1].split(" and ")
-                            aggregated_data = aggregate_data(st.session_state.df, columns)
-                            st.subheader("Aggregated Data:")
-                            st.write(aggregated_data)
-                        
-                        
-                        
-                        
-                        
-                    #To generate images if needed
-                    fig = plt.gcf()
-                    fig, ax = plt.subplots(figsize=(10, 6))
-                    plt.tight_layout()
-                    if fig.get_axes() and fig is not None:
-                      st.pyplot(fig)
-                      fig.savefig("plot.png")
-                    st.write(response)
-                    st.session_state.prompt_history.append(prompt)
-                    response_history.append(response)
-                    st.session_state.response_history = response_history
-                    
-        st.sidebar.subheader("Prompt history:")
-        st.write(st.session_state.prompt_history)
-        
-        st.sidebar.subheader("Prompt response:")
-        for response in response_history:
-            st.write(response)
- 
-        if st.sidebar.button("Clear"):
-            st.session_state.prompt_history = []
-            st.session_state.response_history = []
-            st.session_state.df = None
-        
-        if st.sidebar.button("Save Results", key=0):
-            with open("historical_data.txt", "w") as f:
-                for response in response_history:
-                    f.write(response + "\n")
-            if fig is not None:
-                fig.savefig("plot.png")  
-                    
-   
-
-      #PANDAS AI CHAT  
-      # st.subheader("Peek into the uploaded dataframe:")
-      # st.write(st.session_state.df.head(2))
-    
-      # with st.form("Question"):
-      #     question = st.text_area("Question", value="", help="Enter your queries here")
-      #     answer = st.text_area("Answer", value="")
-      #     submitted = st.form_submit_button("Submit")
-      #     if submitted:
-      #         
-      # with st.spinner():
-      #   llm = OpenAI(api_token=st.session_state.openai_key)
-      #   pandas_ai = PandasAI(llm)
-      #   x = pandas_ai.run(st.session_state.df, prompt=question)
-      # fig = plt.gcf()
-      # fig, ax = plt.subplots(figsize=(10, 6))
-      # plt.tight_layout()
-      # if fig.get_axes() and fig is not None:
-      #   st.pyplot(fig)
-      #   fig.savefig("plot.png")
-      # st.write(x)
-      # st.session_state.prompt_history.append(question)
-      # response_history.append(x) # Append the response to the list
-      # st.session_state.response_history = response_history
 
 
 elif file_ext =='pdf':
