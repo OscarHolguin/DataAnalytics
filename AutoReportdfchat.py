@@ -309,7 +309,7 @@ if file_ext =='csv':
 
         pyg_html = pyg.to_html(df) 
         # # Embed the HTML into the Streamlit app
-        components.html(pyg_html, height=2000, scrolling=True)
+        components.html(pyg_html, height=1000, scrolling=True)
     
     ##chat section
     
