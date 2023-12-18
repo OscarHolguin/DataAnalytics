@@ -269,7 +269,7 @@ if file_ext =='csv':
     
     if option_chosen.lower()=='retro_report':
         r1 = reports.retro_report(df)
-        r1.show_html(filepath='./EDA.html', open_browser=False, layout='vertical', scale=1.0)
+        r1.show_html(filepath='./EDA.html', open_browser=False, layout='vertical')#, scale=1.0)
         st_display_sweetviz("EDA.html")
         #components.iframe(src='./EDA.html', scrolling=True) #width=1100, height=1200,
     
