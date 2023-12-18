@@ -42,9 +42,6 @@ def generate_prompt(question):
            If the query requires creating a bar chart, reply as follows:
            {{"bar": {{"columns": ["A", "B", "C", ...], "data": [25, 24, 10, ...]}}}
 
-           If the query requires creating a line chart, reply as follows:
-           {{"line": {{"columns": ["A", "B", "C", ...], "data": [25, 24, 10, ...]}}}
-
            There can only be two types of chart, "bar" and "line".
 
            If it is just asking a question that requires neither, reply as follows:
@@ -65,8 +62,6 @@ def generate_prompt(question):
 
            Below is the query.
            Query: 
-           
-       
        """+str(question)
    )
     
