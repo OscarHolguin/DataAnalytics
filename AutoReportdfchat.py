@@ -72,7 +72,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+from datachat import generate_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
 
 reports = Reports()
 
