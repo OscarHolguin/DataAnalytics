@@ -50,6 +50,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, TextSplitter
 import uuid
 import spacy
 
+import pathlib
 
 #######################
 #THIS IS FOR TESTING
@@ -248,7 +249,8 @@ def generate_wordcloud(text):
 
 
 if file_ext =='csv':
-    tmppath = os.path.join("/tmp", data_file.name)
+    tmppath = os.path.join("\tmp", data_file.name)
+
     response_history = st.session_state.get("response_history", [])
 
     st.sidebar.header('Select automatic report style')
@@ -316,7 +318,6 @@ if file_ext =='csv':
     if st.session_state.df is not None and chat_toggle:
         st.session_state.prompt_history = []
 
-        st.write("UNDER CONSTRUNCTION CHAT")
         if "messages" in st.session_state:
             print('messages found')
             
@@ -334,9 +335,9 @@ if file_ext =='csv':
                     st.write(prompt)
             
             if st.session_state.messages[-1]["role"] != "assistant":
-                with st.chat_message("assistant"):
+                with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
-                        response =  generate_response(prompt,tmppath)
+                        response =  generate_response(st.session_state.df,prompt)
                         if "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
                             st.write(insights)
