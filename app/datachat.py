@@ -22,7 +22,8 @@ from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe
 
 ###
 import os
-from langchain import PromptTemplate, HuggingFaceHub, LLMChain, OpenAI, SQLDatabase, HuggingFacePipeline
+from langchain import PromptTemplate, HuggingFaceHub, LLMChain, OpenAI, SQLDatabase
+from langchain.llms.huggingface_pipeline import HuggingFacePipeline
 from langchain_experimental.agents import create_csv_agent
 
 # from langchain.chains.sql_database.base import SQLDatabaseChain

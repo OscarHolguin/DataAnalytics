@@ -367,10 +367,11 @@ if file_ext =='csv':
                     response_history.append(response)
                     st.session_state.response_history = response_history
                     
-        st.sidebar.subheader("Prompt history:")
-        st.write(st.session_state.prompt_history)
+        if st.sidebar.button("History"):
+            st.subheader("Prompt history:")
+            st.write(st.session_state.prompt_history)
         
-        st.sidebar.subheader("Prompt response:")
+        st.subheader("Prompt response:")
         for response in response_history:
             st.write(response)
  
