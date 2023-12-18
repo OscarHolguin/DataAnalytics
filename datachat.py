@@ -92,7 +92,7 @@ def generate_response(df,prompt,model_id=model_id):
     
     
     try:
-        result = agent.run(prompt2)
+        result = agent.run(prompt2,handle_parsing_errors=True)
         result = result.__str__()
     except Exception as e:
         result = str(e)
