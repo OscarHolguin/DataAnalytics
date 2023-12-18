@@ -316,7 +316,6 @@ if file_ext =='csv':
     if st.session_state.df is not None and chat_toggle:
         st.session_state.prompt_history = []
 
-        st.write("UNDER CONSTRUNCTION CHAT")
         if "messages" in st.session_state:
             print('messages found')
             
@@ -332,20 +331,21 @@ if file_ext =='csv':
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 with st.chat_message("user"):
                     st.write(prompt)
+
             
             if st.session_state.messages[-1]["role"] != "assistant":
                 with st.chat_message("assistant"):
                     with st.spinner("Thinking..."):
-                        response =  generate_response(prompt,tmppath)
-                        if "insights" in prompt.lower():
+                        response =  generate_response(df,prompt)
+                        if prompt and "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
                             st.write(insights)
-                        elif "trends" in prompt.lower() or "patterns" in prompt.lower():
+                        elif prompt and "trends" in prompt.lower() or "patterns" in prompt.lower():
                             trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
                             for fig in trends_and_patterns:
                                 if fig is not None:
                                     st.pyplot(fig)
-                        elif "aggregate" in prompt.lower():
+                        elif prompt and "aggregate" in prompt.lower():
                             columns = prompt.lower().split("aggregate ")[1].split(" and ")
                             aggregated_data = aggregate_data(st.session_state.df, columns)
                             st.subheader("Aggregated Data:")
