@@ -73,12 +73,12 @@ def generate_prompt(question):
     
     return promptquery
 
-model_id = 'google/flan-t5-small'#'-xxl'
+model_id = "microsoft/phi-2"#'google/flan-t5-small'#'-xxl'
 def generate_response(df,prompt,model_id=model_id):
     config = AutoConfig.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
-    pipe = pipeline('text2text-generation',
+    pipe = pipeline('text-generation',
                 model=model,
                 tokenizer=tokenizer,
                 max_length = 512

@@ -69,7 +69,34 @@ def generate_prompt(question):
     return promptquery
 
 model_id = 'google/flan-t5-small'#'-xxl'
-def generate_response(df,prompt,model_id=model_id):
+# def generate_response(df,prompt,model_id=model_id):
+#     config = AutoConfig.from_pretrained(model_id)
+#     tokenizer = AutoTokenizer.from_pretrained(model_id)
+#     model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
+#     pipe = pipeline('text2text-generation',
+#                 model=model,
+#                 tokenizer=tokenizer,
+#                 max_length = 512
+#                 )
+#     local_llm = HuggingFacePipeline(pipeline = pipe)
+    
+#     prompt2 = generate_prompt(prompt)
+    
+#     agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
+    
+    
+    
+#     try:
+#         result = agent.run(prompt2)
+#         result = result.__str__()
+#     except Exception as e:
+#         result = str(e)
+#         if result.startswith("Could not parse LLM output: `"):
+#              result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
+#         result = result.__str__()
+#     return result
+
+def generate_response(path,prompt,model_id=model_id):
     config = AutoConfig.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
@@ -82,7 +109,7 @@ def generate_response(df,prompt,model_id=model_id):
     
     prompt2 = generate_prompt(prompt)
     
-    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True, handle_parsing_errors=True)
+    agent =  create_csv_agent(llm = local_llm,path=path ,verbose=True)
     
     
     
@@ -95,8 +122,7 @@ def generate_response(df,prompt,model_id=model_id):
              result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
         result = result.__str__()
     return result
-
-        
+    
     
 
 

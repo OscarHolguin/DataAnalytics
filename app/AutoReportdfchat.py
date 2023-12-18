@@ -249,13 +249,14 @@ def generate_wordcloud(text):
 
 
 if file_ext =='csv':
-    tmppath = os.path.join("\tmp", data_file.name)
-
+    #tmppath = os.path.join("\tmp", data_file.name)
+    tmppath = data_file.name
     response_history = st.session_state.get("response_history", [])
 
     st.sidebar.header('Select automatic report style')
 
     df= pd.read_csv(data_file,encoding ="utf-8")
+    df.to_csv(tmppath)
     st.session_state.df = df
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
@@ -339,7 +340,7 @@ if file_ext =='csv':
             if st.session_state.messages[-1]["role"] != "assistant":
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
-                        response =  generate_response(st.session_state.df,prompt)
+                        response =  generate_response(tmppath,prompt)
                         
                         if "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
@@ -365,8 +366,9 @@ if file_ext =='csv':
                     plt.tight_layout()
                     if fig.get_axes() and fig is not None:
                         if ax is not None:
-                            st.pyplot(fig)
-                            fig.savefig("plot.png")
+                            print('image will be displayed')
+                            #st.pyplot(fig)
+                            #fig.savefig("plot.png")
                     st.write(response)
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
@@ -376,9 +378,9 @@ if file_ext =='csv':
             st.subheader("Prompt history:")
             st.write(st.session_state.prompt_history)
         
-        st.subheader("Prompt response:")
-        for response in response_history:
-            st.write(response)
+        # st.subheader("Prompt response:")
+        # for response in response_history:
+        #     st.write(response)
  
         if st.sidebar.button("Clear"):
             st.session_state.prompt_history = []
