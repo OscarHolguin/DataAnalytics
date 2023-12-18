@@ -73,7 +73,7 @@ def generate_prompt(question):
     
     return promptquery
 
-model_id = 'google/flan-t5-xl'#'-xxl'
+model_id = 'google/flan-t5-base'#'-xxl'
 def generate_response(df,prompt,model_id=model_id):
     config = AutoConfig.from_pretrained(model_id)
     tokenizer = AutoTokenizer.from_pretrained(model_id)
