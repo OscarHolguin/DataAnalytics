@@ -87,7 +87,7 @@ def generate_response(df,prompt,model_id=model_id):
     
     prompt2 = generate_prompt(prompt)
     
-    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True, handle_parsing_errors=True)
+    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
     
     
     
