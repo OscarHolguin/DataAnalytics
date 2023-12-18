@@ -366,7 +366,7 @@ if file_ext =='csv':
 #                    if fig.get_axes() and fig is not None:
 #                      st.pyplot(fig)
 #                      fig.savefig("plot.png")
-                    st.write(response)
+#                    st.write(response)
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
                     st.session_state.response_history = response_history
