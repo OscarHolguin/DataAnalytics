@@ -340,6 +340,7 @@ if file_ext =='csv':
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
                         response =  generate_responsedf(df,prompt)
+
                         st.write(response)
                         message = {"role": "assistant", "content": response}
                         st.session_state.messages.append(message) 
