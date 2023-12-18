@@ -11,7 +11,6 @@ Created on Thu Dec  7 14:33:08 2023
 from dataclasses import dataclass
 import pandas as pd
 import pyodbc
-from ydata_profiling import ProfileReport
 import urllib
 
 
@@ -21,6 +20,8 @@ class Reports:
     #df
     
     def create_profiling_report(self,df,title="Data Profile Report",**kwargs):
+        from ydata_profiling import ProfileReport
+
         """
         Create automatic report from pandas dataframe or spark dataframe
         """

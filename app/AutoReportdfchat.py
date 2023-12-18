@@ -22,7 +22,6 @@ from langchain.embeddings import HuggingFaceEmbeddings
 import pyodbc
 from langchain.vectorstores import Chroma
 import urllib
-import pylab
 import numpy as np
 import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
@@ -73,7 +72,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,generate_responsedf
 
 reports = Reports()
 
@@ -268,7 +267,6 @@ if file_ext =='csv':
 
     
     import streamlit.components.v1 as components 
-    from streamlit_ydata_profiling import st_profile_report
     
     if option_chosen.lower()=='retro_report':
         r1 = reports.retro_report(df)
@@ -280,7 +278,8 @@ if file_ext =='csv':
         
     
     elif option_chosen.lower()=='report':
-            
+            from streamlit_ydata_profiling import st_profile_report
+
             correlations={
             "auto": {"calculate": True},
             "pearson": {"calculate": True},
@@ -340,7 +339,7 @@ if file_ext =='csv':
             if st.session_state.messages[-1]["role"] != "assistant":
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
-                        response =  generate_response(tmppath,prompt)
+                        response =  generate_responsedf(df,prompt)
                         
                         if "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)

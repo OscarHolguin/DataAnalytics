@@ -337,7 +337,7 @@ if file_ext =='csv':
                 if prompt:
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
-                            response =  generate_response(df,prompt)
+                            response =  generate_responsedf(df,prompt)
                             if "insights" in prompt.lower():
                                 insights = generate_insights_one(st.session_state.df)
                                 st.write(insights)

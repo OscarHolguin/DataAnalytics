@@ -101,7 +101,27 @@ def generate_response(df,prompt,model_id=model_id):
         result = result.__str__()
     return result
 
-        
+  
+def generate_responsedf(df,prompt):
+    # #NEW VERSION
+    # from pandasai import SmartDataframe
+    # # from pandasai.llm import HuggingFace
+    # from pandasai.llm import Starcoder, Falcon
+    # api_token='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'
+    
+    # llm = Starcoder()
+    # from pandasai.responses.streamlit_response import StreamlitResponse
+    # aidf = SmartDataframe(df,  config={"llm": llm, "verbose": True, "response_parser": StreamlitResponse})
+    
+    # #prev version
+    from pandasai import PandasAI
+    from pandasai.llm.starcoder import Starcoder
+    os.environ['HUGGINGFACE_API_KEY'] = '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'
+    llm = Starcoder()
+    pandas_ai = PandasAI(llm)
+    
+    return pandas_ai.run(df, prompt=prompt)
+    # return aidf.chat(prompt)      
     
 
 
