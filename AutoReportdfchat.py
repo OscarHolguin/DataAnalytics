@@ -159,7 +159,7 @@ left,mid,right = st.columns([1,3,1],gap='large')
 # st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
-def st_display_sweetviz(report_html,width=2000,height=2000):
+def st_display_sweetviz(report_html,width=1500,height=2000):
 	report_file = codecs.open(report_html,'r')
 	page = report_file.read()
     #components.html(page,scrolling =True)
