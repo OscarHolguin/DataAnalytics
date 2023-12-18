@@ -81,7 +81,7 @@ def generate_response(df,prompt,model_id=model_id):
     pipe = pipeline('text2text-generation',
                 model=model,
                 tokenizer=tokenizer,
-                max_length = 1024
+                max_length = 2048
                 )
     local_llm = HuggingFacePipeline(pipeline = pipe)
     

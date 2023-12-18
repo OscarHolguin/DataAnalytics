@@ -338,6 +338,7 @@ if file_ext =='csv':
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
                         response =  generate_response(st.session_state.df,prompt)
+                        
                         if "insights" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
                             st.write(insights)
@@ -361,8 +362,9 @@ if file_ext =='csv':
                     fig, ax = plt.subplots(figsize=(10, 6))
                     plt.tight_layout()
                     if fig.get_axes() and fig is not None:
-                      st.pyplot(fig)
-                      fig.savefig("plot.png")
+                        if ax is not None:
+                            st.pyplot(fig)
+                            fig.savefig("plot.png")
                     st.write(response)
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
