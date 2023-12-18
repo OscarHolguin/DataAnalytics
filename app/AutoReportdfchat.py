@@ -159,7 +159,7 @@ left,mid,right = st.columns([1,3,1],gap='large')
 # st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
-def st_display_sweetviz(report_html,width=2000,height=2000):
+def st_display_sweetviz(report_html,width=1500,height=2000):
 	report_file = codecs.open(report_html,'r')
 	page = report_file.read()
     #components.html(page,scrolling =True)
@@ -247,8 +247,11 @@ def generate_wordcloud(text):
     
 
 
+
 if file_ext =='csv':
     #tmppath = os.path.join("\tmp", data_file.name)
+    if 'toggle' not in st.session_state:
+        st.session_state.Chat = False
     tmppath = data_file.name
     response_history = st.session_state.get("response_history", [])
 
@@ -269,8 +272,9 @@ if file_ext =='csv':
     import streamlit.components.v1 as components 
     
     if option_chosen.lower()=='retro_report':
+        chat_toggle = False
         r1 = reports.retro_report(df)
-        r1.show_html(filepath='./EDA.html', open_browser=False, layout='vertical', scale=1.0)
+        r1.show_html(filepath='./EDA.html', open_browser=False, layout='vertical')#, scale=1.0)
         st_display_sweetviz("EDA.html")
         #components.iframe(src='./EDA.html', scrolling=True) #width=1100, height=1200,
     

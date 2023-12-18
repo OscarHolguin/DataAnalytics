@@ -268,6 +268,8 @@ if file_ext =='csv':
     from streamlit_ydata_profiling import st_profile_report
     
     if option_chosen.lower()=='retro_report':
+        chat_toggle = False
+
         r1 = reports.retro_report(df)
         r1.show_html(filepath='./EDA.html', open_browser=False, layout='vertical')#, scale=1.0)
         st_display_sweetviz("EDA.html")
@@ -277,7 +279,8 @@ if file_ext =='csv':
         
     
     elif option_chosen.lower()=='report':
-            
+            chat_toggle = False
+
             correlations={
             "auto": {"calculate": True},
             "pearson": {"calculate": True},
@@ -304,6 +307,8 @@ if file_ext =='csv':
     
     
     elif option_chosen.lower() == "create":
+        chat_toggle = False
+
         from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
         
 
