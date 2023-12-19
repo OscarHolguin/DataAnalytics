@@ -74,20 +74,26 @@ def generate_prompt(question):
     return promptquery
 
 model_id = 'google/flan-t5-base'#'-xxl'
-def generate_response(df,prompt,model_id=model_id):
-    config = AutoConfig.from_pretrained(model_id)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
-    pipe = pipeline('text2text-generation',
-                model=model,
-                tokenizer=tokenizer,
-                max_length = 512
-                )
-    local_llm = HuggingFacePipeline(pipeline = pipe)
+def generate_response(df,prompt,model_id=model_id,openai=False):
+    if not openai:
+        config = AutoConfig.from_pretrained(model_id)
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
+        pipe = pipeline('text2text-generation',
+                    model=model,
+                    tokenizer=tokenizer,
+                    max_length = 512
+                    )
+        local_llm = HuggingFacePipeline(pipeline = pipe)
+
     
-    prompt2 = generate_prompt(prompt)
-    
-    agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
+        prompt2 = generate_prompt(prompt)
+        
+        agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
+    else:
+        from langchain.chat_models import ChatOpenAI
+        agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613"),df,verbose=True,agent_type=AgentType.OPENAI_FUNCTIONS)
+
     
     
     
@@ -124,7 +130,9 @@ def generate_responsedf(df,prompt):
     pandas_ai = PandasAI(llm)
     
     return pandas_ai.run(df, prompt=prompt)
-    # return aidf.chat(prompt)      
+    # return aidf.chat(prompt)  
+
+
     
 
 

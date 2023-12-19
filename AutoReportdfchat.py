@@ -342,12 +342,12 @@ if file_ext =='csv':
                 if prompt:
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
-                            response =  generate_responsedf(df,prompt)
-
+                            #response =  generate_responsedf(df,prompt)
+                            response = generate_response(prompt)
                             st.write(response)
                             message = {"role": "assistant", "content": response}
                             st.session_state.messages.append(message) 
-                            if "insights" in prompt.lower():
+                            if "insights2" in prompt.lower():
                                 insights = generate_insights_one(st.session_state.df)
                                 st.write(insights)
                             elif "trends" in prompt.lower() or "patterns" in prompt.lower():
