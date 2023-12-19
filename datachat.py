@@ -142,6 +142,7 @@ def generate_response(df,prompt,model_id=model_id,openai=False):
         agent = create_pandas_dataframe_agent(llm, df, verbose=True)
         #agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
         #    ,df,verbose=True,agent_type=AgentType.OPENAI_FUNCTIONS)
+        prompt2 = generate_prompt(prompt)
 
         response = agent.run(prompt2)
         response = json.loads(response)
