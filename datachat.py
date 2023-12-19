@@ -73,6 +73,48 @@ def generate_prompt(question):
     
     return promptquery
 
+
+
+
+def write_response(response_dict: dict):
+    """
+    Write a response from an agent to a Streamlit app.
+
+    Args:
+        response_dict: The response from the agent.
+
+    Returns:
+        None.
+    """
+
+    # Check if the response is an answer.
+    if "answer" in response_dict:
+        st.write(response_dict["answer"])
+
+    # Check if the response is a bar chart.
+    if "bar" in response_dict:
+        data = response_dict["bar"]
+        df = pd.DataFrame(data)
+        df.set_index("columns", inplace=True)
+        st.bar_chart(df)
+
+    # Check if the response is a line chart.
+    if "line" in response_dict:
+        data = response_dict["line"]
+        df = pd.DataFrame(data)
+        df.set_index("columns", inplace=True)
+        st.line_chart(df)
+
+    # Check if the response is a table.
+    if "table" in response_dict:
+        data = response_dict["table"]
+        df = pd.DataFrame(data["data"], columns=data["columns"])
+        st.table(df)
+
+
+
+
+
 model_id = 'google/flan-t5-base'#'-xxl'
 def generate_response(df,prompt,model_id=model_id,openai=False):
     if not openai:
@@ -90,22 +132,32 @@ def generate_response(df,prompt,model_id=model_id,openai=False):
         prompt2 = generate_prompt(prompt)
         
         agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
+        response = agent.run(prompt2)
     else:
         from langchain.chat_models import ChatOpenAI
-        agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613"),df,verbose=True,agent_type=AgentType.OPENAI_FUNCTIONS)
+        from langchain import OpenAI
 
+        llm = OpenAI(openai_api_key=st.secrets["openai_key"])
+
+        agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
+            ,df,verbose=True,agent_type=AgentType.OPENAI_FUNCTIONS)
+
+        response = agent.run(prompt2)
+        response = json.loads(response)
+
+    return response
     
     
     
-    try:
-        result = agent.run(prompt2)
-        result = result.__str__()
-    except Exception as e:
-        result = str(e)
-        if result.startswith("Could not parse LLM output: `"):
-             result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
-        result = result.__str__()
-    return result
+#    try:
+#        result = agent.run(prompt2)
+#        result = result.__str__()
+#    except Exception as e:
+#        result = str(e)
+#        if result.startswith("Could not parse LLM output: `"):
+#             result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
+#        result = result.__str__()
+#    return result
 
   
 def generate_responsedf(df,prompt):

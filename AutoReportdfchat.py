@@ -72,7 +72,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
 
 reports = Reports()
 
@@ -343,8 +343,12 @@ if file_ext =='csv':
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
                             #response =  generate_responsedf(df,prompt)
-                            response = generate_response(prompt)
-                            st.write(response)
+                            openai=True
+                            response = generate_response(df,prompt,openai=openai)
+                            if openai:
+                                write_response(response)
+                            else:
+                                st.write(response)
                             message = {"role": "assistant", "content": response}
                             st.session_state.messages.append(message) 
                             if "insights2" in prompt.lower():
