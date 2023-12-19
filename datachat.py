@@ -119,7 +119,7 @@ def generate_responsedf(df,prompt):
     from pandasai.llm.starcoder import Starcoder
     from pandasai.llm.openai import OpenAI
     os.environ['HUGGINGFACE_API_KEY'] = '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'
-    openaikey = "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"
+    openaikey = st.secrets["openai_key"]
     llm = OpenAI(api_token = openaikey) #llm = Starcoder()
     pandas_ai = PandasAI(llm)
     
