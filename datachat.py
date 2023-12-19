@@ -145,8 +145,10 @@ def generate_response(df,prompt,model_id=model_id,openai=False):
         prompt2 = generate_prompt(prompt)
 
         response = agent.run(prompt2)
-        response = json.loads(response)
-
+        try:
+            response = json.loads(response)
+        except:
+            response = response
     return response
     
     
