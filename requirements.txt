@@ -25,3 +25,4 @@ cartography
 torch
 langchain-experimental
 chromadb
+openai
