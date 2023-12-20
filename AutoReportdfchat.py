@@ -60,7 +60,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,read_file_from_url
 
 reports = Reports()
 
@@ -110,12 +110,9 @@ st.set_page_config(page_title = pagetitle,
 
 
 st.title('BrAIn')
-st.subtitle("Your AI Data Analyst")
+st.subheader("Your AI Data Analyst")
 #st.image('https://djnsalesianos.mx/wp-content/uploads/2019/04/logodjnnuevo.png',width=800)
 
-
-
-# dfs=[sqldf(table) for table in tables]
 
 
 
@@ -136,14 +133,17 @@ def st_display_sweetviz(report_html,width=1500,height=2000):
 
 # #default df but maybe load file(?)
 #df = dfs[0][["WindowTimeStamp_Start","WindowTimeStamp_End","DeviceName","Vibration","Voltage","AirPressure","Current_amps"]]
-#@st.cache_resource
 
-
+@st.cache_resource
 data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
 file_ext = option_chosen = "null"
 if data_file is not None:
     file_name = data_file.name
     file_ext = file_name.split(".")[-1]
+else:
+    print('No file uploaded want to try from an url?')
+    st.input("Provide your CSV or PDF from a valid url")
+    
 
 
 
