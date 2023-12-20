@@ -19,7 +19,7 @@ from langchain.memory import ConversationBufferMemory
 
 
 
-def get_responsepdf(texts,query,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5):
+def generate_responsepdf(texts,query,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5):
 
 
     openai.api_key = openai_api_key = st.secrets["openai_key"]
