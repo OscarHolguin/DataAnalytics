@@ -128,7 +128,7 @@ if not st.toggle("From url"):
     if data_file is not None:
         file_name = data_file.name
         file_ext = file_name.split(".")[-1]
-        urlflag = False
+        urlflag = urlfile = False
 
 else:
     
