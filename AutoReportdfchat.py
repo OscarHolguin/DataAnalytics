@@ -230,15 +230,15 @@ if file_ext =='csv':
     #tmppath = os.path.join("/tmp", data_file.name)
     response_history = st.session_state.get("response_history", [])
 
-    st.sidebar.header('Select automatic report style')
     df= pd.read_csv(data_file,encoding ="utf-8") if not urlfile else pd.read_csv(urlfile,encoding ="utf-8")
 
     st.session_state.df = df
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
-    chat_toggle = st.sidebar.toggle("Chat")
+    chat_toggle = st.sidebar.toggle("AI Chat")
     index = 0 if chat_toggle else None # Set index to 0 if toggle is True, otherwise None
     
+    st.sidebar.header('Select automatic report style')
     option_chosen = st.sidebar.selectbox("Report Style:", menu,index)
     option_chosen = "Home" if option_chosen == None else option_chosen
 
