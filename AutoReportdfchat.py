@@ -60,7 +60,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,read_file_from_url
+from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
 
 reports = Reports()
 
