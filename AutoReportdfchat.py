@@ -131,7 +131,7 @@ if data_file is not None:
 
 else:
     print('No file uploaded want to try from an url?')
-    urlfile = st.text.input("Provide your CSV or PDF from a valid url")
+    urlfile = st.text_input("Provide your CSV or PDF from a valid url")
     urlflag = True
     
 
