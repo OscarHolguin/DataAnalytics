@@ -438,7 +438,8 @@ elif file_ext =='pdf':
     if st.toggle('pdfchat'):
         st.session_state.prompt_history = []
 
-        if "messages" in st.session_state:            
+        if "messages" in st.session_state: 
+            print('messages found')
         else:
            if "messages" not in st.session_state.keys():
                st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your file?"}]
