@@ -24,4 +24,4 @@ transformers
 cartography 
 torch
 langchain-experimental
-pandasai==0.6.3
+chromadb
