@@ -134,15 +134,20 @@ def st_display_sweetviz(report_html,width=1500,height=2000):
 # #default df but maybe load file(?)
 #df = dfs[0][["WindowTimeStamp_Start","WindowTimeStamp_End","DeviceName","Vibration","Voltage","AirPressure","Current_amps"]]
 
-@st.cache_resource
+#@st.cache_resource
+st.markdown('### ** Upload CSV or PDF file 👇 **')
+
 data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
 file_ext = option_chosen = "null"
 if data_file is not None:
     file_name = data_file.name
     file_ext = file_name.split(".")[-1]
+    urlflag = False
+
 else:
     print('No file uploaded want to try from an url?')
-    st.input("Provide your CSV or PDF from a valid url")
+    urlfile = st.input("Provide your CSV or PDF from a valid url")
+    urlflag = True
     
 
 
@@ -220,8 +225,8 @@ if file_ext =='csv':
     response_history = st.session_state.get("response_history", [])
 
     st.sidebar.header('Select automatic report style')
+    df= pd.read_csv(data_file,encoding ="utf-8") if not urlfile else pd.read_csv(urlfile,encoding ="utf-8")
 
-    df= pd.read_csv(data_file,encoding ="utf-8")
     st.session_state.df = df
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
@@ -379,7 +384,7 @@ elif file_ext =='pdf':
     if extractimgs:
         imgs = True
     bytes_data = data_file.read()  # read the content of the file in binary
-    tmppath = os.path.join("/tmp", data_file.name)
+    tmppath = os.path.join("/tmp", data_file.name) if not urlfile else urlfile
     with open(tmppath, "wb") as f:
         f.write(bytes_data)
     parser = PDFParser(tmppath,extract_images= imgs, max_tokens = 1048, chunk_overlap=64)
