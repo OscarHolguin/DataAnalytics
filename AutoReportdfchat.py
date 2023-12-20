@@ -51,22 +51,10 @@ import uuid
 import spacy
 
 
-#######################
-#THIS IS FOR TESTING
-sqlServer = {'sqlServerName': 'euwdsrg03rsql01.database.windows.net',
- 'sqlDatabase': 'EUWDSRG03RRSG02ADB01_Copy',
- 'userName': 'dbWSS',
- 'password': 'braf0wNVtixu3?IhU=hmrCeLzmzX>Wlo'}
 
 
 
-
-# PROD_MxD_PDM_DeviceFailureV2DataTable
-sqlServerName,sqlDatabase,userName,password = sqlServer.get('sqlServerName'),sqlServer.get('sqlDatabase'),sqlServer.get('userName'), sqlServer.get('password')
-
-
-
-os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
+os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 
 
 ############################
@@ -121,31 +109,11 @@ st.set_page_config(page_title = pagetitle,
 
 
 
-st.title('Data Analysis')
+st.title('BrAIn')
+st.subtitle("Your AI Data Analyst")
 #st.image('https://djnsalesianos.mx/wp-content/uploads/2019/04/logodjnnuevo.png',width=800)
 
 
-#@st.cache_data(ttl=10)
-@st.cache_resource
-def read_sql(sqlServerName ,sqlDatabase,userName,password,tablename,sqlPort = 1433,query =None,pandas=False)->pd.DataFrame:
-    query = query if query else f"(SELECT * FROM {tablename})"# AS subquery"
-    try:
-        if pandas:
-            cnxn = pyodbc.connect(DRIVER="{ODBC Driver 17 for SQL Server}", SERVER=sqlServerName, DATABASE=sqlDatabase, UID=userName, PWD=password, STORE_DRVRESULTS=0)
-            df = pd.read_sql(query,cnxn)
-            return df
-        #df.write.jdbc(sqlServerUrl, "PDM_AD_PredictionTable", write_mode, connectionProperties)
-        else:
-            connstr = f"DRIVER=ODBC Driver 17 for SQL Server, SERVER={sqlServerName}, DATABASE={sqlDatabase}, UID={userName}, PWD={password}, STORE_DRVRESULTS=0"
-            connection_string = urllib.parse.quote_plus(connstr)
-            connection_string = "mssql+pyodbc:///?odbc_connect=%s" % connection_string
-            return connection_string
-    except Exception as e:
-        return str(e)
-
-
-sqldf = lambda table: read_sql(sqlServerName ,sqlDatabase,userName,password,table,sqlPort = 1433,pandas = True)
-tables = ["PROD_MxD_PDM_DeviceFailureV2DataTable","PROD_MxD_PDM_DeviceFailureV2PredictionTable","PROD_MxD_DDM_AssetDataTable","PROD_MxD_DDM_DowntimeDataTable"]
 
 # dfs=[sqldf(table) for table in tables]
 
@@ -388,44 +356,20 @@ if file_ext =='csv':
         #for response in response_history:
         #    st.write(response)
  
-        if st.sidebar.button("Clear"):
-            st.session_state.prompt_history = []
-            st.session_state.response_history = []
-            st.session_state.df = None
+        # if st.sidebar.button("Clear"):
+        #     st.session_state.prompt_history = []
+        #     st.session_state.response_history = []
+        #     st.session_state.df = None
         
-        if st.sidebar.button("Save Results", key=0):
-            with open("historical_data.txt", "w") as f:
-                for response in response_history:
-                    f.write(response + "\n")
-            if fig is not None:
-                fig.savefig("plot.png")  
+        # if st.sidebar.button("Save Results", key=0):
+        #     with open("historical_data.txt", "w") as f:
+        #         for response in response_history:
+        #             f.write(response + "\n")
+        #     if fig is not None:
+        #         fig.savefig("plot.png")  
                     
    
 
-      #PANDAS AI CHAT  
-      # st.subheader("Peek into the uploaded dataframe:")
-      # st.write(st.session_state.df.head(2))
-    
-      # with st.form("Question"):
-      #     question = st.text_area("Question", value="", help="Enter your queries here")
-      #     answer = st.text_area("Answer", value="")
-      #     submitted = st.form_submit_button("Submit")
-      #     if submitted:
-      #         
-      # with st.spinner():
-      #   llm = OpenAI(api_token=st.session_state.openai_key)
-      #   pandas_ai = PandasAI(llm)
-      #   x = pandas_ai.run(st.session_state.df, prompt=question)
-      # fig = plt.gcf()
-      # fig, ax = plt.subplots(figsize=(10, 6))
-      # plt.tight_layout()
-      # if fig.get_axes() and fig is not None:
-      #   st.pyplot(fig)
-      #   fig.savefig("plot.png")
-#      st.write(x)
-#      st.session_state.prompt_history.append(question)
-#      response_history.append(x) # Append the response to the list
-#      st.session_state.response_history = response_history
 
 
 elif file_ext =='pdf':
@@ -479,3 +423,37 @@ elif file_ext =='pdf':
         
 
 
+
+
+
+
+
+
+
+
+
+
+      #PANDAS AI CHAT  
+      # st.subheader("Peek into the uploaded dataframe:")
+      # st.write(st.session_state.df.head(2))
+    
+      # with st.form("Question"):
+      #     question = st.text_area("Question", value="", help="Enter your queries here")
+      #     answer = st.text_area("Answer", value="")
+      #     submitted = st.form_submit_button("Submit")
+      #     if submitted:
+      #         
+      # with st.spinner():
+      #   llm = OpenAI(api_token=st.session_state.openai_key)
+      #   pandas_ai = PandasAI(llm)
+      #   x = pandas_ai.run(st.session_state.df, prompt=question)
+      # fig = plt.gcf()
+      # fig, ax = plt.subplots(figsize=(10, 6))
+      # plt.tight_layout()
+      # if fig.get_axes() and fig is not None:
+      #   st.pyplot(fig)
+      #   fig.savefig("plot.png")
+#      st.write(x)
+#      st.session_state.prompt_history.append(question)
+#      response_history.append(x) # Append the response to the list
+#      st.session_state.response_history = response_history

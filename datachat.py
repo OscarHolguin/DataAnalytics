@@ -115,6 +115,10 @@ def write_response(response_dict: dict):
         st.table(df)
 
 
+
+
+
+
 #CODE FOR LANGCHAIN PANDAS DATAFRAME AGENT
 def extract_python_code(text):
     import re
@@ -130,7 +134,7 @@ def extract_python_code(text):
 
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, max_tokens=512, top_p=0.5,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, max_tokens=1048, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -230,7 +234,7 @@ def generate_responsedf(df,prompt):
     from pandasai import PandasAI
     from pandasai.llm.starcoder import Starcoder
     from pandasai.llm.openai import OpenAI
-    os.environ['HUGGINGFACE_API_KEY'] = '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'
+    os.environ['HUGGINGFACE_API_KEY'] = st.secrets["huggingface"]
     openaikey = st.secrets["openai_key"]
     llm = OpenAI(api_token = openaikey) #llm = Starcoder()
     pandas_ai = PandasAI(llm)
