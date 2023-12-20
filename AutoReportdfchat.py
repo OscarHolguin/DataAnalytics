@@ -122,15 +122,16 @@ left,mid,right = st.columns([1,3,1],gap='large')
 
 st.markdown('### ** Upload CSV or PDF file 👇 **')
 
-data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
-file_ext = option_chosen = "null"
-if data_file is not None:
-    file_name = data_file.name
-    file_ext = file_name.split(".")[-1]
-    urlflag = False
+if not st.toggle("From url"):
+    data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
+    file_ext = option_chosen = "null"
+    if data_file is not None:
+        file_name = data_file.name
+        file_ext = file_name.split(".")[-1]
+        urlflag = False
 
 else:
-    if st.toggle("From url"):
+    
         print('No file uploaded want to try from an url?')
         urlfile = st.text_input("Provide your CSV or PDF from a valid url")
         urlflag = True
@@ -227,7 +228,7 @@ def generate_wordcloud(text):
 
 
 if file_ext =='csv':
-    tmppath = os.path.join("/tmp", data_file.name)
+    #tmppath = os.path.join("/tmp", data_file.name)
     response_history = st.session_state.get("response_history", [])
 
     st.sidebar.header('Select automatic report style')
