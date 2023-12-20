@@ -343,9 +343,8 @@ if file_ext =='csv':
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
                             #response =  generate_responsedf(df,prompt)
-                            openai=True
-                            response = generate_response(df,prompt,openai=openai)
-                            st.write(response)
+                            response =  generate_response(df,prompt,openail=True)
+                            #st.write(response)
                             # if openai:
                             #     write_response(response)
                             # else:
@@ -355,7 +354,7 @@ if file_ext =='csv':
                             if "insights2" in prompt.lower():
                                 insights = generate_insights_one(st.session_state.df)
                                 st.write(insights)
-                            elif "trends" in prompt.lower() or "patterns" in prompt.lower():
+                            elif "trends2" in prompt.lower() or "patterns" in prompt.lower():
                                 trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
                                 for fig in trends_and_patterns:
                                     if fig is not None:

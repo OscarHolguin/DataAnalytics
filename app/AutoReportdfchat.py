@@ -356,9 +356,9 @@ if file_ext =='csv':
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
                         #response =  generate_responsedf(df,prompt).chat(prompt)
-                        response =  generate_response(df,prompt,openai=True)
+                        response =  generate_response(df,prompt,openail=True)
                         # write_response(response)
-                        st.write(response)
+                        # st.write(response)
                         
                         
                         message = {"role": "assistant", "content": response}
