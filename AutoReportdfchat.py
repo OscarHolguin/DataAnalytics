@@ -345,10 +345,11 @@ if file_ext =='csv':
                             #response =  generate_responsedf(df,prompt)
                             openai=True
                             response = generate_response(df,prompt,openai=openai)
-                            if openai:
-                                write_response(response)
-                            else:
-                                st.write(response)
+                            st.write(response)
+                            # if openai:
+                            #     write_response(response)
+                            # else:
+                            #     st.write(response)
                             message = {"role": "assistant", "content": response}
                             st.session_state.messages.append(message) 
                             if "insights2" in prompt.lower():

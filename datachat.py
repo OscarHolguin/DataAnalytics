@@ -93,7 +93,10 @@ def write_response(response_dict: dict):
 
     # Check if the response is a bar chart.
     if "bar" in response_dict:
-        data = response_dict["bar"]
+        try:
+            data = response_dict["bar"]
+        except:
+            data = response_dict
         df = pd.DataFrame(data)
         df.set_index("columns", inplace=True)
         st.bar_chart(df)
@@ -137,21 +140,36 @@ def generate_response(df,prompt,model_id=model_id,openai=False):
         from langchain.chat_models import ChatOpenAI
         from langchain import OpenAI
 
-        llm = OpenAI(openai_api_key=st.secrets["openai_key"])
+        # llm = OpenAI(openai_api_key=st.secrets["openai_key"])
 
-        agent = create_pandas_dataframe_agent(llm, df, verbose=True)
-        #agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
-        #    ,df,verbose=True,agent_type=AgentType.OPENAI_FUNCTIONS)
-        prompt2 = generate_prompt(prompt)
+        # agent = create_pandas_dataframe_agent(llm, df, verbose=True)
+        agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613"),
+                                              df,
+                                              verbose=True,
+                                              agent_type=AgentType.OPENAI_FUNCTIONS,
+                                              return_intermediate_steps=True,  # returns intermediate steps and logic
+                                              )
+        #prompt2 = generate_prompt(prompt)
+        
+        answer = agent(prompt)
+        if answer["intermediate_steps"]:
+            action = answer["intermediate_steps"][-1][0].tool_input["query"]
+            st.write(f"Executed the code ```{action}```")
+        
+        print(answer["output"])    
+        
 
-        response = agent.run(prompt2)
-        try:
-            response = json.loads(response)
-        except:
-            response = response
-    return response
+    #     response = agent.run(prompt2)
+    #     try:
+    #         response = json.loads(response)
+    #     except:
+    #         response = response
+    # return response
     
     
+    
+    
+
     
 #    try:
 #        result = agent.run(prompt2)
