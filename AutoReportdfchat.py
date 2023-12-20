@@ -220,7 +220,7 @@ def generate_wordcloud(text):
     wordcloud = WordCloud().generate(text)
     return wordcloud
 
-@st.cache_data(allow_output_mutation=True)
+@st.cache_data
 def load_csv(file,**kwargs):
     df = pd.read_csv(file, encoding='utf-8')
     return df
