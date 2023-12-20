@@ -134,6 +134,7 @@ else:
     urlfile = st.text_input("Provide your CSV or PDF from a valid url")
     urlflag = True
     st.write("You added ",urlfile)
+    file_ext = urlfile.split(".")[-1]
     
 
 
