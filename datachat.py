@@ -151,9 +151,10 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
             Return the code <code> in the following
             format ```python <code>```
         """
+
         st.session_state.messages.append({
             "role": "assistant",
-            "content": code_prompt
+            "content": prompt +" "+code_prompt
         })
         response = openai.ChatCompletion.create(
             model=model,
