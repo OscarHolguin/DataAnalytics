@@ -344,7 +344,7 @@ if file_ext =='csv':
                         with st.spinner("Thinking..."):
                             #response =  generate_responsedf(df,prompt)
                             response =  generate_response(df,prompt,openail=True)
-                            #st.write(response)
+                            st.write(response)
                             # if openai:
                             #     write_response(response)
                             # else:
