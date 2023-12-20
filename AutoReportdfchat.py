@@ -133,6 +133,7 @@ else:
     print('No file uploaded want to try from an url?')
     urlfile = st.text_input("Provide your CSV or PDF from a valid url")
     urlflag = True
+    st.write("You added ",urlfile)
     
 
 
