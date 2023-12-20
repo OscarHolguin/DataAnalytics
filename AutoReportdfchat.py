@@ -143,7 +143,7 @@ else:
 # st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
-def st_display_sweetviz(report_html,width=1000,height=2000):
+def st_display_sweetviz(report_html,width=1200,height=2000):
 	report_file = codecs.open(report_html,'r')
 	page = report_file.read()
     #components.html(page,scrolling =True)
