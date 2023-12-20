@@ -435,7 +435,8 @@ elif file_ext =='pdf':
         
         components.html(HtmlFile.read(), height=1000)
 
-    if st.toggle('pdfchat'):
+    #if st.toggle('pdfchat'):
+    if True:
         st.session_state.prompt_history = []
 
         if "messages" in st.session_state: 
