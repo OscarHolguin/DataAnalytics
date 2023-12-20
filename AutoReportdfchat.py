@@ -120,6 +120,22 @@ left,mid,right = st.columns([1,3,1],gap='large')
 
 
 
+st.markdown('### ** Upload CSV or PDF file 👇 **')
+
+data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
+file_ext = option_chosen = "null"
+if data_file is not None:
+    file_name = data_file.name
+    file_ext = file_name.split(".")[-1]
+    urlflag = False
+
+else:
+    print('No file uploaded want to try from an url?')
+    urlfile = st.text.input("Provide your CSV or PDF from a valid url")
+    urlflag = True
+    
+
+
 
 # st.sidebar.header('Seleccion de datos')
 
@@ -135,20 +151,7 @@ def st_display_sweetviz(report_html,width=1500,height=2000):
 #df = dfs[0][["WindowTimeStamp_Start","WindowTimeStamp_End","DeviceName","Vibration","Voltage","AirPressure","Current_amps"]]
 
 #@st.cache_resource
-st.markdown('### ** Upload CSV or PDF file 👇 **')
 
-data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
-file_ext = option_chosen = "null"
-if data_file is not None:
-    file_name = data_file.name
-    file_ext = file_name.split(".")[-1]
-    urlflag = False
-
-else:
-    print('No file uploaded want to try from an url?')
-    urlfile = st.input("Provide your CSV or PDF from a valid url")
-    urlflag = True
-    
 
 
 
