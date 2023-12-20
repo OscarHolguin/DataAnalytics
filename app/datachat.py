@@ -13,7 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-
+import json
 # from pandasai import SmartDataframe
 # from pandasai.llm import HuggingFace
 from langchain.agents.agent_types import AgentType
@@ -68,7 +68,95 @@ def generate_prompt(question):
     
     return promptquery
 
-model_id = 'google/flan-t5-small'#'-xxl'
+
+
+def write_response(response_dict: dict):
+    """
+    Write a response from an agent to a Streamlit app.
+
+    Args:
+        response_dict: The response from the agent.
+
+    Returns:
+        None.
+    """
+    
+    print(response_dict)
+    print(type(response_dict))
+    
+    # Check if the response is an answer.
+    if "answer" in response_dict:
+        st.write(response_dict)
+
+    # Check if the response is a bar chart.
+    if "bar" in response_dict:
+        data = response_dict["bar"]
+        df = pd.DataFrame(data)
+        df.set_index("columns", inplace=True)
+        st.bar_chart(df)
+
+    # Check if the response is a line chart.
+    if "line" in response_dict:
+        data = response_dict["line"]
+        df = pd.DataFrame(data)
+        df.set_index("columns", inplace=True)
+        st.line_chart(df)
+
+    # Check if the response is a table.
+    if "table" in response_dict:
+        data = response_dict["table"]
+        df = pd.DataFrame(data["data"], columns=data["columns"])
+        st.table(df)
+
+
+
+
+
+model_id = 'google/flan-t5-base'#'-xxl'
+def generate_response(df,prompt,model_id=model_id,openai=False):
+    if not openai:
+        config = AutoConfig.from_pretrained(model_id)
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
+        pipe = pipeline('text2text-generation',
+                    model=model,
+                    tokenizer=tokenizer,
+                    max_length = 512
+                    )
+        local_llm = HuggingFacePipeline(pipeline = pipe)
+
+    
+        prompt2 = generate_prompt(prompt)
+        
+        agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
+        response = agent.run(prompt2)
+    else:
+        from langchain.chat_models import ChatOpenAI
+        from langchain import OpenAI
+
+        # llm = OpenAI(openai_api_key=st.secrets["openai_key"])
+
+        # agent = create_pandas_dataframe_agent(llm, df, verbose=True)
+        agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613",openai_api_key=st.secrets["openai_key"]),df,
+                                              verbose=True,
+                                              handle_parsing_errors=True,
+                                              agent_type=AgentType.OPENAI_FUNCTIONS)
+        prompt2 = generate_prompt(prompt)
+
+        response = agent.run(prompt)
+        # try:
+        #     response = #st.success(response)
+        # except:
+        #     response = response
+    return response
+    #     print('the response is ',response)
+    #     try:
+    #         response = json.loads(response)
+    #     except:
+    #         response = response
+    # return response
+
+
 # def generate_response(df,prompt,model_id=model_id):
 #     config = AutoConfig.from_pretrained(model_id)
 #     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -96,54 +184,42 @@ model_id = 'google/flan-t5-small'#'-xxl'
 #         result = result.__str__()
 #     return result
 
-def generate_response(path,prompt,model_id=model_id):
-    config = AutoConfig.from_pretrained(model_id)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
-    pipe = pipeline('text2text-generation',
-                model=model,
-                tokenizer=tokenizer,
-                max_length = 512
-                )
-    local_llm = HuggingFacePipeline(pipeline = pipe)
-    
-    prompt2 = generate_prompt(prompt)
-    
-    agent =  create_csv_agent(llm = local_llm,path=path ,verbose=True)
-    
-    
-    
-    try:
-        result = agent.run(prompt2)
-        result = result.__str__()
-    except Exception as e:
-        result = str(e)
-        if result.startswith("Could not parse LLM output: `"):
-             result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
-        result = result.__str__()
-    return result
     
     
 def generate_responsedf(df,prompt):
     # #NEW VERSION
-    # from pandasai import SmartDataframe
+
+    from pandasai import SmartDataframe
     # # from pandasai.llm import HuggingFace
-    # from pandasai.llm import Starcoder, Falcon
-    # api_token='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'
+    # from pandasai.callbacks import StdoutCallback
+    from pandasai.llm import OpenAI
+    from pandasai.llm import Starcoder, Falcon
+    from pandasai.responses.streamlit_response import StreamlitResponse
+
+    api_token='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'
+    llm = OpenAI(api_token=st.secrets["openai_key"])
+
+    aidf = SmartDataframe(df, config = {"llm": llm,"verbose": True, "response_parser": StreamlitResponse,
+                                    # "enable_cache": False,
+                                    # "conversational": True
+                                    })
+                                    #"callback": StdoutCallback()})
     
+    return aidf#.chat(prompt)
+    
+    # # llm = Starcoder()
+    # # from pandasai.responses.streamlit_response import StreamlitResponse
+    # # aidf = SmartDataframe(df,  config={"llm": llm, "verbose": True, "response_parser": StreamlitResponse})
+    
+    # # #prev version
+    # from pandasai import PandasAI
+    # from pandasai.llm.starcoder import Starcoder
+    # os.environ['HUGGINGFACE_API_KEY'] = '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'
     # llm = Starcoder()
-    # from pandasai.responses.streamlit_response import StreamlitResponse
-    # aidf = SmartDataframe(df,  config={"llm": llm, "verbose": True, "response_parser": StreamlitResponse})
+    # pandas_ai = PandasAI(llm)
     
-    # #prev version
-    from pandasai import PandasAI
-    from pandasai.llm.starcoder import Starcoder
-    os.environ['HUGGINGFACE_API_KEY'] = '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'
-    llm = Starcoder()
-    pandas_ai = PandasAI(llm)
-    
-    return pandas_ai.run(df, prompt=prompt)
-    # return aidf.chat(prompt)
+    # return pandas_ai.run(df, prompt=prompt)
+    # # return aidf.chat(prompt)
     
 
 

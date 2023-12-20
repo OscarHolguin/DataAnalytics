@@ -51,6 +51,9 @@ import spacy
 
 import pathlib
 
+from pandasai.responses.streamlit_response import StreamlitResponse
+
+
 #######################
 #THIS IS FOR TESTING
 sqlServer = {'sqlServerName': 'euwdsrg03rsql01.database.windows.net',
@@ -72,12 +75,17 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,generate_responsedf
+from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,generate_responsedf,write_response
 
 reports = Reports()
 
 import hmac
 
+
+
+
+# import matplotlib
+# matplotlib.use('TkAgg')
 
 # def check_password():
 #     """Returns `True` if the user had the correct password."""
@@ -331,8 +339,12 @@ if file_ext =='csv':
         
         if "messages" in st.session_state:
             for message in st.session_state.messages:
+
                 with st.chat_message(message["role"]):
-                    st.write(message["content"])
+                    try:
+                        st.write(message["content"])
+                    except:
+                        pass
             if prompt := st.chat_input():
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 with st.chat_message("user"):
@@ -343,20 +355,24 @@ if file_ext =='csv':
             if st.session_state.messages[-1]["role"] != "assistant":
                 with st.chat_message("assistant"):  
                     with st.spinner("Thinking..."):
-                        response =  generate_responsedf(df,prompt)
-
+                        #response =  generate_responsedf(df,prompt).chat(prompt)
+                        response =  generate_response(df,prompt,openai=True)
+                        # write_response(response)
                         st.write(response)
+                        
+                        
                         message = {"role": "assistant", "content": response}
                         st.session_state.messages.append(message) 
-                        if "insights" in prompt.lower():
+                        if "insights2" in prompt.lower():
                             insights = generate_insights_one(st.session_state.df)
                             st.write(insights)
-                        elif "trends" in prompt.lower() or "patterns" in prompt.lower():
+                            
+                        elif "trends2" in prompt.lower() or "patterns" in prompt.lower():
                             trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
                             for fig in trends_and_patterns:
                                 if fig is not None:
                                     st.pyplot(fig)
-                        elif "aggregate" in prompt.lower():
+                        elif "aggregate2" in prompt.lower():
                             columns = prompt.lower().split("aggregate ")[1].split(" and ")
                             aggregated_data = aggregate_data(st.session_state.df, columns)
                             st.subheader("Aggregated Data:")
@@ -371,9 +387,9 @@ if file_ext =='csv':
                     fig, ax = plt.subplots(figsize=(10, 6))
                     plt.tight_layout()
                     if fig.get_axes() and fig is not None:
-                        if ax is not None:
+                        if ax.has_data():
                             print('image will be displayed')
-                            #st.pyplot(fig)
+                            st.pyplot(fig)
                             #fig.savefig("plot.png")
                     # st.write(response)
                     st.session_state.prompt_history.append(prompt)
