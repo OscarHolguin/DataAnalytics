@@ -61,6 +61,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 from reports_template import Reports
 #
 from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+from filechat import generate_responsepdf
 
 reports = Reports()
 
@@ -219,7 +220,10 @@ def generate_wordcloud(text):
     wordcloud = WordCloud().generate(text)
     return wordcloud
 
-
+@st.cache(allow_output_mutation=True)
+def load_csv(file,**kwargs):
+    df = pd.read_csv(file, encoding='utf-8',**kwargs)
+    return df
 
 
 
@@ -230,7 +234,7 @@ if file_ext =='csv':
     #tmppath = os.path.join("/tmp", data_file.name)
     response_history = st.session_state.get("response_history", [])
 
-    df= pd.read_csv(data_file,encoding ="utf-8") if not urlfile else pd.read_csv(urlfile,encoding ="utf-8")
+    df= load_csv(data_file,encoding ="utf-8") if not urlfile else load_csv(urlfile,encoding ="utf-8")
 
     st.session_state.df = df
     st.dataframe(df.head())
@@ -360,8 +364,8 @@ if file_ext =='csv':
                     response_history.append(response)
                     st.session_state.response_history = response_history
                     
-        st.sidebar.subheader("Prompt history:")
-        st.sidebar.write(st.session_state.prompt_history)
+        #st.sidebar.subheader("Prompt history:")
+        #st.sidebar.write(st.session_state.prompt_history)
         
         #st.sidebar.subheader("Prompt response:")
         #for response in response_history:
@@ -430,6 +434,33 @@ elif file_ext =='pdf':
         HtmlFile = open("entity.html", 'r', encoding='utf-8')
         
         components.html(HtmlFile.read(), height=1000)
+
+    if :
+        st.session_state.prompt_history = []
+
+        if "messages" in st.session_state:            
+        else:
+           if "messages" not in st.session_state.keys():
+               st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your file?"}]
+        
+        if "messages" in st.session_state:
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.write(message["content"])
+            if prompt := st.chat_input():
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                with st.chat_message("user"):
+                    st.write(prompt)
+            
+            if st.session_state.messages[-1]["role"] != "assistant":
+                if prompt:
+                    with st.chat_message("assistant"):
+                        with st.spinner("Thinking..."):
+                            response =  generate_responsepdf(documents,prompt)
+                            st.write(response)
+                            message = {"role": "assistant", "content": response}
+                            st.session_state.messages.append(message) 
+        
         
         
 
