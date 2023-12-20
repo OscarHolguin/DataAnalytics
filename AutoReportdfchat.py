@@ -132,7 +132,6 @@ if not st.toggle("From url"):
 
 else:
     
-        print('No file uploaded want to try from an url?')
         urlfile = st.text_input("Provide your CSV or PDF from a valid url")
         urlflag = True
         st.write("You added ",urlfile)
@@ -144,7 +143,7 @@ else:
 # st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
-def st_display_sweetviz(report_html,width=1500,height=2000):
+def st_display_sweetviz(report_html,width=1200,height=2000):
 	report_file = codecs.open(report_html,'r')
 	page = report_file.read()
     #components.html(page,scrolling =True)
