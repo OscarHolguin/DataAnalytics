@@ -130,11 +130,12 @@ if data_file is not None:
     urlflag = False
 
 else:
-    print('No file uploaded want to try from an url?')
-    urlfile = st.text_input("Provide your CSV or PDF from a valid url")
-    urlflag = True
-    st.write("You added ",urlfile)
-    file_ext = urlfile.split(".")[-1]
+    if st.toggle("From url"):
+        print('No file uploaded want to try from an url?')
+        urlfile = st.text_input("Provide your CSV or PDF from a valid url")
+        urlflag = True
+        st.write("You added ",urlfile)
+        file_ext = urlfile.split(".")[-1]
     
 
 
