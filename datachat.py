@@ -134,7 +134,7 @@ def extract_python_code(text):
 
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, max_tokens=1048, top_p=0.5,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-1106", temperature=0.0, max_tokens=1048, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -211,8 +211,8 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
             error_msg = """OutputParserException error occured in LangChain agent.
                 Refine your query."""
             return error_msg
-        except:  # noqa: E722
-            answer = "Unknown error occured in LangChain agent. Refine your query"
+        except Exception as e:  # noqa: E722
+            answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
             return answer
 
 
