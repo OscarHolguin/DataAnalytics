@@ -131,7 +131,7 @@ def extract_python_code(text):
 
 
 def get_insight_prompts(agent):
-    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief"
+    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
     result = agent(prompt)
     return result
     
