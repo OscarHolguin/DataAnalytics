@@ -133,7 +133,7 @@ def extract_python_code(text):
 def get_insight_prompts(agent):
     prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
     result = agent(prompt)
-    return result
+    return result.get('output')
     
 
 def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):

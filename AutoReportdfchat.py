@@ -305,6 +305,7 @@ if file_ext =='csv':
         
         pdfagent1 = get_agent(st.session_state.df)
         suggestions = get_insight_prompts(pdfagent1)
+        st.write("Suggestions")
         st.sidebar.write(suggestions)
         
         st.session_state.prompt_history = []
