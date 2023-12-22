@@ -131,12 +131,12 @@ def extract_python_code(text):
 
 
 def get_insight_prompts(agent):
-    prompt = "Based on my dataframe give me 5 insights I can analyze for my data in a json format where each recommendation is one json key"
+    prompt = "Based on my dataframe give me 5 insights I can analyze for my data in a json format where each recommendation is one json key, make sure to be brief and use no more than 2k tokens"
     result = agent(prompt)
     return result
     
 
-def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=3500, top_p=0.5):
+def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):
     from langchain.chat_models import ChatOpenAI
     llm = ChatOpenAI(
         model=model,
@@ -160,7 +160,7 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=3500, top_p=
 
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=3500, top_p=0.5,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
