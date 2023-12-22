@@ -131,7 +131,7 @@ def extract_python_code(text):
 
 
 def get_insight_prompts(agent):
-    prompt = "Based on my dataframe give me 5 insights I can analyze for my data in a bullet list"
+    prompt = "Based on my dataframe give me 5 insights I can analyze for my data in a json format where each recommendation is one json key"
     result = agent(prompt)
     return result
     
