@@ -304,7 +304,7 @@ if file_ext =='csv':
     if st.session_state.df is not None and chat_toggle:
         
         pdfagent1 = get_agent(st.session_state.df)
-        suggestions = get_insight_prompts(pdfagent1,st.session_state.df)
+        suggestions = get_insight_prompts(pdfagent1)
         st.sidebar.write(suggestions)
         
         st.session_state.prompt_history = []
