@@ -130,8 +130,14 @@ def extract_python_code(text):
         return matches[0]
 
 
+def get_insight_prompts(agent):
+    prompt = "Based on my dataframe give me 5 insights I can analyze for my data in a bullet list"
+    result = agent(prompt)
+    return result
+    
 
 def get_agent(df,model="gpt-3.5-1106", temperature=0.0, max_tokens=4000, top_p=0.5):
+    from langchain.chat_models import ChatOpenAI
     llm = ChatOpenAI(
         model=model,
         temperature=temperature,
@@ -154,7 +160,7 @@ def get_agent(df,model="gpt-3.5-1106", temperature=0.0, max_tokens=4000, top_p=0
 
 
 
-def generate_response(df, prompt,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-1106", temperature=0.0, max_tokens=4000, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -357,6 +363,6 @@ def generate_trends_and_patterns_one(df):
 
 
 
-def get_insight_prompts(df):
+
     
     

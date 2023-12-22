@@ -60,7 +60,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data
+from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,get_agent, get_insight_prompts
 from filechat import generate_responsepdf
 
 reports = Reports()
@@ -302,6 +302,11 @@ if file_ext =='csv':
     ##chat section
     
     if st.session_state.df is not None and chat_toggle:
+        
+        pdfagent1 = get_agent(st.session_state.df)
+        suggestions = get_insight_prompts(pdfagent1,st.session_state.df)
+        st.sidebar.write(suggestions)
+        
         st.session_state.prompt_history = []
 
         if "messages" in st.session_state:
