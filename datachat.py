@@ -131,10 +131,30 @@ def extract_python_code(text):
 
 
 
+def get_agent(df,model="gpt-3.5-1106", temperature=0.0, max_tokens=4000, top_p=0.5):
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        top_p=top_p,
+        openai_api_key = st.secrets["openai_key"]
+
+    )
+
+    pandas_df_agent = create_pandas_dataframe_agent(
+        llm,
+        df,
+        verbose=True,
+        return_intermediate_steps=True,
+        agent_type=AgentType.OPENAI_FUNCTIONS,
+        handle_parsing_errors=False,
+    )
+    
+    return pandas_df_agent
 
 
 
-def generate_response(df, prompt,model="gpt-3.5-1106", temperature=0.0, max_tokens=1048, top_p=0.5,openail=True):
+def generate_response(df, prompt,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -179,37 +199,21 @@ def generate_response(df, prompt,model="gpt-3.5-1106", temperature=0.0, max_toke
         else:
             code = code.replace("fig.show()", "")
             code += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  # noqa: E501
-            st.write(f"```{code}")
+            # st.write(f"```{code}") #WRITE IT HERE?
             exec(code)
             return response["choices"][0]["message"]["content"]
     else:
-        llm = ChatOpenAI(
-            model=model,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            top_p=top_p,
-            openai_api_key = st.secrets["openai_key"]
-
-        )
-
-        pandas_df_agent = create_pandas_dataframe_agent(
-            llm,
-            df,
-            verbose=True,
-            return_intermediate_steps=True,
-            agent_type=AgentType.OPENAI_FUNCTIONS,
-            handle_parsing_errors=False,
-        )
-
+        
+        pandas_df_agent = get_agent(df)
         try:
             answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
             if answer["intermediate_steps"]:
                 action = answer["intermediate_steps"][-1][0].tool_input["query"]
                 st.write(f"Executed the code ```{action}```")
             return answer["output"]
-        except OutputParserException:
+        except OutputParserException as e:
             error_msg = """OutputParserException error occured in LangChain agent.
-                Refine your query."""
+                Refine your query. """ + e
             return error_msg
         except Exception as e:  # noqa: E722
             answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
@@ -350,3 +354,9 @@ def generate_trends_and_patterns_one(df):
 
     return trends_and_patterns
 
+
+
+
+def get_insight_prompts(df):
+    
+    
