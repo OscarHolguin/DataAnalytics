@@ -225,7 +225,9 @@ def load_csv(file,**kwargs):
     df = pd.read_csv(file, encoding='utf-8')
     return df
 
-
+@st.cache_resource
+def generate_chat_response(df,prompt,openail=True):
+    return generate_response(df,prompt,openail=True)
 
     
 
@@ -304,9 +306,26 @@ if file_ext =='csv':
     if st.session_state.df is not None and chat_toggle:
         
         pdfagent1 = get_agent(st.session_state.df)
-        suggestions = get_insight_prompts(pdfagent1)
-        st.write("Suggestions")
-        st.sidebar.write(suggestions)
+        if st.sidebar.toggle("suggest insights"):
+                    st.sidebar.write("Suggested inisghts")
+                    suggestions = get_insight_prompts(pdfagent1)
+                    suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
+                    suggestions_s = [x for x in suggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
+                    clickables = {}
+            
+                    with st.sidebar: 
+                        for sug in suggestions_s:
+                            clickables[sug] = st.button(sug, type="primary")
+                        # for i,clickable in enumerate(clickables):
+                            if clickables[sug]:
+            
+                                  st.session_state.messages.append({"role": "user", "content": sug})
+                                  with st.chat_message("assistant"):
+                                      # with st.spinner("Thinking..."):
+                                          response =  generate_chat_response(df,sug,openail=True)
+                                          # st.write(response)
+                                          message = {"role": "assistant", "content": response}
+                                          st.session_state.messages.append(message) 
         
         st.session_state.prompt_history = []
 
@@ -332,7 +351,7 @@ if file_ext =='csv':
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
                             #response =  generate_responsedf(df,prompt)
-                            response =  generate_response(df,prompt,openail=True)
+                            response =  generate_chat_response(df,prompt,openail=True)
                             st.write(response)
                             # if openai:
                             #     write_response(response)

@@ -42,6 +42,9 @@ def generate_prompt(question):
            If the query requires creating a bar chart, reply as follows:
            {{"bar": {{"columns": ["A", "B", "C", ...], "data": [25, 24, 10, ...]}}}
 
+           If the query requires creating a line chart, reply as follows:
+           {{"line": {{"columns": ["A", "B", "C", ...], "data": [25, 24, 10, ...]}}}
+
            There can only be two types of chart, "bar" and "line".
 
            If it is just asking a question that requires neither, reply as follows:
@@ -62,11 +65,14 @@ def generate_prompt(question):
 
            Below is the query.
            Query: 
+           
+       
        """+str(question)
    )
     
     
     return promptquery
+
 
 
 
@@ -80,17 +86,17 @@ def write_response(response_dict: dict):
     Returns:
         None.
     """
-    
-    print(response_dict)
-    print(type(response_dict))
-    
+
     # Check if the response is an answer.
     if "answer" in response_dict:
         st.write(response_dict)
 
     # Check if the response is a bar chart.
     if "bar" in response_dict:
-        data = response_dict["bar"]
+        try:
+            data = response_dict["bar"]
+        except:
+            data = response_dict
         df = pd.DataFrame(data)
         df.set_index("columns", inplace=True)
         st.bar_chart(df)
@@ -109,6 +115,10 @@ def write_response(response_dict: dict):
         st.table(df)
 
 
+
+
+
+
 #CODE FOR LANGCHAIN PANDAS DATAFRAME AGENT
 def extract_python_code(text):
     import re
@@ -120,11 +130,37 @@ def extract_python_code(text):
         return matches[0]
 
 
+def get_insight_prompts(agent):
+    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
+    result = agent(prompt)
+    return result.get('output')
+    
+
+def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):
+    from langchain.chat_models import ChatOpenAI
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        # top_p=top_p,
+        openai_api_key = st.secrets["openai_key"]
+
+    )
+
+    pandas_df_agent = create_pandas_dataframe_agent(
+        llm,
+        df,
+        verbose=True,
+        return_intermediate_steps=True,
+        agent_type=AgentType.OPENAI_FUNCTIONS,
+        handle_parsing_errors=False,
+    )
+    
+    return pandas_df_agent
 
 
 
-
-def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, max_tokens=512, top_p=0.5,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -145,16 +181,17 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
             Return the code <code> in the following
             format ```python <code>```
         """
+
         st.session_state.messages.append({
             "role": "assistant",
-            "content": code_prompt
+            "content": prompt +" "+code_prompt
         })
         response = openai.ChatCompletion.create(
             model=model,
             messages=st.session_state.messages,
             temperature=temperature,
             max_tokens=max_tokens,
-            top_p=top_p,
+            # top_p=top_p,
         )
         code = extract_python_code(response["choices"][0]["message"]["content"])
         if code is None:
@@ -168,153 +205,54 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
         else:
             code = code.replace("fig.show()", "")
             code += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  # noqa: E501
-            st.write(f"```{code}")
+            # st.write(f"```{code}") #WRITE IT HERE?
             exec(code)
             return response["choices"][0]["message"]["content"]
     else:
-        llm = ChatOpenAI(
-            model=model,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            top_p=top_p,
-            openai_api_key = st.secrets["openai_key"]
-
-        )
-
-        pandas_df_agent = create_pandas_dataframe_agent(
-            llm,
-            df,
-            verbose=True,
-            return_intermediate_steps=True,
-            agent_type=AgentType.OPENAI_FUNCTIONS,
-            handle_parsing_errors=False,
-        )
-
+        
+        pandas_df_agent = get_agent(df)
         try:
             answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
             if answer["intermediate_steps"]:
                 action = answer["intermediate_steps"][-1][0].tool_input["query"]
                 st.write(f"Executed the code ```{action}```")
             return answer["output"]
-        except OutputParserException:
+        except OutputParserException as e:
             error_msg = """OutputParserException error occured in LangChain agent.
-                Refine your query."""
+                Refine your query. """ + e
             return error_msg
-        except:  # noqa: E722
-            answer = "Unknown error occured in LangChain agent. Refine your query"
+        except Exception as e:  # noqa: E722
+            answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
             return answer
 
 
 
-# model_id = 'google/flan-t5-base'#'-xxl'
-# def generate_response(df,prompt,model_id=model_id,openai=False):
-#     if not openai:
-#         config = AutoConfig.from_pretrained(model_id)
-#         tokenizer = AutoTokenizer.from_pretrained(model_id)
-#         model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
-#         pipe = pipeline('text2text-generation',
-#                     model=model,
-#                     tokenizer=tokenizer,
-#                     max_length = 512
-#                     )
-#         local_llm = HuggingFacePipeline(pipeline = pipe)
-
-    
-#         prompt2 = generate_prompt(prompt)
-        
-#         agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
-#         response = agent.run(prompt2)
-#     else:
-#         from langchain.chat_models import ChatOpenAI
-#         from langchain import OpenAI
-
-#         # llm = OpenAI(openai_api_key=st.secrets["openai_key"])
-
-#         # agent = create_pandas_dataframe_agent(llm, df, verbose=True)
-#         agent = create_pandas_dataframe_agent(ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613",openai_api_key=st.secrets["openai_key"]),df,
-#                                               verbose=True,
-#                                               handle_parsing_errors=False,
-                                              
-#                                               agent_type=AgentType.OPENAI_FUNCTIONS)
-#         prompt2 = generate_prompt(prompt)
-
-#         response = agent.run(prompt)
-#         # try:
-#         #     response = #st.success(response)
-#         # except:
-#         #     response = response
-#     return response
-#     #     print('the response is ',response)
-#     #     try:
-#     #         response = json.loads(response)
-#     #     except:
-#     #         response = response
-#     # return response
-
-
-# def generate_response(df,prompt,model_id=model_id):
-#     config = AutoConfig.from_pretrained(model_id)
-#     tokenizer = AutoTokenizer.from_pretrained(model_id)
-#     model = AutoModelForSeq2SeqLM.from_pretrained(model_id, config=config)
-#     pipe = pipeline('text2text-generation',
-#                 model=model,
-#                 tokenizer=tokenizer,
-#                 max_length = 512
-#                 )
-#     local_llm = HuggingFacePipeline(pipeline = pipe)
-    
-#     prompt2 = generate_prompt(prompt)
-    
-#     agent =  create_pandas_dataframe_agent(llm = local_llm,df=df ,verbose=True)
-    
-    
-    
-#     try:
-#         result = agent.run(prompt2)
-#         result = result.__str__()
-#     except Exception as e:
-#         result = str(e)
-#         if result.startswith("Could not parse LLM output: `"):
-#              result = result.removeprefix("Could not parse LLM output: `").removesuffix("`")
-#         result = result.__str__()
-#     return result
-
-    
-    
+  
 def generate_responsedf(df,prompt):
+    print("USING PANDASAI")
     # #NEW VERSION
-
-    from pandasai import SmartDataframe
+    # from pandasai import SmartDataframe
     # # from pandasai.llm import HuggingFace
-    # from pandasai.callbacks import StdoutCallback
-    from pandasai.llm import OpenAI
-    from pandasai.llm import Starcoder, Falcon
-    from pandasai.responses.streamlit_response import StreamlitResponse
-
-    api_token='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'
-    llm = OpenAI(api_token=st.secrets["openai_key"])
-
-    aidf = SmartDataframe(df, config = {"llm": llm,"verbose": True, "response_parser": StreamlitResponse,
-                                    # "enable_cache": False,
-                                    # "conversational": True
-                                    })
-                                    #"callback": StdoutCallback()})
+    # from pandasai.llm import Starcoder, Falcon
+    # api_token='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'
     
-    return aidf#.chat(prompt)
-    
-    # # llm = Starcoder()
-    # # from pandasai.responses.streamlit_response import StreamlitResponse
-    # # aidf = SmartDataframe(df,  config={"llm": llm, "verbose": True, "response_parser": StreamlitResponse})
-    
-    # # #prev version
-    # from pandasai import PandasAI
-    # from pandasai.llm.starcoder import Starcoder
-    # os.environ['HUGGINGFACE_API_KEY'] = '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'
     # llm = Starcoder()
-    # pandas_ai = PandasAI(llm)
+    # from pandasai.responses.streamlit_response import StreamlitResponse
+    # aidf = SmartDataframe(df,  config={"llm": llm, "verbose": True, "response_parser": StreamlitResponse})
     
-    # return pandas_ai.run(df, prompt=prompt)
-    # # return aidf.chat(prompt)
+    # #prev version
+    from pandasai import PandasAI
+    from pandasai.llm.starcoder import Starcoder
+    from pandasai.llm.openai import OpenAI
+    os.environ['HUGGINGFACE_API_KEY'] = st.secrets["huggingface"]
+    openaikey = st.secrets["openai_key"]
+    llm = OpenAI(api_token = openaikey) #llm = Starcoder()
+    pandas_ai = PandasAI(llm)
+    
+    return pandas_ai.run(df, prompt=prompt)
+    # return aidf.chat(prompt)  
+
+
     
 
 
@@ -422,3 +360,9 @@ def generate_trends_and_patterns_one(df):
 
     return trends_and_patterns
 
+
+
+
+
+    
+    

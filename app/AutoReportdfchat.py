@@ -12,7 +12,7 @@ CHAT ENABLED PDF VERSION
 
 import asyncio
 
-
+import nltk
 
 import plotly_express as px
 import streamlit as st
@@ -39,7 +39,7 @@ import streamlit.components.v1 as components
 
 
 from streamlit_d3graph import d3graph
-#import d3graph
+import d3graph
 
 import networkx as nx
 
@@ -75,8 +75,7 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 ############################
 from reports_template import Reports
 #
-from datachat import generate_response,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,generate_responsedf,write_response
-
+from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,get_agent, get_insight_prompts
 reports = Reports()
 
 import hmac
@@ -127,6 +126,65 @@ st.set_page_config(page_title = pagetitle,
 
 
 
+# st.markdown(
+#     """
+#     <style>
+#     button[kind="primary"] {
+#         background: none!important;
+#         border: none;
+#         padding: 0!important;
+#         color: white !important;
+#         text-decoration: none;
+#         cursor: pointer;
+#         border: none !important;
+#     }
+#     button[kind="primary"]:hover {
+#         text-decoration: click over me;
+#         color: blue !important;
+#     }
+#     button[kind="primary"]:focus {
+#         outline: none !important;
+#         box-shadow: none !important;
+#         color: blue !important;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True,
+# )
+st.markdown(
+    """
+    <style>
+    button[kind="primary"] {
+        background: 5px darkblue;
+        border: none;
+        padding: 0!important;
+        color: white !important;
+        text-decoration: none;
+        cursor: pointer;
+        border: none !important;
+    }
+    button[kind="primary"]:hover {
+        text-decoration: click over me;
+        color: orange !important;
+    }
+    button[kind="primary"]:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        color: blue !important;
+    }
+    /* Add this selector to create a box around the button with kind=primary */
+    div.stButton > button[kind=primary] {
+        border: 2px darkblue;
+        border-radius: 10px;
+        box-shadow: 0 0 5px black;
+        background-color: darkblue;
+        margin: 10px;
+        padding: 5px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 st.title('Data Analysis')
@@ -248,10 +306,45 @@ def generate_wordcloud(text):
     wordcloud = WordCloud().generate(text)
     return wordcloud
 
+@st.cache_resource
+def generate_chat_response(df,prompt,openail=True):
+    return generate_response(df,prompt,openail=True)
 
 
+# import streamlit_pills as sp
+
+# from streamlit_pills import pills
+# with st.sidebar:
+#     selected = pills("Label", ["Option 1", "Option 2", "Option 3"], ["🌀", "🎈", "🌈"])
+#     selected2 = pills("Label2", ["Option 12", "Option 22", "Option 32"], ["🌀", "🎈", "🌈"])
+#     st.help(pills)
+#     st.write(selected)
+    
+    
+#@st.cache_resource
+def write_suggestions(suggestions):
+    from streamlit_pills import pills
+    selections={}
+    # with st.sidebar:
+    selected = pills("Suggestions for chat",suggestions,)
+    st.write(selected)
+    return selected
+    # with st.chat_message("user"):
+    #       st.write(selected)
+        
+        
+        # for n,suggestion in enumerate(suggestions):
+        #     selections[n] = pills(f"Suggestion {n}", [suggestion], ["🌀"])
+        # st.write(selections)
+        
+
+    
 
 
+# Define a callback function that takes the selected suggestion as an argument
+def on_submit(suggestion):
+    # Do something with the suggestion, such as sending it to a chatbot
+    st.write(f"You have selected: {suggestion}")
     
 
 
@@ -328,7 +421,32 @@ if file_ext =='csv':
     ##chat section
     
     if st.session_state.df is not None and chat_toggle:
+        pdfagent1 = get_agent(st.session_state.df)
+        if st.sidebar.toggle("suggest insights"):
+            st.sidebar.write("Suggested inisghts")
+            suggestions = get_insight_prompts(pdfagent1)
+            suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
+            suggestions_s = [x for x in suggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
+            print(suggestions_s[0])
+            clickables = {}
+    
+            with st.sidebar: 
+                for sug in suggestions_s:
+                    clickables[sug] = st.button(sug, type="primary")
+                # for i,clickable in enumerate(clickables):
+                    if clickables[sug]:
+    
+                          st.session_state.messages.append({"role": "user", "content": sug})
+                          with st.chat_message("assistant"):
+                              # with st.spinner("Thinking..."):
+                                  response =  generate_chat_response(df,sug,openail=True)
+                                  # st.write(response)
+                                  message = {"role": "assistant", "content": response}
+                                  st.session_state.messages.append(message) 
+
+        # suggestionins = ["Give the best insight for this data","plot the best insight","Calculate the best metric","Provide an in detail analysis for a stakeholder"]
         st.session_state.prompt_history = []
+
 
         if "messages" in st.session_state:
             print('messages found')
@@ -339,44 +457,42 @@ if file_ext =='csv':
         
         if "messages" in st.session_state:
             for message in st.session_state.messages:
-
                 with st.chat_message(message["role"]):
-                    try:
-                        st.write(message["content"])
-                    except:
-                        pass
+                    st.write(message["content"])
+            
             if prompt := st.chat_input():
+
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 with st.chat_message("user"):
                     st.write(prompt)
-            else:
-                prompt = "Nothing for now"
+
             
             if st.session_state.messages[-1]["role"] != "assistant":
-                with st.chat_message("assistant"):  
-                    with st.spinner("Thinking..."):
-                        #response =  generate_responsedf(df,prompt).chat(prompt)
-                        response =  generate_response(df,prompt,openail=True)
-                        # write_response(response)
-                        # st.write(response)
-                        
-                        
-                        message = {"role": "assistant", "content": response}
-                        st.session_state.messages.append(message) 
-                        if "insights2" in prompt.lower():
-                            insights = generate_insights_one(st.session_state.df)
-                            st.write(insights)
-                            
-                        elif "trends2" in prompt.lower() or "patterns" in prompt.lower():
-                            trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
-                            for fig in trends_and_patterns:
-                                if fig is not None:
-                                    st.pyplot(fig)
-                        elif "aggregate2" in prompt.lower():
-                            columns = prompt.lower().split("aggregate ")[1].split(" and ")
-                            aggregated_data = aggregate_data(st.session_state.df, columns)
-                            st.subheader("Aggregated Data:")
-                            st.write(aggregated_data)
+                if prompt:
+                    with st.chat_message("assistant"):
+                        with st.spinner("Thinking..."):
+                            #response =  generate_responsedf(df,prompt)
+                            response =  generate_chat_response(df,prompt,openail=True)
+                            st.write(response)
+                            # if openai:
+                            #     write_response(response)
+                            # else:
+                            #     st.write(response)
+                            message = {"role": "assistant", "content": response}
+                            st.session_state.messages.append(message) 
+                            if "insights2" in prompt.lower():
+                                insights = generate_insights_one(st.session_state.df)
+                                st.write(insights)
+                            elif "trends2" in prompt.lower() or "patterns" in prompt.lower():
+                                trends_and_patterns = generate_trends_and_patterns_one(st.session_state.df)
+                                for fig in trends_and_patterns:
+                                    if fig is not None:
+                                        st.pyplot(fig)
+                            elif "aggregate" in prompt.lower():
+                                columns = prompt.lower().split("aggregate ")[1].split(" and ")
+                                aggregated_data = aggregate_data(st.session_state.df, columns)
+                                st.subheader("Aggregated Data:")
+                                st.write(aggregated_data)
                         
                         
                         
@@ -386,15 +502,14 @@ if file_ext =='csv':
                     fig = plt.gcf()
                     fig, ax = plt.subplots(figsize=(10, 6))
                     plt.tight_layout()
-                    if fig.get_axes() and fig is not None:
-                        if ax.has_data():
-                            print('image will be displayed')
-                            st.pyplot(fig)
-                            #fig.savefig("plot.png")
-                    # st.write(response)
+#                    if fig.get_axes() and fig is not None:
+#                      st.pyplot(fig)
+#                      fig.savefig("plot.png")
+#                    st.write(response)
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
                     st.session_state.response_history = response_history
+    
                     
         if st.sidebar.button("History"):
             st.subheader("Prompt history:")

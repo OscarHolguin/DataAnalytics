@@ -1,0 +1,1001 @@
+,Date,Product_ID,Category,Unit_Price,Units_Sold,Customer_Age,Customer_Location,Marketing_Strategy,Total_Sale
+0,2020-06-21,30,Sports & Outdoors,66.31,6,18,West,Strategy B,397.86
+1,2020-02-17,50,Sports & Outdoors,364.8,7,42,West,Strategy A,2553.6
+2,2020-04-27,12,Clothing,109.66,5,64,South,Strategy D,548.3
+3,2020-07-11,4,Home & Garden,96.29,5,50,West,Strategy B,481.4500000000001
+4,2020-11-19,14,Electronics,166.71,3,58,South,Strategy C,500.13
+5,2020-09-08,25,Beauty & Health,410.24,5,22,West,Strategy C,2051.2
+6,2020-07-14,5,Beauty & Health,274.37,1,47,West,Strategy B,274.37
+7,2020-12-25,23,Electronics,32.47,9,69,South,Strategy D,292.23
+8,2020-01-10,30,Beauty & Health,237.31,2,36,West,Strategy C,474.62
+9,2020-07-30,39,Home & Garden,345.15,8,55,East,Strategy B,2761.2
+10,2020-10-04,12,Clothing,273.8,5,57,North,Strategy B,1369.0
+11,2020-08-30,15,Beauty & Health,290.5,2,20,East,Strategy C,581.0
+12,2020-10-19,19,Clothing,120.14,1,69,South,Strategy C,120.14
+13,2020-03-28,26,Beauty & Health,425.39,6,51,West,Strategy D,2552.34
+14,2020-03-11,45,Beauty & Health,285.09,2,43,East,Strategy C,570.18
+15,2020-03-29,4,Sports & Outdoors,359.49,9,45,West,Strategy B,3235.41
+16,2020-11-10,38,Beauty & Health,491.11,2,63,South,Strategy A,982.22
+17,2020-07-12,8,Sports & Outdoors,219.82,7,40,North,Strategy B,1538.74
+18,2020-02-09,30,Electronics,441.72,1,60,South,Strategy B,441.72
+19,2020-03-28,15,Beauty & Health,13.57,1,67,West,Strategy D,13.57
+20,2020-06-23,12,Beauty & Health,26.37,3,24,South,Strategy C,79.11
+21,2020-03-29,10,Beauty & Health,299.24,1,47,South,Strategy C,299.24
+22,2020-12-03,12,Sports & Outdoors,162.61,8,50,West,Strategy D,1300.88
+23,2020-06-14,17,Beauty & Health,131.66,3,57,East,Strategy C,394.98
+24,2020-01-26,40,Home & Garden,146.19,8,41,South,Strategy A,1169.52
+25,2020-11-29,2,Electronics,166.02,6,55,South,Strategy A,996.12
+26,2020-03-13,19,Clothing,367.18,5,28,West,Strategy B,1835.9
+27,2020-09-22,29,Clothing,288.91,1,27,South,Strategy B,288.91
+28,2020-04-25,1,Sports & Outdoors,396.63,8,19,South,Strategy B,3173.04
+29,2020-08-31,22,Electronics,416.8,9,18,South,Strategy D,3751.2
+30,2020-07-16,25,Electronics,423.04,2,21,South,Strategy A,846.08
+31,2020-12-01,10,Clothing,213.18,4,43,East,Strategy A,852.72
+32,2020-12-04,9,Sports & Outdoors,216.42,3,58,West,Strategy B,649.26
+33,2020-04-09,19,Home & Garden,463.87,3,30,North,Strategy D,1391.61
+34,2020-06-26,12,Electronics,334.26,6,21,North,Strategy B,2005.56
+35,2020-08-31,29,Clothing,49.43,8,52,North,Strategy C,395.44
+36,2020-10-12,18,Home & Garden,275.67,2,45,North,Strategy A,551.34
+37,2020-05-27,16,Home & Garden,184.44,6,67,East,Strategy B,1106.64
+38,2020-05-27,4,Home & Garden,493.84,4,19,South,Strategy D,1975.36
+39,2020-10-15,43,Beauty & Health,16.69,6,26,South,Strategy B,100.14
+40,2020-09-22,25,Home & Garden,309.97,7,56,East,Strategy A,2169.79
+41,2020-07-04,22,Home & Garden,364.58,4,51,West,Strategy C,1458.32
+42,2020-05-07,29,Clothing,151.56,7,61,North,Strategy C,1060.92
+43,2020-02-02,22,Sports & Outdoors,487.08,8,49,East,Strategy A,3896.64
+44,2020-02-01,15,Beauty & Health,431.17,6,47,East,Strategy B,2587.02
+45,2020-07-21,48,Clothing,458.67,7,66,West,Strategy A,3210.69
+46,2020-09-01,2,Clothing,19.42,6,63,West,Strategy D,116.52
+47,2020-05-31,13,Home & Garden,289.24,8,31,North,Strategy D,2313.92
+48,2020-06-12,12,Beauty & Health,154.38,6,32,East,Strategy B,926.28
+49,2020-07-02,26,Sports & Outdoors,426.02,4,46,South,Strategy A,1704.08
+50,2020-01-29,40,Sports & Outdoors,320.1,4,34,East,Strategy D,1280.4
+51,2020-10-17,12,Clothing,274.05,5,53,North,Strategy C,1370.25
+52,2020-05-08,27,Beauty & Health,66.15,1,42,North,Strategy B,66.15
+53,2020-05-08,46,Clothing,274.71,2,63,North,Strategy D,549.42
+54,2020-02-23,35,Clothing,319.63,4,24,West,Strategy B,1278.52
+55,2020-02-08,2,Sports & Outdoors,478.4,4,36,East,Strategy C,1913.6
+56,2020-09-01,17,Sports & Outdoors,296.67,4,51,West,Strategy C,1186.68
+57,2020-09-30,2,Clothing,484.03,9,26,North,Strategy C,4356.27
+58,2020-12-01,17,Sports & Outdoors,481.19,9,32,South,Strategy B,4330.71
+59,2020-04-15,34,Sports & Outdoors,328.6,4,36,North,Strategy C,1314.4
+60,2020-02-12,34,Home & Garden,257.89,9,59,South,Strategy D,2321.01
+61,2020-02-01,45,Home & Garden,238.35,5,57,East,Strategy C,1191.75
+62,2020-09-14,39,Electronics,446.29,1,42,North,Strategy D,446.29
+63,2020-11-17,41,Electronics,23.85,7,30,North,Strategy B,166.95000000000002
+64,2020-02-27,9,Clothing,65.77,9,27,South,Strategy C,591.93
+65,2020-10-18,14,Clothing,60.02,7,66,East,Strategy A,420.14
+66,2020-12-24,43,Clothing,380.9,4,51,South,Strategy D,1523.6
+67,2020-04-29,20,Clothing,176.43,9,67,East,Strategy D,1587.87
+68,2020-09-24,33,Sports & Outdoors,322.6,3,51,South,Strategy A,967.8
+69,2020-03-23,24,Electronics,305.85,9,68,South,Strategy D,2752.65
+70,2020-04-01,5,Clothing,199.06,9,42,West,Strategy A,1791.54
+71,2020-04-09,32,Home & Garden,270.47,9,33,North,Strategy D,2434.2300000000005
+72,2020-02-23,23,Sports & Outdoors,326.12,3,64,South,Strategy C,978.36
+73,2020-05-01,1,Electronics,471.07,6,57,East,Strategy B,2826.42
+74,2020-03-25,38,Sports & Outdoors,292.06,7,24,South,Strategy C,2044.42
+75,2020-07-22,32,Beauty & Health,311.04,6,35,East,Strategy D,1866.24
+76,2020-11-20,16,Clothing,43.25,9,26,South,Strategy A,389.25
+77,2020-09-19,20,Home & Garden,476.59,6,65,West,Strategy C,2859.54
+78,2020-02-17,16,Electronics,268.76,9,19,West,Strategy C,2418.84
+79,2020-05-07,13,Sports & Outdoors,402.62,3,25,West,Strategy B,1207.86
+80,2020-05-11,46,Electronics,34.64,1,38,North,Strategy A,34.64
+81,2020-12-22,11,Beauty & Health,216.25,3,58,South,Strategy A,648.75
+82,2020-06-29,42,Home & Garden,135.92,1,26,East,Strategy A,135.92
+83,2020-11-30,17,Sports & Outdoors,140.82,3,18,West,Strategy D,422.46
+84,2020-05-23,7,Beauty & Health,397.81,1,59,East,Strategy C,397.81
+85,2020-05-28,22,Home & Garden,315.69,9,20,North,Strategy A,2841.21
+86,2020-08-15,31,Clothing,225.48,1,50,East,Strategy C,225.48
+87,2020-10-06,4,Electronics,15.19,5,40,West,Strategy A,75.95
+88,2020-07-26,17,Beauty & Health,482.81,5,28,West,Strategy B,2414.05
+89,2020-12-07,1,Electronics,481.39,4,48,North,Strategy A,1925.56
+90,2020-02-18,2,Electronics,116.6,6,26,South,Strategy A,699.5999999999999
+91,2020-11-01,33,Beauty & Health,30.26,3,39,East,Strategy B,90.78
+92,2020-03-10,44,Beauty & Health,269.8,5,63,North,Strategy C,1349.0
+93,2020-06-18,19,Sports & Outdoors,476.19,1,21,South,Strategy A,476.19
+94,2020-06-12,19,Home & Garden,456.09,6,23,South,Strategy A,2736.54
+95,2020-04-05,23,Clothing,296.48,6,45,North,Strategy B,1778.88
+96,2020-07-16,16,Home & Garden,158.74,8,44,North,Strategy D,1269.92
+97,2020-04-04,16,Clothing,171.68,8,30,South,Strategy D,1373.44
+98,2020-09-13,29,Clothing,449.98,2,18,South,Strategy B,899.96
+99,2020-06-27,8,Sports & Outdoors,250.97,3,21,North,Strategy C,752.91
+100,2020-10-19,28,Home & Garden,74.25,9,61,North,Strategy B,668.25
+101,2020-10-31,25,Beauty & Health,131.73,8,50,South,Strategy A,1053.84
+102,2020-12-15,25,Electronics,145.63,9,58,West,Strategy A,1310.67
+103,2020-04-08,13,Sports & Outdoors,70.54,2,38,South,Strategy C,141.08
+104,2020-02-12,14,Sports & Outdoors,236.89,4,32,East,Strategy B,947.56
+105,2020-07-20,19,Sports & Outdoors,458.86,3,42,East,Strategy C,1376.58
+106,2020-01-01,15,Beauty & Health,337.7,9,21,North,Strategy B,3039.3
+107,2020-02-13,15,Electronics,45.51,8,50,West,Strategy A,364.08
+108,2020-01-24,21,Clothing,12.69,2,27,North,Strategy A,25.38
+109,2020-07-06,8,Beauty & Health,145.36,7,24,West,Strategy C,1017.52
+110,2020-05-10,45,Home & Garden,187.72,1,21,South,Strategy B,187.72
+111,2020-04-08,44,Home & Garden,390.61,9,46,West,Strategy A,3515.49
+112,2020-03-03,28,Beauty & Health,483.83,5,21,South,Strategy A,2419.15
+113,2020-08-10,45,Sports & Outdoors,199.91,7,33,North,Strategy B,1399.37
+114,2020-05-03,16,Beauty & Health,346.48,7,50,North,Strategy C,2425.36
+115,2020-03-23,24,Electronics,497.5,2,56,North,Strategy C,995.0
+116,2020-08-15,12,Clothing,375.38,4,62,North,Strategy C,1501.52
+117,2020-05-28,14,Clothing,321.73,1,46,South,Strategy D,321.73
+118,2020-07-28,30,Clothing,48.26,8,68,West,Strategy C,386.08
+119,2020-02-20,32,Clothing,168.38,2,23,East,Strategy C,336.76
+120,2020-09-27,47,Sports & Outdoors,457.56,8,19,East,Strategy A,3660.48
+121,2020-02-11,19,Home & Garden,108.49,2,35,North,Strategy B,216.98
+122,2020-02-28,5,Home & Garden,423.36,6,65,North,Strategy C,2540.16
+123,2020-07-12,29,Beauty & Health,351.2,6,26,East,Strategy D,2107.2
+124,2020-02-06,2,Clothing,189.5,7,27,South,Strategy A,1326.5
+125,2020-09-23,50,Home & Garden,269.3,8,31,South,Strategy C,2154.4
+126,2020-03-27,50,Electronics,275.98,8,66,West,Strategy C,2207.84
+127,2020-02-13,24,Beauty & Health,359.89,9,59,West,Strategy D,3239.01
+128,2020-12-26,17,Sports & Outdoors,263.11,5,42,North,Strategy D,1315.5500000000002
+129,2020-01-12,42,Home & Garden,75.21,6,22,North,Strategy A,451.26
+130,2020-09-15,27,Clothing,388.99,9,25,East,Strategy D,3500.91
+131,2020-11-03,49,Sports & Outdoors,209.07,7,23,West,Strategy C,1463.49
+132,2020-03-21,3,Electronics,481.92,9,57,North,Strategy B,4337.28
+133,2020-02-02,48,Electronics,148.92,6,38,East,Strategy D,893.52
+134,2020-07-01,18,Electronics,138.91,9,21,South,Strategy C,1250.19
+135,2020-05-08,21,Sports & Outdoors,173.42,9,19,West,Strategy A,1560.78
+136,2020-10-21,39,Home & Garden,290.44,5,27,North,Strategy B,1452.2
+137,2020-10-02,1,Home & Garden,448.49,6,44,West,Strategy A,2690.94
+138,2020-06-23,7,Clothing,96.38,3,19,West,Strategy C,289.14
+139,2020-02-12,45,Sports & Outdoors,147.04,2,58,East,Strategy B,294.08
+140,2020-07-03,23,Home & Garden,295.02,2,66,North,Strategy A,590.04
+141,2020-03-18,16,Beauty & Health,232.62,8,56,West,Strategy C,1860.96
+142,2020-10-13,11,Clothing,229.19,8,64,West,Strategy A,1833.52
+143,2020-10-07,35,Home & Garden,412.16,1,39,North,Strategy D,412.16
+144,2020-05-05,41,Beauty & Health,462.7,7,30,West,Strategy C,3238.9
+145,2020-09-15,39,Clothing,245.84,4,24,East,Strategy B,983.36
+146,2020-01-04,22,Electronics,346.8,3,50,West,Strategy C,1040.4
+147,2020-04-04,35,Electronics,402.52,2,60,North,Strategy B,805.04
+148,2020-08-14,33,Beauty & Health,264.0,2,38,East,Strategy D,528.0
+149,2020-12-29,43,Electronics,154.22,1,30,West,Strategy A,154.22
+150,2020-09-26,45,Beauty & Health,322.66,8,40,North,Strategy B,2581.28
+151,2020-10-23,36,Clothing,296.7,8,38,North,Strategy A,2373.6
+152,2020-11-24,42,Home & Garden,451.77,1,63,North,Strategy C,451.77
+153,2020-01-20,40,Clothing,35.68,4,51,West,Strategy C,142.72
+154,2020-04-05,28,Beauty & Health,455.96,7,50,East,Strategy B,3191.72
+155,2020-11-24,49,Sports & Outdoors,271.87,5,27,West,Strategy D,1359.35
+156,2020-09-05,11,Sports & Outdoors,17.68,9,54,North,Strategy C,159.12
+157,2020-06-29,5,Beauty & Health,178.9,2,21,South,Strategy A,357.8
+158,2020-11-19,18,Electronics,364.92,5,59,East,Strategy C,1824.6
+159,2020-11-13,4,Beauty & Health,249.33,6,26,South,Strategy C,1495.98
+160,2020-09-27,38,Home & Garden,490.28,5,46,South,Strategy D,2451.4
+161,2020-12-18,31,Clothing,217.08,3,69,East,Strategy A,651.24
+162,2020-09-17,24,Beauty & Health,170.05,7,31,East,Strategy B,1190.35
+163,2020-08-25,30,Home & Garden,412.62,4,41,West,Strategy C,1650.48
+164,2020-05-19,39,Sports & Outdoors,278.47,3,25,South,Strategy C,835.4100000000001
+165,2020-03-27,31,Beauty & Health,344.34,3,69,West,Strategy C,1033.02
+166,2020-04-19,12,Electronics,404.79,4,30,West,Strategy D,1619.16
+167,2020-11-27,3,Beauty & Health,339.0,1,20,West,Strategy C,339.0
+168,2020-07-03,30,Sports & Outdoors,216.98,1,54,East,Strategy C,216.98
+169,2020-01-17,8,Home & Garden,71.15,7,63,South,Strategy B,498.05000000000007
+170,2020-06-01,10,Beauty & Health,294.32,5,31,North,Strategy B,1471.6
+171,2020-05-29,24,Beauty & Health,449.74,4,41,East,Strategy A,1798.96
+172,2020-04-20,1,Electronics,215.26,1,57,East,Strategy B,215.26
+173,2020-01-26,49,Beauty & Health,456.26,1,27,South,Strategy A,456.26
+174,2020-04-27,18,Clothing,256.73,9,57,South,Strategy B,2310.57
+175,2020-03-24,41,Beauty & Health,314.21,9,33,South,Strategy A,2827.89
+176,2020-06-10,22,Home & Garden,418.16,3,29,South,Strategy A,1254.48
+177,2020-12-26,31,Clothing,286.65,5,27,South,Strategy C,1433.25
+178,2020-08-16,27,Electronics,54.57,5,19,North,Strategy D,272.85
+179,2020-09-08,16,Home & Garden,490.68,9,44,West,Strategy A,4416.12
+180,2020-05-01,49,Electronics,130.47,6,29,West,Strategy D,782.8199999999999
+181,2020-11-22,18,Beauty & Health,358.15,9,49,East,Strategy C,3223.35
+182,2020-10-14,11,Beauty & Health,257.51,3,66,West,Strategy A,772.53
+183,2020-01-14,18,Beauty & Health,244.6,7,29,West,Strategy A,1712.2
+184,2020-11-23,4,Sports & Outdoors,129.53,7,19,West,Strategy D,906.71
+185,2020-07-03,40,Sports & Outdoors,363.85,1,26,North,Strategy C,363.85
+186,2020-06-01,10,Sports & Outdoors,65.27,2,43,North,Strategy D,130.54
+187,2020-03-20,30,Clothing,495.32,6,48,West,Strategy D,2971.92
+188,2020-02-11,4,Sports & Outdoors,424.23,4,51,South,Strategy B,1696.92
+189,2020-10-01,8,Beauty & Health,271.91,4,62,West,Strategy B,1087.64
+190,2020-02-10,17,Beauty & Health,218.03,5,41,South,Strategy B,1090.15
+191,2020-07-26,35,Electronics,150.37,2,38,East,Strategy C,300.74
+192,2020-09-24,5,Home & Garden,255.78,3,67,South,Strategy C,767.34
+193,2020-06-15,27,Home & Garden,440.91,5,26,North,Strategy B,2204.55
+194,2020-04-21,37,Clothing,144.75,9,18,East,Strategy C,1302.75
+195,2020-12-15,7,Home & Garden,255.26,2,52,North,Strategy C,510.52
+196,2020-05-09,33,Clothing,124.93,4,48,North,Strategy B,499.72
+197,2020-08-11,18,Electronics,175.2,1,56,North,Strategy B,175.2
+198,2020-10-27,38,Beauty & Health,103.23,8,38,West,Strategy B,825.84
+199,2020-08-04,28,Beauty & Health,495.36,9,55,North,Strategy D,4458.24
+200,2020-01-25,15,Clothing,290.03,3,40,North,Strategy B,870.0899999999999
+201,2020-03-08,23,Sports & Outdoors,369.08,2,60,North,Strategy B,738.16
+202,2020-09-16,32,Electronics,58.14,7,66,West,Strategy D,406.98
+203,2020-08-22,9,Beauty & Health,189.4,9,40,West,Strategy B,1704.6
+204,2020-07-23,30,Beauty & Health,447.39,3,59,North,Strategy C,1342.17
+205,2020-10-18,29,Electronics,51.37,9,38,North,Strategy C,462.33
+206,2020-08-02,32,Clothing,91.09,2,61,East,Strategy A,182.18
+207,2020-07-08,35,Sports & Outdoors,316.45,8,25,North,Strategy D,2531.6
+208,2020-07-16,18,Clothing,315.17,5,19,South,Strategy C,1575.85
+209,2020-08-03,29,Electronics,420.73,5,63,West,Strategy A,2103.65
+210,2020-02-13,48,Home & Garden,468.39,3,48,East,Strategy B,1405.17
+211,2020-02-02,17,Clothing,79.57,5,30,South,Strategy A,397.85
+212,2020-01-12,9,Home & Garden,137.09,8,23,North,Strategy D,1096.72
+213,2020-04-14,45,Electronics,219.46,4,39,East,Strategy B,877.84
+214,2020-07-31,8,Home & Garden,10.44,5,23,East,Strategy D,52.2
+215,2020-05-18,13,Beauty & Health,44.21,8,34,West,Strategy A,353.68
+216,2020-07-01,33,Home & Garden,120.98,1,61,South,Strategy C,120.98
+217,2020-05-05,21,Sports & Outdoors,245.74,5,41,East,Strategy B,1228.7
+218,2020-06-05,44,Sports & Outdoors,133.25,5,58,West,Strategy B,666.25
+219,2020-04-21,12,Electronics,439.57,9,55,South,Strategy C,3956.13
+220,2020-09-15,30,Sports & Outdoors,168.89,8,65,West,Strategy A,1351.12
+221,2020-01-28,41,Home & Garden,463.07,9,66,West,Strategy D,4167.63
+222,2020-08-05,1,Beauty & Health,487.65,6,57,East,Strategy C,2925.9
+223,2020-05-31,21,Electronics,230.43,7,58,West,Strategy C,1613.01
+224,2020-11-05,46,Clothing,121.29,3,56,East,Strategy B,363.87
+225,2020-11-03,29,Beauty & Health,152.92,9,61,North,Strategy B,1376.28
+226,2020-06-23,14,Clothing,390.4,9,66,North,Strategy A,3513.6
+227,2020-05-28,38,Electronics,143.94,9,18,North,Strategy C,1295.46
+228,2020-01-30,48,Clothing,196.49,1,27,North,Strategy B,196.49
+229,2020-03-08,40,Beauty & Health,244.5,1,33,South,Strategy B,244.5
+230,2020-02-05,5,Sports & Outdoors,291.8,2,62,East,Strategy A,583.6
+231,2020-10-22,47,Electronics,498.09,1,22,East,Strategy A,498.09
+232,2020-03-14,13,Sports & Outdoors,123.78,6,46,North,Strategy A,742.6800000000001
+233,2020-10-24,38,Sports & Outdoors,183.18,9,67,West,Strategy D,1648.62
+234,2020-10-29,49,Sports & Outdoors,138.82,4,53,East,Strategy C,555.28
+235,2020-08-06,5,Beauty & Health,186.95,1,38,North,Strategy D,186.95
+236,2020-12-30,42,Home & Garden,59.39,5,24,West,Strategy A,296.95
+237,2020-09-16,37,Sports & Outdoors,186.31,3,59,North,Strategy D,558.9300000000001
+238,2020-10-14,17,Home & Garden,445.05,2,49,East,Strategy C,890.1
+239,2020-09-22,19,Electronics,156.31,9,43,North,Strategy C,1406.79
+240,2020-01-28,38,Clothing,192.25,5,34,West,Strategy D,961.25
+241,2020-07-18,31,Sports & Outdoors,472.79,2,22,South,Strategy D,945.58
+242,2020-03-02,47,Home & Garden,366.91,7,64,North,Strategy C,2568.3700000000003
+243,2020-12-07,36,Electronics,263.2,2,31,North,Strategy B,526.4
+244,2020-12-19,49,Beauty & Health,390.82,3,51,South,Strategy D,1172.46
+245,2020-02-14,1,Electronics,70.36,4,35,West,Strategy A,281.44
+246,2020-10-17,50,Beauty & Health,237.6,1,65,North,Strategy C,237.6
+247,2020-03-29,10,Clothing,67.94,5,19,North,Strategy B,339.7
+248,2020-02-03,34,Clothing,124.47,6,43,West,Strategy C,746.8199999999999
+249,2020-05-13,49,Home & Garden,79.51,4,65,North,Strategy A,318.04
+250,2020-08-20,50,Beauty & Health,187.28,9,40,West,Strategy A,1685.52
+251,2020-09-12,13,Beauty & Health,197.0,8,60,South,Strategy C,1576.0
+252,2020-02-06,7,Clothing,474.18,9,40,West,Strategy A,4267.62
+253,2020-09-13,37,Electronics,139.42,9,35,North,Strategy B,1254.78
+254,2020-10-17,36,Electronics,241.49,3,21,West,Strategy B,724.47
+255,2020-07-16,39,Home & Garden,407.58,6,37,North,Strategy A,2445.48
+256,2020-09-11,37,Clothing,409.65,4,64,East,Strategy C,1638.6
+257,2020-03-21,31,Clothing,377.67,8,47,South,Strategy C,3021.36
+258,2020-05-16,20,Sports & Outdoors,151.04,7,22,South,Strategy C,1057.28
+259,2020-07-08,39,Home & Garden,252.54,4,38,West,Strategy B,1010.16
+260,2020-05-09,45,Clothing,101.24,6,63,South,Strategy D,607.4399999999999
+261,2020-07-28,36,Sports & Outdoors,102.32,6,48,North,Strategy D,613.92
+262,2020-10-18,15,Beauty & Health,223.56,5,62,South,Strategy A,1117.8
+263,2020-12-13,30,Sports & Outdoors,371.91,4,33,South,Strategy B,1487.64
+264,2020-06-17,18,Clothing,268.03,3,51,North,Strategy A,804.0899999999999
+265,2020-10-19,4,Electronics,444.47,2,22,East,Strategy A,888.94
+266,2020-06-25,30,Home & Garden,417.15,7,37,West,Strategy B,2920.05
+267,2020-01-26,28,Beauty & Health,25.49,1,55,South,Strategy B,25.49
+268,2020-11-19,4,Electronics,288.53,1,18,South,Strategy A,288.53
+269,2020-12-25,34,Home & Garden,308.49,7,35,South,Strategy D,2159.4300000000003
+270,2020-10-18,28,Beauty & Health,481.17,4,35,South,Strategy D,1924.68
+271,2020-04-24,37,Beauty & Health,21.39,9,67,North,Strategy C,192.51
+272,2020-10-13,22,Clothing,270.24,4,57,South,Strategy D,1080.96
+273,2020-01-30,40,Sports & Outdoors,110.34,4,58,North,Strategy A,441.36
+274,2020-08-29,43,Electronics,36.29,8,36,West,Strategy B,290.32
+275,2020-10-16,11,Sports & Outdoors,297.87,5,23,North,Strategy A,1489.35
+276,2020-05-26,30,Clothing,388.58,9,52,West,Strategy A,3497.22
+277,2020-09-30,50,Clothing,389.68,7,21,East,Strategy A,2727.76
+278,2020-08-09,30,Electronics,24.84,7,18,South,Strategy B,173.88
+279,2020-12-06,25,Beauty & Health,209.4,8,53,South,Strategy C,1675.2
+280,2020-01-03,17,Home & Garden,31.81,3,43,South,Strategy D,95.43
+281,2020-03-10,1,Beauty & Health,131.44,6,38,East,Strategy C,788.64
+282,2020-12-23,37,Sports & Outdoors,104.51,5,47,South,Strategy D,522.5500000000001
+283,2020-02-14,35,Electronics,115.44,1,19,West,Strategy C,115.44
+284,2020-09-10,14,Clothing,176.17,6,32,North,Strategy B,1057.02
+285,2020-11-18,2,Beauty & Health,145.93,7,62,South,Strategy B,1021.51
+286,2020-04-21,3,Electronics,481.52,7,56,East,Strategy C,3370.64
+287,2020-04-01,3,Home & Garden,182.68,9,22,South,Strategy A,1644.12
+288,2020-12-07,20,Clothing,448.14,6,24,East,Strategy D,2688.84
+289,2020-02-09,13,Beauty & Health,98.71,3,35,South,Strategy A,296.13
+290,2020-05-30,31,Clothing,384.24,4,47,East,Strategy B,1536.96
+291,2020-05-25,40,Sports & Outdoors,40.06,8,19,South,Strategy B,320.48
+292,2020-07-17,22,Home & Garden,236.75,4,34,South,Strategy A,947.0
+293,2020-10-01,14,Home & Garden,12.7,6,20,West,Strategy B,76.19999999999999
+294,2020-12-14,50,Home & Garden,407.04,2,32,East,Strategy B,814.08
+295,2020-02-13,27,Sports & Outdoors,475.74,2,60,West,Strategy D,951.48
+296,2020-03-24,13,Beauty & Health,27.2,1,67,South,Strategy A,27.2
+297,2020-10-24,50,Beauty & Health,467.58,5,42,East,Strategy C,2337.9
+298,2020-04-03,1,Beauty & Health,389.19,4,23,West,Strategy A,1556.76
+299,2020-06-23,2,Beauty & Health,185.84,4,39,South,Strategy C,743.36
+300,2020-07-20,37,Beauty & Health,455.35,5,26,West,Strategy C,2276.75
+301,2020-12-11,11,Electronics,155.17,4,26,North,Strategy C,620.68
+302,2020-11-25,43,Sports & Outdoors,210.55,6,51,East,Strategy A,1263.3000000000002
+303,2020-01-29,33,Home & Garden,57.39,9,23,East,Strategy D,516.51
+304,2020-07-28,29,Beauty & Health,331.9,2,50,South,Strategy D,663.8
+305,2020-04-15,3,Beauty & Health,24.5,4,18,West,Strategy B,98.0
+306,2020-03-04,29,Home & Garden,247.6,1,61,West,Strategy A,247.6
+307,2020-01-17,2,Home & Garden,344.76,7,69,West,Strategy A,2413.32
+308,2020-04-16,14,Electronics,412.41,5,24,North,Strategy B,2062.05
+309,2020-06-13,20,Sports & Outdoors,83.47,8,32,East,Strategy A,667.76
+310,2020-04-04,48,Clothing,379.5,7,55,North,Strategy B,2656.5
+311,2020-01-25,18,Electronics,362.35,6,46,West,Strategy B,2174.1000000000004
+312,2020-04-26,37,Clothing,284.19,7,34,East,Strategy C,1989.33
+313,2020-07-10,8,Electronics,296.48,1,47,South,Strategy B,296.48
+314,2020-07-14,7,Sports & Outdoors,54.72,8,36,North,Strategy C,437.76
+315,2020-11-03,10,Sports & Outdoors,304.23,8,47,West,Strategy C,2433.84
+316,2020-05-16,16,Clothing,196.95,2,55,North,Strategy B,393.9
+317,2020-12-13,19,Beauty & Health,435.11,1,21,West,Strategy B,435.11
+318,2020-04-03,30,Beauty & Health,163.42,3,60,West,Strategy B,490.26
+319,2020-08-26,43,Beauty & Health,292.53,7,28,West,Strategy B,2047.71
+320,2020-03-28,19,Clothing,219.02,7,59,East,Strategy B,1533.14
+321,2020-06-09,3,Beauty & Health,439.37,8,57,North,Strategy D,3514.96
+322,2020-05-27,30,Home & Garden,134.42,5,50,West,Strategy A,672.0999999999999
+323,2020-03-13,18,Home & Garden,48.61,4,50,West,Strategy B,194.44
+324,2020-03-28,36,Sports & Outdoors,376.84,4,46,South,Strategy D,1507.36
+325,2020-01-14,20,Clothing,212.32,6,32,North,Strategy C,1273.92
+326,2020-11-10,17,Beauty & Health,298.66,2,49,North,Strategy D,597.32
+327,2020-03-22,24,Home & Garden,22.93,1,52,South,Strategy D,22.93
+328,2020-04-30,13,Beauty & Health,476.53,2,55,West,Strategy A,953.06
+329,2020-11-16,36,Electronics,440.03,3,53,North,Strategy B,1320.09
+330,2020-07-22,46,Beauty & Health,315.7,6,21,North,Strategy D,1894.2
+331,2020-08-08,3,Sports & Outdoors,18.34,5,31,South,Strategy D,91.7
+332,2020-10-08,21,Electronics,195.21,3,36,South,Strategy B,585.63
+333,2020-10-15,4,Clothing,489.61,7,35,North,Strategy C,3427.27
+334,2020-09-27,18,Beauty & Health,343.85,5,52,South,Strategy C,1719.25
+335,2020-10-11,45,Beauty & Health,88.88,2,52,North,Strategy A,177.76
+336,2020-10-03,39,Electronics,235.69,1,37,West,Strategy A,235.69
+337,2020-11-20,43,Sports & Outdoors,483.7,8,68,West,Strategy B,3869.6
+338,2020-01-23,11,Sports & Outdoors,272.01,9,22,East,Strategy A,2448.09
+339,2020-08-15,38,Sports & Outdoors,22.06,3,29,East,Strategy A,66.17999999999999
+340,2020-03-24,43,Clothing,313.69,9,39,West,Strategy D,2823.21
+341,2020-05-15,41,Electronics,142.9,6,21,North,Strategy D,857.4000000000001
+342,2020-03-02,48,Home & Garden,58.43,4,67,North,Strategy B,233.72
+343,2020-05-21,28,Clothing,207.43,3,52,North,Strategy A,622.29
+344,2020-01-06,5,Sports & Outdoors,283.68,3,37,South,Strategy C,851.04
+345,2020-09-13,23,Sports & Outdoors,18.35,7,44,North,Strategy B,128.45000000000002
+346,2020-05-16,38,Beauty & Health,283.93,9,26,West,Strategy D,2555.37
+347,2020-07-26,36,Clothing,260.49,2,59,South,Strategy B,520.98
+348,2020-05-19,31,Electronics,399.02,5,32,West,Strategy D,1995.1
+349,2020-01-05,8,Sports & Outdoors,217.54,2,53,South,Strategy D,435.08
+350,2020-12-14,25,Home & Garden,281.19,4,30,North,Strategy B,1124.76
+351,2020-10-09,25,Beauty & Health,373.58,8,35,East,Strategy A,2988.64
+352,2020-03-15,48,Electronics,449.6,4,60,West,Strategy B,1798.4
+353,2020-11-04,16,Electronics,196.22,1,41,North,Strategy C,196.22
+354,2020-08-07,11,Electronics,304.8,8,35,East,Strategy A,2438.4
+355,2020-11-03,20,Beauty & Health,350.36,4,50,South,Strategy D,1401.44
+356,2020-08-15,14,Home & Garden,31.2,1,67,East,Strategy C,31.2
+357,2020-12-27,40,Sports & Outdoors,402.37,9,29,North,Strategy A,3621.33
+358,2020-10-01,38,Beauty & Health,194.94,4,58,East,Strategy D,779.76
+359,2020-10-17,40,Beauty & Health,338.42,8,20,East,Strategy C,2707.36
+360,2020-02-21,19,Home & Garden,241.12,5,66,North,Strategy B,1205.6
+361,2020-06-07,8,Electronics,354.15,2,40,East,Strategy B,708.3
+362,2020-11-10,25,Sports & Outdoors,364.92,7,22,North,Strategy A,2554.44
+363,2020-11-07,33,Clothing,103.87,5,59,West,Strategy B,519.35
+364,2020-10-01,45,Electronics,334.47,4,60,North,Strategy A,1337.88
+365,2020-12-09,40,Electronics,427.15,7,33,East,Strategy B,2990.05
+366,2020-11-22,41,Home & Garden,125.43,7,35,East,Strategy A,878.01
+367,2020-02-23,48,Clothing,381.51,5,57,East,Strategy A,1907.55
+368,2020-10-31,37,Sports & Outdoors,320.57,3,31,East,Strategy C,961.71
+369,2020-04-04,43,Sports & Outdoors,478.01,8,49,East,Strategy B,3824.08
+370,2020-02-29,17,Sports & Outdoors,137.52,4,53,West,Strategy C,550.08
+371,2020-12-02,27,Home & Garden,85.6,2,67,North,Strategy B,171.2
+372,2020-06-03,41,Clothing,162.94,1,21,West,Strategy B,162.94
+373,2020-05-04,17,Clothing,136.4,7,63,East,Strategy B,954.8
+374,2020-06-12,47,Electronics,380.85,2,43,North,Strategy C,761.7
+375,2020-02-28,33,Beauty & Health,369.22,6,69,West,Strategy D,2215.32
+376,2020-04-16,31,Clothing,338.15,5,46,East,Strategy C,1690.75
+377,2020-07-20,21,Sports & Outdoors,116.03,7,36,East,Strategy C,812.21
+378,2020-10-27,24,Sports & Outdoors,432.29,4,62,East,Strategy B,1729.16
+379,2020-09-26,16,Beauty & Health,478.72,2,49,East,Strategy A,957.44
+380,2020-11-22,45,Beauty & Health,270.49,8,41,South,Strategy B,2163.92
+381,2020-02-08,20,Electronics,328.19,8,64,South,Strategy B,2625.52
+382,2020-06-16,35,Electronics,255.34,9,28,East,Strategy A,2298.06
+383,2020-05-16,28,Home & Garden,148.94,1,31,South,Strategy B,148.94
+384,2020-01-14,46,Sports & Outdoors,150.21,1,31,South,Strategy D,150.21
+385,2020-07-27,35,Home & Garden,163.58,3,31,North,Strategy C,490.74
+386,2020-01-23,18,Sports & Outdoors,103.52,7,37,South,Strategy C,724.64
+387,2020-12-01,24,Home & Garden,451.94,2,19,North,Strategy C,903.88
+388,2020-09-21,28,Electronics,430.62,6,21,East,Strategy D,2583.7200000000003
+389,2020-08-15,14,Clothing,236.2,2,30,West,Strategy C,472.4
+390,2020-09-19,49,Beauty & Health,189.95,8,26,East,Strategy A,1519.6
+391,2020-07-28,24,Sports & Outdoors,470.15,4,69,East,Strategy C,1880.6
+392,2020-03-01,31,Electronics,118.96,4,28,South,Strategy B,475.84
+393,2020-02-26,6,Electronics,281.24,3,24,East,Strategy B,843.72
+394,2020-08-25,40,Electronics,36.7,5,49,North,Strategy C,183.5
+395,2020-05-31,34,Home & Garden,103.69,6,61,South,Strategy D,622.14
+396,2020-10-07,50,Beauty & Health,305.97,5,49,South,Strategy A,1529.85
+397,2020-01-05,35,Electronics,334.47,7,39,North,Strategy B,2341.29
+398,2020-04-10,29,Home & Garden,294.69,9,31,South,Strategy D,2652.21
+399,2020-11-01,2,Electronics,436.1,1,25,West,Strategy A,436.1
+400,2020-12-09,5,Home & Garden,496.77,7,63,South,Strategy A,3477.39
+401,2020-01-31,22,Clothing,384.29,8,46,North,Strategy C,3074.32
+402,2020-02-24,9,Home & Garden,237.89,7,36,East,Strategy C,1665.23
+403,2020-06-02,34,Sports & Outdoors,418.63,6,47,West,Strategy B,2511.78
+404,2020-10-03,36,Beauty & Health,68.99,5,44,South,Strategy A,344.95
+405,2020-12-19,49,Home & Garden,344.8,8,68,North,Strategy D,2758.4
+406,2020-12-23,36,Beauty & Health,263.99,4,33,South,Strategy A,1055.96
+407,2020-07-04,26,Home & Garden,97.25,7,64,North,Strategy D,680.75
+408,2020-01-30,6,Beauty & Health,486.74,4,19,South,Strategy D,1946.96
+409,2020-11-05,2,Clothing,175.83,8,63,East,Strategy D,1406.64
+410,2020-04-29,36,Sports & Outdoors,311.56,9,69,West,Strategy D,2804.04
+411,2020-12-08,8,Sports & Outdoors,440.51,5,43,North,Strategy D,2202.55
+412,2020-01-08,2,Sports & Outdoors,258.28,9,36,East,Strategy C,2324.5199999999995
+413,2020-04-15,2,Home & Garden,66.42,3,57,North,Strategy A,199.26
+414,2020-05-17,8,Sports & Outdoors,411.18,7,66,South,Strategy D,2878.26
+415,2020-07-01,26,Electronics,183.07,7,63,South,Strategy D,1281.49
+416,2020-12-05,37,Electronics,491.7,6,40,West,Strategy B,2950.2
+417,2020-07-28,14,Sports & Outdoors,443.07,8,45,South,Strategy C,3544.56
+418,2020-05-28,45,Sports & Outdoors,428.19,9,29,South,Strategy A,3853.71
+419,2020-09-16,28,Home & Garden,184.56,3,62,North,Strategy A,553.6800000000001
+420,2020-05-06,33,Sports & Outdoors,380.99,3,56,North,Strategy D,1142.97
+421,2020-10-25,44,Beauty & Health,493.3,1,67,South,Strategy C,493.3
+422,2020-03-06,20,Clothing,267.9,9,18,East,Strategy D,2411.1
+423,2020-01-21,35,Home & Garden,240.66,2,27,South,Strategy C,481.32
+424,2020-10-19,46,Home & Garden,17.19,8,40,West,Strategy C,137.52
+425,2020-11-20,37,Electronics,353.1,6,23,East,Strategy A,2118.6000000000004
+426,2020-04-22,17,Home & Garden,430.65,8,41,North,Strategy D,3445.2
+427,2020-05-18,49,Home & Garden,131.25,6,24,North,Strategy C,787.5
+428,2020-08-25,43,Clothing,164.36,7,40,South,Strategy B,1150.52
+429,2020-12-26,44,Beauty & Health,255.33,3,41,South,Strategy A,765.99
+430,2020-12-13,4,Clothing,45.32,8,19,West,Strategy A,362.56
+431,2020-02-13,9,Beauty & Health,53.92,8,44,South,Strategy C,431.36
+432,2020-03-04,20,Electronics,216.34,5,49,West,Strategy A,1081.7
+433,2020-09-22,47,Clothing,138.0,4,37,North,Strategy B,552.0
+434,2020-04-01,1,Clothing,208.96,4,43,South,Strategy B,835.84
+435,2020-04-21,21,Clothing,232.65,6,58,West,Strategy D,1395.9
+436,2020-12-05,33,Sports & Outdoors,488.37,6,25,South,Strategy A,2930.2200000000003
+437,2020-11-28,35,Sports & Outdoors,472.69,7,29,East,Strategy C,3308.83
+438,2020-10-01,44,Clothing,78.47,2,35,North,Strategy D,156.94
+439,2020-11-26,6,Home & Garden,442.47,3,58,South,Strategy D,1327.41
+440,2020-08-14,22,Electronics,49.3,1,18,East,Strategy D,49.3
+441,2020-08-13,25,Home & Garden,258.74,3,29,East,Strategy C,776.22
+442,2020-05-11,3,Electronics,90.32,6,54,West,Strategy D,541.92
+443,2020-08-16,8,Electronics,189.29,3,53,South,Strategy B,567.87
+444,2020-11-10,45,Sports & Outdoors,374.24,1,31,West,Strategy A,374.24
+445,2020-05-08,12,Electronics,218.01,4,26,North,Strategy A,872.04
+446,2020-10-22,29,Clothing,405.41,9,56,East,Strategy B,3648.69
+447,2020-01-25,32,Clothing,362.22,4,28,North,Strategy D,1448.88
+448,2020-07-05,2,Electronics,471.99,2,43,East,Strategy B,943.98
+449,2020-10-19,17,Sports & Outdoors,271.74,1,59,East,Strategy B,271.74
+450,2020-12-21,19,Home & Garden,403.05,7,27,North,Strategy A,2821.35
+451,2020-11-21,15,Sports & Outdoors,168.22,5,38,West,Strategy B,841.1
+452,2020-05-14,22,Sports & Outdoors,179.42,7,22,West,Strategy B,1255.9399999999998
+453,2020-01-04,48,Home & Garden,206.25,5,57,East,Strategy C,1031.25
+454,2020-08-14,48,Clothing,211.35,2,34,West,Strategy B,422.7
+455,2020-06-17,6,Beauty & Health,60.59,4,36,South,Strategy A,242.36
+456,2020-10-11,34,Sports & Outdoors,264.36,7,64,West,Strategy A,1850.52
+457,2020-11-20,43,Clothing,57.43,3,32,South,Strategy D,172.29
+458,2020-01-27,3,Electronics,445.98,9,41,East,Strategy A,4013.82
+459,2020-08-12,28,Sports & Outdoors,40.3,9,64,West,Strategy B,362.7
+460,2020-09-05,41,Sports & Outdoors,230.35,3,53,South,Strategy A,691.05
+461,2020-12-31,20,Electronics,149.5,4,66,West,Strategy D,598.0
+462,2020-07-20,16,Beauty & Health,85.89,3,48,North,Strategy A,257.67
+463,2020-07-16,8,Beauty & Health,394.08,2,21,North,Strategy B,788.16
+464,2020-05-15,45,Home & Garden,360.32,2,28,West,Strategy B,720.64
+465,2020-05-05,30,Electronics,81.51,6,50,West,Strategy C,489.06000000000006
+466,2020-04-04,36,Clothing,320.06,7,39,West,Strategy C,2240.42
+467,2020-03-13,34,Clothing,398.35,2,59,South,Strategy D,796.7
+468,2020-09-03,49,Beauty & Health,388.93,8,64,South,Strategy D,3111.44
+469,2020-12-06,50,Home & Garden,55.22,7,51,South,Strategy A,386.54
+470,2020-05-15,17,Home & Garden,345.9,3,36,North,Strategy A,1037.6999999999998
+471,2020-07-14,25,Clothing,360.85,3,51,West,Strategy D,1082.5500000000002
+472,2020-08-01,6,Home & Garden,432.46,7,69,East,Strategy D,3027.22
+473,2020-04-18,43,Beauty & Health,258.94,9,30,South,Strategy D,2330.46
+474,2020-11-19,20,Beauty & Health,235.94,6,20,West,Strategy D,1415.64
+475,2020-04-12,18,Home & Garden,482.91,7,43,South,Strategy B,3380.3700000000003
+476,2020-12-06,46,Beauty & Health,400.29,6,60,West,Strategy A,2401.74
+477,2020-11-23,33,Beauty & Health,283.78,3,48,North,Strategy C,851.3399999999999
+478,2020-03-24,23,Home & Garden,172.0,9,69,West,Strategy D,1548.0
+479,2020-08-11,34,Beauty & Health,424.17,6,46,East,Strategy B,2545.02
+480,2020-09-13,39,Electronics,233.16,9,59,North,Strategy C,2098.44
+481,2020-05-13,10,Beauty & Health,55.42,9,35,South,Strategy D,498.78
+482,2020-12-13,6,Sports & Outdoors,232.9,1,32,North,Strategy D,232.9
+483,2020-04-17,13,Clothing,437.26,1,31,East,Strategy A,437.26
+484,2020-01-08,43,Electronics,229.66,5,51,North,Strategy D,1148.3
+485,2020-05-29,17,Home & Garden,17.03,5,40,North,Strategy C,85.15
+486,2020-06-20,18,Clothing,309.63,6,42,West,Strategy A,1857.78
+487,2020-02-16,5,Sports & Outdoors,497.96,3,48,East,Strategy A,1493.88
+488,2020-01-01,26,Clothing,410.45,8,28,West,Strategy C,3283.6
+489,2020-12-26,15,Beauty & Health,312.45,7,21,South,Strategy B,2187.15
+490,2020-06-28,46,Clothing,458.06,2,49,North,Strategy B,916.12
+491,2020-02-08,18,Home & Garden,408.66,8,67,North,Strategy D,3269.28
+492,2020-03-30,30,Beauty & Health,254.33,3,50,East,Strategy D,762.99
+493,2020-03-15,7,Beauty & Health,299.7,1,31,South,Strategy B,299.7
+494,2020-08-14,29,Sports & Outdoors,368.33,7,67,East,Strategy B,2578.31
+495,2020-05-03,11,Clothing,424.75,8,57,West,Strategy B,3398.0
+496,2020-12-09,6,Sports & Outdoors,38.51,4,18,West,Strategy C,154.04
+497,2020-04-06,37,Beauty & Health,389.65,4,64,South,Strategy D,1558.6
+498,2020-12-05,37,Beauty & Health,229.28,7,42,South,Strategy B,1604.96
+499,2020-10-09,21,Sports & Outdoors,333.79,2,38,North,Strategy B,667.58
+500,2020-07-25,23,Beauty & Health,384.67,2,61,West,Strategy D,769.34
+501,2020-02-02,11,Clothing,274.36,6,59,South,Strategy C,1646.16
+502,2020-04-25,44,Electronics,87.67,2,44,South,Strategy C,175.34
+503,2020-12-19,31,Sports & Outdoors,210.67,2,45,North,Strategy B,421.34
+504,2020-11-11,15,Home & Garden,47.67,4,41,North,Strategy A,190.68
+505,2020-11-09,49,Electronics,347.76,7,44,South,Strategy B,2434.32
+506,2020-06-27,2,Home & Garden,477.32,6,27,West,Strategy B,2863.92
+507,2020-06-22,41,Beauty & Health,399.67,3,51,South,Strategy D,1199.01
+508,2020-08-21,8,Electronics,201.0,2,44,West,Strategy C,402.0
+509,2020-05-12,6,Beauty & Health,296.3,4,59,South,Strategy D,1185.2
+510,2020-04-03,16,Beauty & Health,159.06,3,65,West,Strategy C,477.18
+511,2020-12-13,42,Sports & Outdoors,275.11,2,49,East,Strategy A,550.22
+512,2020-07-13,33,Home & Garden,157.36,1,58,North,Strategy D,157.36
+513,2020-07-04,24,Clothing,371.78,1,49,South,Strategy A,371.78
+514,2020-06-13,15,Sports & Outdoors,137.08,6,26,South,Strategy D,822.48
+515,2020-12-27,35,Sports & Outdoors,482.37,5,67,North,Strategy C,2411.85
+516,2020-07-09,30,Home & Garden,334.35,4,54,West,Strategy A,1337.4
+517,2020-01-05,26,Sports & Outdoors,43.7,9,35,South,Strategy A,393.3
+518,2020-07-24,5,Home & Garden,15.28,3,48,South,Strategy B,45.84
+519,2020-12-31,1,Sports & Outdoors,498.55,1,19,South,Strategy C,498.55
+520,2020-12-09,27,Electronics,118.05,5,47,West,Strategy D,590.25
+521,2020-08-14,21,Home & Garden,163.16,9,34,South,Strategy D,1468.44
+522,2020-03-14,6,Clothing,112.12,4,38,East,Strategy A,448.48
+523,2020-08-06,25,Sports & Outdoors,464.77,8,26,South,Strategy D,3718.16
+524,2020-01-27,18,Electronics,329.49,6,54,South,Strategy B,1976.94
+525,2020-01-23,5,Clothing,257.15,2,47,North,Strategy D,514.3
+526,2020-07-26,33,Sports & Outdoors,283.25,4,61,West,Strategy B,1133.0
+527,2020-12-20,50,Sports & Outdoors,165.76,1,62,East,Strategy C,165.76
+528,2020-03-31,18,Beauty & Health,310.95,5,33,North,Strategy C,1554.75
+529,2020-02-21,9,Sports & Outdoors,215.6,2,31,West,Strategy C,431.2
+530,2020-10-29,10,Clothing,107.62,4,43,West,Strategy A,430.48
+531,2020-07-27,37,Clothing,331.74,5,55,South,Strategy A,1658.7
+532,2020-03-02,32,Electronics,193.18,9,34,North,Strategy C,1738.62
+533,2020-10-30,31,Beauty & Health,394.68,9,68,West,Strategy D,3552.12
+534,2020-04-14,10,Electronics,213.54,6,29,East,Strategy D,1281.24
+535,2020-05-08,45,Electronics,259.05,1,64,South,Strategy B,259.05
+536,2020-11-23,49,Sports & Outdoors,395.86,4,20,South,Strategy D,1583.44
+537,2020-04-04,36,Electronics,229.46,6,51,South,Strategy D,1376.76
+538,2020-01-07,33,Home & Garden,483.45,9,46,South,Strategy D,4351.05
+539,2020-06-22,15,Beauty & Health,398.58,1,44,East,Strategy B,398.58
+540,2020-09-02,24,Sports & Outdoors,414.95,6,59,South,Strategy C,2489.7
+541,2020-01-16,33,Home & Garden,477.42,6,19,West,Strategy A,2864.52
+542,2020-06-18,29,Clothing,200.54,9,44,North,Strategy C,1804.86
+543,2020-06-15,44,Beauty & Health,294.24,3,26,West,Strategy C,882.72
+544,2020-11-05,34,Clothing,349.86,1,37,South,Strategy D,349.86
+545,2020-03-23,47,Clothing,339.99,8,45,North,Strategy A,2719.92
+546,2020-08-08,45,Sports & Outdoors,476.94,8,53,South,Strategy B,3815.52
+547,2020-11-17,9,Home & Garden,151.29,1,40,South,Strategy D,151.29
+548,2020-06-18,38,Beauty & Health,152.77,4,43,East,Strategy D,611.08
+549,2020-11-18,3,Sports & Outdoors,459.82,2,42,East,Strategy B,919.64
+550,2020-04-24,18,Electronics,401.66,1,62,West,Strategy B,401.66
+551,2020-12-14,16,Beauty & Health,109.64,9,38,East,Strategy C,986.76
+552,2020-11-30,4,Sports & Outdoors,289.32,1,54,North,Strategy C,289.32
+553,2020-08-17,22,Beauty & Health,375.42,7,42,North,Strategy D,2627.94
+554,2020-08-07,49,Beauty & Health,182.99,3,48,North,Strategy B,548.97
+555,2020-09-03,30,Sports & Outdoors,222.85,2,30,South,Strategy C,445.7
+556,2020-04-10,38,Clothing,291.94,4,60,South,Strategy D,1167.76
+557,2020-08-09,23,Clothing,238.88,5,46,South,Strategy B,1194.4
+558,2020-06-27,19,Sports & Outdoors,378.99,6,68,South,Strategy D,2273.94
+559,2020-06-23,8,Beauty & Health,12.91,2,22,East,Strategy B,25.82
+560,2020-04-03,50,Clothing,222.97,7,19,South,Strategy D,1560.79
+561,2020-04-24,27,Home & Garden,175.41,2,23,North,Strategy C,350.82
+562,2020-06-10,5,Electronics,308.49,4,62,West,Strategy B,1233.96
+563,2020-09-25,46,Electronics,390.22,9,39,West,Strategy A,3511.9800000000005
+564,2020-08-12,26,Home & Garden,47.31,3,67,West,Strategy B,141.93
+565,2020-08-21,27,Home & Garden,87.45,7,42,North,Strategy A,612.15
+566,2020-12-02,48,Home & Garden,335.89,1,26,West,Strategy A,335.89
+567,2020-03-07,20,Beauty & Health,371.82,5,62,South,Strategy D,1859.1
+568,2020-05-05,15,Clothing,298.22,5,66,East,Strategy D,1491.1
+569,2020-05-18,19,Home & Garden,491.57,1,48,West,Strategy D,491.57
+570,2020-04-22,33,Sports & Outdoors,254.74,4,50,East,Strategy B,1018.96
+571,2020-08-06,28,Electronics,76.78,4,39,West,Strategy D,307.12
+572,2020-06-04,37,Electronics,346.28,7,21,East,Strategy B,2423.96
+573,2020-07-03,39,Home & Garden,305.02,8,38,East,Strategy C,2440.16
+574,2020-04-30,21,Clothing,299.31,7,35,South,Strategy D,2095.17
+575,2020-11-17,45,Home & Garden,277.47,8,35,East,Strategy A,2219.76
+576,2020-07-16,4,Sports & Outdoors,470.16,2,29,East,Strategy D,940.32
+577,2020-12-10,19,Home & Garden,73.29,7,36,West,Strategy D,513.0300000000001
+578,2020-10-17,14,Beauty & Health,45.87,9,53,South,Strategy C,412.83
+579,2020-01-04,50,Home & Garden,85.52,3,39,North,Strategy B,256.56
+580,2020-07-07,32,Beauty & Health,130.05,6,63,South,Strategy A,780.3000000000001
+581,2020-08-26,34,Clothing,300.54,1,61,North,Strategy D,300.54
+582,2020-06-14,19,Clothing,310.09,3,52,West,Strategy B,930.27
+583,2020-06-20,13,Sports & Outdoors,123.97,6,69,West,Strategy C,743.8199999999999
+584,2020-07-30,48,Clothing,249.72,4,51,South,Strategy C,998.88
+585,2020-12-10,28,Beauty & Health,246.21,1,27,East,Strategy C,246.21
+586,2020-03-11,40,Clothing,232.02,6,45,West,Strategy B,1392.12
+587,2020-05-28,35,Beauty & Health,403.74,3,41,East,Strategy B,1211.22
+588,2020-10-11,8,Sports & Outdoors,241.13,4,59,East,Strategy C,964.52
+589,2020-04-25,31,Beauty & Health,381.6,4,69,North,Strategy A,1526.4
+590,2020-11-18,46,Home & Garden,91.58,1,54,North,Strategy A,91.58
+591,2020-04-02,17,Clothing,270.66,7,66,South,Strategy B,1894.62
+592,2020-04-12,2,Electronics,413.81,7,51,West,Strategy C,2896.67
+593,2020-12-23,25,Home & Garden,97.08,2,29,North,Strategy A,194.16
+594,2020-07-16,17,Beauty & Health,237.81,7,63,South,Strategy B,1664.67
+595,2020-04-19,46,Home & Garden,308.45,6,26,South,Strategy A,1850.7
+596,2020-11-25,28,Home & Garden,100.54,7,61,West,Strategy A,703.7800000000001
+597,2020-04-10,38,Home & Garden,380.82,3,64,West,Strategy B,1142.46
+598,2020-07-01,25,Home & Garden,48.71,1,47,North,Strategy A,48.71
+599,2020-11-29,49,Beauty & Health,473.74,2,51,West,Strategy B,947.48
+600,2020-06-08,13,Clothing,239.43,9,65,West,Strategy A,2154.87
+601,2020-03-22,5,Clothing,174.7,1,32,South,Strategy D,174.7
+602,2020-02-05,49,Home & Garden,67.24,5,48,East,Strategy A,336.2
+603,2020-08-25,47,Electronics,221.97,9,64,North,Strategy B,1997.73
+604,2020-08-31,41,Clothing,333.3,3,49,East,Strategy C,999.9
+605,2020-09-07,15,Beauty & Health,56.3,8,41,South,Strategy D,450.4
+606,2020-09-11,50,Beauty & Health,160.07,9,61,North,Strategy C,1440.63
+607,2020-10-08,11,Clothing,419.65,1,39,East,Strategy D,419.65
+608,2020-01-22,28,Beauty & Health,326.63,7,20,West,Strategy C,2286.41
+609,2020-08-17,15,Beauty & Health,111.12,5,44,West,Strategy B,555.6
+610,2020-06-02,39,Sports & Outdoors,88.85,1,54,South,Strategy B,88.85
+611,2020-04-29,14,Beauty & Health,453.2,6,64,West,Strategy A,2719.2
+612,2020-06-14,5,Clothing,150.64,8,27,North,Strategy A,1205.12
+613,2020-07-17,23,Clothing,97.96,2,19,North,Strategy C,195.92
+614,2020-12-12,16,Electronics,499.98,3,21,West,Strategy B,1499.94
+615,2020-03-15,30,Home & Garden,161.5,1,35,East,Strategy A,161.5
+616,2020-03-19,15,Clothing,71.12,9,19,East,Strategy C,640.08
+617,2020-11-14,43,Beauty & Health,236.26,6,66,South,Strategy B,1417.56
+618,2020-03-13,26,Electronics,222.83,7,48,South,Strategy B,1559.8100000000002
+619,2020-07-18,12,Sports & Outdoors,464.13,7,52,North,Strategy C,3248.91
+620,2020-10-28,32,Electronics,75.76,4,51,North,Strategy D,303.04
+621,2020-05-13,28,Beauty & Health,54.66,3,65,West,Strategy A,163.98
+622,2020-02-17,23,Clothing,55.56,5,66,South,Strategy C,277.8
+623,2020-07-06,47,Electronics,453.1,2,28,West,Strategy D,906.2
+624,2020-06-19,44,Beauty & Health,230.19,9,24,East,Strategy D,2071.71
+625,2020-05-18,21,Sports & Outdoors,83.8,7,23,East,Strategy D,586.6
+626,2020-08-30,3,Electronics,300.98,3,60,North,Strategy A,902.94
+627,2020-11-09,26,Beauty & Health,273.44,6,24,West,Strategy A,1640.64
+628,2020-12-11,1,Home & Garden,107.22,2,59,West,Strategy B,214.44
+629,2020-05-05,32,Clothing,305.49,7,56,North,Strategy D,2138.4300000000003
+630,2020-07-25,47,Beauty & Health,176.71,7,23,East,Strategy B,1236.97
+631,2020-12-04,7,Home & Garden,126.8,1,48,South,Strategy D,126.8
+632,2020-07-16,19,Clothing,260.1,4,26,North,Strategy B,1040.4
+633,2020-07-05,23,Clothing,152.91,8,35,North,Strategy B,1223.28
+634,2020-01-18,47,Clothing,118.85,1,40,North,Strategy C,118.85
+635,2020-07-16,26,Home & Garden,441.06,7,21,North,Strategy D,3087.42
+636,2020-12-16,14,Electronics,86.32,9,33,North,Strategy B,776.8799999999999
+637,2020-06-01,13,Home & Garden,147.49,3,56,North,Strategy B,442.47
+638,2020-05-11,38,Home & Garden,199.21,9,64,East,Strategy A,1792.89
+639,2020-11-21,20,Beauty & Health,144.08,2,48,East,Strategy B,288.16
+640,2020-06-13,32,Beauty & Health,113.25,4,24,West,Strategy B,453.0
+641,2020-02-28,29,Sports & Outdoors,387.86,5,47,South,Strategy C,1939.3
+642,2020-06-26,20,Home & Garden,171.22,5,40,East,Strategy D,856.1
+643,2020-06-01,41,Home & Garden,65.13,2,28,West,Strategy B,130.26
+644,2020-06-10,41,Sports & Outdoors,275.04,2,46,East,Strategy B,550.08
+645,2020-12-19,26,Home & Garden,71.49,6,25,West,Strategy C,428.94
+646,2020-08-29,48,Home & Garden,185.18,7,45,South,Strategy D,1296.26
+647,2020-05-15,30,Sports & Outdoors,442.1,9,66,West,Strategy B,3978.9
+648,2020-08-23,29,Sports & Outdoors,190.89,2,37,North,Strategy B,381.78
+649,2020-02-16,43,Sports & Outdoors,319.93,1,20,East,Strategy C,319.93
+650,2020-05-07,11,Clothing,262.17,1,69,East,Strategy C,262.17
+651,2020-12-03,21,Beauty & Health,77.49,1,25,West,Strategy D,77.49
+652,2020-06-06,18,Sports & Outdoors,328.04,3,30,South,Strategy D,984.12
+653,2020-01-13,1,Clothing,429.46,9,69,South,Strategy B,3865.14
+654,2020-04-28,40,Beauty & Health,55.67,2,37,East,Strategy B,111.34
+655,2020-10-29,39,Sports & Outdoors,379.3,1,69,North,Strategy C,379.3
+656,2020-10-15,35,Home & Garden,348.2,9,48,North,Strategy D,3133.8
+657,2020-10-17,2,Home & Garden,434.66,2,48,South,Strategy C,869.32
+658,2020-04-25,49,Beauty & Health,61.01,7,45,West,Strategy D,427.07
+659,2020-03-28,23,Electronics,159.79,1,33,West,Strategy D,159.79
+660,2020-05-04,46,Beauty & Health,350.2,9,65,South,Strategy D,3151.8
+661,2020-06-23,50,Clothing,20.79,9,41,North,Strategy D,187.11
+662,2020-12-29,23,Home & Garden,369.7,1,48,West,Strategy C,369.7
+663,2020-02-22,40,Home & Garden,430.41,9,37,West,Strategy D,3873.69
+664,2020-04-20,29,Sports & Outdoors,232.12,4,26,East,Strategy A,928.48
+665,2020-03-05,2,Clothing,222.82,4,31,East,Strategy D,891.28
+666,2020-11-28,22,Electronics,146.45,1,56,South,Strategy B,146.45
+667,2020-03-14,3,Clothing,12.48,8,56,West,Strategy C,99.84
+668,2020-05-26,33,Clothing,101.29,5,20,West,Strategy A,506.4500000000001
+669,2020-09-17,7,Clothing,490.13,3,60,East,Strategy B,1470.39
+670,2020-09-20,39,Clothing,434.97,2,69,North,Strategy B,869.94
+671,2020-05-11,36,Electronics,140.59,7,22,West,Strategy C,984.13
+672,2020-02-18,37,Clothing,482.24,3,56,East,Strategy A,1446.72
+673,2020-03-17,24,Electronics,190.18,4,23,West,Strategy C,760.72
+674,2020-10-20,19,Beauty & Health,155.82,5,64,South,Strategy A,779.0999999999999
+675,2020-04-26,39,Clothing,84.88,8,68,South,Strategy D,679.04
+676,2020-02-18,26,Sports & Outdoors,451.79,3,51,South,Strategy A,1355.37
+677,2020-04-19,47,Electronics,493.63,1,42,East,Strategy C,493.63
+678,2020-06-28,16,Electronics,170.43,2,62,North,Strategy B,340.86
+679,2020-02-19,50,Clothing,354.68,7,46,East,Strategy B,2482.76
+680,2020-03-12,28,Sports & Outdoors,174.3,9,39,West,Strategy B,1568.7
+681,2020-12-12,22,Sports & Outdoors,61.45,8,62,East,Strategy A,491.6
+682,2020-10-12,2,Clothing,202.42,8,32,South,Strategy B,1619.36
+683,2020-01-04,10,Sports & Outdoors,280.27,2,68,West,Strategy A,560.54
+684,2020-03-15,18,Electronics,70.28,4,22,West,Strategy B,281.12
+685,2020-03-25,12,Clothing,410.95,3,59,East,Strategy C,1232.85
+686,2020-11-17,1,Clothing,253.71,8,35,East,Strategy C,2029.68
+687,2020-01-21,4,Clothing,124.85,3,33,West,Strategy D,374.55
+688,2020-07-27,37,Beauty & Health,300.45,9,43,West,Strategy A,2704.05
+689,2020-02-12,21,Clothing,398.7,8,54,West,Strategy A,3189.6
+690,2020-01-29,20,Home & Garden,170.54,7,30,South,Strategy B,1193.78
+691,2020-12-09,48,Home & Garden,353.72,4,56,South,Strategy B,1414.88
+692,2020-06-29,6,Electronics,219.65,6,47,West,Strategy D,1317.9
+693,2020-10-31,21,Beauty & Health,482.39,1,48,North,Strategy A,482.39
+694,2020-04-12,5,Beauty & Health,387.76,5,52,East,Strategy B,1938.8
+695,2020-09-22,42,Sports & Outdoors,184.61,6,37,North,Strategy A,1107.66
+696,2020-09-15,17,Clothing,18.7,7,60,South,Strategy B,130.9
+697,2020-12-30,17,Home & Garden,332.18,6,37,West,Strategy B,1993.08
+698,2020-08-21,6,Beauty & Health,106.96,2,49,East,Strategy A,213.92
+699,2020-12-11,33,Home & Garden,69.72,7,59,West,Strategy C,488.04
+700,2020-04-10,23,Home & Garden,466.57,6,54,North,Strategy C,2799.42
+701,2020-03-31,4,Clothing,499.97,1,59,East,Strategy D,499.97
+702,2020-03-09,9,Home & Garden,142.25,9,29,West,Strategy D,1280.25
+703,2020-04-15,29,Electronics,157.87,9,25,East,Strategy B,1420.83
+704,2020-01-11,42,Electronics,90.84,4,23,South,Strategy A,363.36
+705,2020-01-13,11,Beauty & Health,234.27,8,31,East,Strategy B,1874.16
+706,2020-04-14,39,Beauty & Health,434.26,6,52,West,Strategy B,2605.56
+707,2020-08-13,29,Sports & Outdoors,353.74,3,64,North,Strategy C,1061.22
+708,2020-06-16,32,Home & Garden,424.7,6,50,West,Strategy D,2548.2
+709,2020-10-16,45,Beauty & Health,121.96,1,50,South,Strategy C,121.96
+710,2020-04-09,12,Clothing,367.92,5,46,West,Strategy D,1839.6
+711,2020-08-05,35,Beauty & Health,460.08,7,30,East,Strategy B,3220.56
+712,2020-11-02,28,Electronics,147.89,3,47,North,Strategy C,443.67
+713,2020-12-10,50,Home & Garden,348.42,7,69,East,Strategy B,2438.94
+714,2020-07-29,8,Electronics,206.32,2,28,East,Strategy D,412.64
+715,2020-10-03,40,Beauty & Health,152.21,5,60,North,Strategy C,761.0500000000001
+716,2020-08-10,39,Beauty & Health,485.12,8,27,North,Strategy B,3880.96
+717,2020-06-05,6,Electronics,180.83,4,69,South,Strategy C,723.32
+718,2020-03-13,10,Sports & Outdoors,62.85,8,67,South,Strategy A,502.8
+719,2020-10-01,25,Sports & Outdoors,200.41,1,37,East,Strategy B,200.41
+720,2020-02-09,13,Beauty & Health,229.36,6,40,West,Strategy B,1376.16
+721,2020-08-22,41,Sports & Outdoors,378.58,3,41,South,Strategy C,1135.74
+722,2020-05-03,34,Electronics,475.46,9,48,West,Strategy D,4279.139999999999
+723,2020-10-11,15,Home & Garden,410.36,6,31,East,Strategy B,2462.16
+724,2020-06-01,46,Beauty & Health,466.16,1,68,West,Strategy A,466.16
+725,2020-05-26,16,Clothing,242.78,7,49,South,Strategy D,1699.46
+726,2020-07-14,5,Sports & Outdoors,362.47,1,34,East,Strategy D,362.47
+727,2020-06-21,23,Sports & Outdoors,161.43,2,36,West,Strategy C,322.86
+728,2020-07-30,3,Clothing,44.1,4,19,South,Strategy A,176.4
+729,2020-10-28,8,Clothing,189.08,5,33,South,Strategy C,945.4
+730,2020-11-06,46,Electronics,351.98,7,50,East,Strategy C,2463.86
+731,2020-01-01,9,Electronics,144.56,1,32,West,Strategy C,144.56
+732,2020-05-18,6,Sports & Outdoors,432.09,8,27,North,Strategy D,3456.72
+733,2020-07-14,40,Home & Garden,397.48,5,24,South,Strategy C,1987.4
+734,2020-08-07,16,Electronics,105.08,4,69,East,Strategy A,420.32
+735,2020-12-21,16,Electronics,172.11,4,65,East,Strategy B,688.44
+736,2020-06-11,42,Beauty & Health,414.4,4,21,East,Strategy A,1657.6
+737,2020-02-20,26,Beauty & Health,129.53,3,24,North,Strategy B,388.59
+738,2020-08-30,23,Electronics,172.49,2,33,North,Strategy D,344.98
+739,2020-12-24,26,Home & Garden,178.1,4,47,South,Strategy A,712.4
+740,2020-01-21,26,Sports & Outdoors,402.51,9,39,East,Strategy D,3622.59
+741,2020-06-20,20,Clothing,28.14,2,69,West,Strategy D,56.28
+742,2020-04-28,30,Electronics,46.16,9,28,North,Strategy C,415.44
+743,2020-05-08,10,Home & Garden,293.44,9,31,North,Strategy C,2640.96
+744,2020-12-31,12,Home & Garden,204.58,5,45,North,Strategy A,1022.9
+745,2020-04-15,36,Home & Garden,320.11,7,44,North,Strategy B,2240.77
+746,2020-07-13,27,Electronics,140.57,4,44,West,Strategy C,562.28
+747,2020-08-13,40,Electronics,455.7,7,59,East,Strategy D,3189.9
+748,2020-05-20,19,Home & Garden,382.86,6,22,South,Strategy C,2297.16
+749,2020-09-28,9,Home & Garden,43.2,9,47,West,Strategy C,388.8
+750,2020-04-28,2,Electronics,394.11,1,66,North,Strategy C,394.11
+751,2020-02-03,36,Sports & Outdoors,485.1,8,46,South,Strategy A,3880.8
+752,2020-05-31,50,Electronics,471.79,7,33,North,Strategy D,3302.53
+753,2020-02-08,47,Beauty & Health,370.39,5,64,West,Strategy C,1851.95
+754,2020-09-14,11,Home & Garden,70.56,9,45,North,Strategy A,635.04
+755,2020-09-23,11,Sports & Outdoors,292.28,5,58,South,Strategy B,1461.4
+756,2020-01-07,25,Clothing,149.27,6,50,South,Strategy D,895.6200000000001
+757,2020-09-19,32,Electronics,485.4,6,63,East,Strategy B,2912.4
+758,2020-04-12,44,Home & Garden,361.57,7,67,East,Strategy D,2530.99
+759,2020-11-27,28,Electronics,309.28,8,32,West,Strategy A,2474.24
+760,2020-12-07,14,Clothing,350.59,4,22,East,Strategy A,1402.36
+761,2020-06-27,15,Electronics,224.61,9,43,East,Strategy D,2021.49
+762,2020-11-03,6,Sports & Outdoors,192.64,2,50,South,Strategy A,385.28
+763,2020-09-15,24,Clothing,468.54,2,30,South,Strategy B,937.08
+764,2020-11-28,43,Beauty & Health,172.64,9,62,West,Strategy A,1553.7599999999998
+765,2020-06-06,40,Beauty & Health,30.3,2,59,North,Strategy D,60.6
+766,2020-01-10,50,Home & Garden,206.41,5,60,West,Strategy D,1032.05
+767,2020-04-25,38,Beauty & Health,397.27,9,31,South,Strategy C,3575.43
+768,2020-04-26,39,Electronics,327.75,4,68,North,Strategy C,1311.0
+769,2020-06-30,12,Sports & Outdoors,481.46,2,68,East,Strategy C,962.92
+770,2020-08-23,44,Beauty & Health,62.04,7,67,North,Strategy D,434.28
+771,2020-07-12,25,Home & Garden,456.66,5,23,East,Strategy A,2283.3
+772,2020-10-26,18,Electronics,190.74,6,41,North,Strategy A,1144.44
+773,2020-03-20,22,Home & Garden,242.26,1,55,West,Strategy B,242.26
+774,2020-03-03,31,Home & Garden,219.96,8,48,East,Strategy D,1759.68
+775,2020-11-28,19,Sports & Outdoors,67.06,7,46,South,Strategy A,469.42
+776,2020-02-17,26,Sports & Outdoors,131.42,7,39,East,Strategy A,919.94
+777,2020-03-17,30,Home & Garden,373.71,8,37,East,Strategy C,2989.68
+778,2020-05-29,38,Home & Garden,21.27,3,42,North,Strategy C,63.81
+779,2020-04-30,50,Beauty & Health,75.61,2,65,West,Strategy A,151.22
+780,2020-10-01,41,Beauty & Health,22.35,2,41,West,Strategy C,44.7
+781,2020-12-11,50,Clothing,430.12,6,63,South,Strategy D,2580.7200000000003
+782,2020-01-14,43,Sports & Outdoors,312.49,3,28,North,Strategy C,937.47
+783,2020-08-10,32,Beauty & Health,93.27,2,48,South,Strategy D,186.54
+784,2020-04-02,40,Home & Garden,386.7,2,50,South,Strategy D,773.4
+785,2020-08-24,12,Beauty & Health,483.73,5,39,East,Strategy A,2418.65
+786,2020-04-15,15,Clothing,467.93,1,58,East,Strategy B,467.93
+787,2020-08-01,33,Beauty & Health,461.56,4,48,West,Strategy C,1846.24
+788,2020-01-07,2,Home & Garden,13.83,7,24,East,Strategy B,96.81
+789,2020-04-10,2,Beauty & Health,298.62,6,43,North,Strategy D,1791.72
+790,2020-02-18,37,Beauty & Health,135.75,6,23,North,Strategy C,814.5
+791,2020-02-10,26,Sports & Outdoors,286.68,5,49,South,Strategy C,1433.4
+792,2020-06-07,13,Sports & Outdoors,165.83,8,65,North,Strategy C,1326.64
+793,2020-05-23,9,Clothing,85.3,6,64,West,Strategy C,511.8
+794,2020-02-07,13,Clothing,227.8,2,45,West,Strategy B,455.6
+795,2020-02-29,25,Beauty & Health,252.6,3,43,East,Strategy A,757.8
+796,2020-04-23,20,Sports & Outdoors,494.99,3,51,North,Strategy D,1484.97
+797,2020-04-05,4,Sports & Outdoors,30.77,2,45,North,Strategy C,61.54
+798,2020-12-18,11,Beauty & Health,157.57,2,34,West,Strategy C,315.14
+799,2020-07-27,8,Sports & Outdoors,427.43,2,34,South,Strategy C,854.86
+800,2020-10-15,29,Electronics,333.25,5,33,East,Strategy C,1666.25
+801,2020-03-03,15,Home & Garden,415.07,9,48,North,Strategy D,3735.63
+802,2020-04-03,9,Electronics,333.54,3,52,North,Strategy A,1000.62
+803,2020-11-16,47,Electronics,382.17,6,23,South,Strategy B,2293.02
+804,2020-12-12,36,Electronics,251.53,8,26,South,Strategy B,2012.24
+805,2020-05-30,36,Sports & Outdoors,110.39,2,34,South,Strategy B,220.78
+806,2020-10-19,18,Beauty & Health,406.9,2,56,East,Strategy A,813.8
+807,2020-03-24,24,Clothing,288.23,8,69,South,Strategy B,2305.84
+808,2020-05-07,13,Home & Garden,78.36,1,57,North,Strategy B,78.36
+809,2020-09-18,46,Home & Garden,404.4,2,46,North,Strategy D,808.8
+810,2020-12-14,8,Electronics,479.71,7,23,East,Strategy A,3357.97
+811,2020-06-03,48,Clothing,179.62,9,18,South,Strategy A,1616.58
+812,2020-08-29,47,Beauty & Health,153.82,7,37,East,Strategy A,1076.74
+813,2020-03-24,40,Clothing,50.07,8,41,East,Strategy C,400.56
+814,2020-05-15,31,Clothing,335.6,8,48,West,Strategy B,2684.8
+815,2020-06-29,20,Home & Garden,479.89,3,64,East,Strategy D,1439.67
+816,2020-03-21,43,Sports & Outdoors,76.64,6,56,East,Strategy B,459.84
+817,2020-01-01,46,Electronics,247.73,5,58,South,Strategy A,1238.65
+818,2020-08-03,2,Sports & Outdoors,58.14,3,52,East,Strategy C,174.42000000000002
+819,2020-07-26,44,Home & Garden,26.71,2,35,West,Strategy A,53.42
+820,2020-11-26,19,Clothing,335.61,7,33,East,Strategy C,2349.27
+821,2020-09-09,15,Electronics,435.17,4,28,East,Strategy A,1740.68
+822,2020-05-11,26,Beauty & Health,175.41,5,36,North,Strategy D,877.05
+823,2020-03-02,38,Beauty & Health,439.12,6,58,West,Strategy C,2634.7200000000003
+824,2020-11-19,9,Clothing,67.36,7,45,South,Strategy A,471.52
+825,2020-05-24,35,Sports & Outdoors,126.6,4,69,West,Strategy D,506.4
+826,2020-03-25,27,Sports & Outdoors,451.79,8,60,East,Strategy B,3614.32
+827,2020-04-26,12,Electronics,259.17,9,56,North,Strategy A,2332.53
+828,2020-08-17,45,Home & Garden,308.01,5,32,South,Strategy C,1540.05
+829,2020-09-12,12,Sports & Outdoors,28.63,2,65,East,Strategy D,57.26
+830,2020-11-08,41,Beauty & Health,72.91,5,35,West,Strategy C,364.55
+831,2020-11-14,37,Beauty & Health,37.34,8,59,South,Strategy A,298.72
+832,2020-02-18,50,Beauty & Health,453.45,4,62,South,Strategy D,1813.8
+833,2020-05-25,13,Sports & Outdoors,76.05,3,21,South,Strategy B,228.15
+834,2020-01-10,18,Clothing,426.34,8,66,East,Strategy B,3410.72
+835,2020-07-09,32,Sports & Outdoors,182.01,5,43,East,Strategy B,910.05
+836,2020-03-20,11,Sports & Outdoors,402.29,5,42,South,Strategy B,2011.45
+837,2020-08-18,49,Electronics,188.87,9,62,North,Strategy D,1699.83
+838,2020-07-25,11,Home & Garden,141.17,1,49,South,Strategy C,141.17
+839,2020-08-16,12,Sports & Outdoors,55.89,8,41,East,Strategy C,447.12
+840,2020-11-23,30,Sports & Outdoors,147.55,8,33,East,Strategy B,1180.4
+841,2020-11-14,35,Home & Garden,241.03,9,39,East,Strategy B,2169.27
+842,2020-10-06,11,Beauty & Health,410.58,6,47,East,Strategy A,2463.48
+843,2020-12-13,13,Home & Garden,231.73,1,40,South,Strategy B,231.73
+844,2020-01-08,50,Sports & Outdoors,486.0,1,42,North,Strategy A,486.0
+845,2020-10-05,40,Clothing,275.4,9,21,West,Strategy D,2478.6
+846,2020-12-20,49,Electronics,22.22,8,27,South,Strategy B,177.76
+847,2020-06-07,11,Electronics,213.53,9,56,West,Strategy D,1921.77
+848,2020-09-03,3,Home & Garden,347.56,3,18,East,Strategy C,1042.68
+849,2020-03-21,48,Home & Garden,124.8,5,33,West,Strategy B,624.0
+850,2020-06-04,12,Beauty & Health,352.33,7,62,West,Strategy A,2466.31
+851,2020-02-17,47,Electronics,256.81,1,59,South,Strategy C,256.81
+852,2020-04-24,42,Home & Garden,22.61,8,32,North,Strategy D,180.88
+853,2020-01-12,28,Sports & Outdoors,389.43,9,23,North,Strategy C,3504.87
+854,2020-11-30,4,Sports & Outdoors,284.58,6,35,South,Strategy D,1707.48
+855,2020-10-13,17,Clothing,50.42,5,59,North,Strategy B,252.1
+856,2020-03-31,1,Clothing,242.85,4,21,South,Strategy A,971.4
+857,2020-10-17,14,Home & Garden,150.77,6,66,South,Strategy D,904.62
+858,2020-02-24,39,Beauty & Health,441.04,9,37,North,Strategy D,3969.36
+859,2020-12-03,5,Beauty & Health,149.61,4,36,East,Strategy A,598.44
+860,2020-06-12,4,Beauty & Health,471.43,8,61,South,Strategy A,3771.44
+861,2020-03-12,20,Beauty & Health,277.61,7,67,North,Strategy C,1943.27
+862,2020-12-31,18,Electronics,168.57,4,67,West,Strategy C,674.28
+863,2020-11-11,17,Beauty & Health,408.64,2,19,West,Strategy B,817.28
+864,2020-04-22,8,Clothing,351.73,6,25,South,Strategy D,2110.38
+865,2020-03-09,25,Clothing,212.84,3,26,North,Strategy A,638.52
+866,2020-01-14,12,Electronics,318.51,7,49,North,Strategy A,2229.57
+867,2020-04-11,23,Home & Garden,391.51,9,32,South,Strategy C,3523.59
+868,2020-10-02,28,Sports & Outdoors,427.26,2,32,West,Strategy D,854.52
+869,2020-12-29,3,Clothing,410.04,6,38,South,Strategy C,2460.24
+870,2020-09-21,9,Clothing,91.38,8,36,South,Strategy A,731.04
+871,2020-12-18,9,Electronics,415.91,7,65,West,Strategy D,2911.3700000000003
+872,2020-07-28,26,Clothing,38.73,5,53,West,Strategy B,193.65
+873,2020-07-16,39,Sports & Outdoors,108.08,4,62,East,Strategy B,432.32
+874,2020-04-10,34,Electronics,315.23,9,58,East,Strategy B,2837.07
+875,2020-09-10,25,Beauty & Health,66.2,8,57,West,Strategy C,529.6
+876,2020-06-06,22,Beauty & Health,305.64,5,49,West,Strategy B,1528.1999999999998
+877,2020-08-18,5,Beauty & Health,160.9,8,19,South,Strategy C,1287.2
+878,2020-05-30,32,Sports & Outdoors,220.44,8,44,West,Strategy A,1763.52
+879,2020-01-31,12,Home & Garden,164.42,5,42,North,Strategy A,822.0999999999999
+880,2020-09-12,38,Clothing,44.39,7,56,South,Strategy A,310.73
+881,2020-01-20,8,Sports & Outdoors,255.37,3,59,North,Strategy A,766.11
+882,2020-09-17,23,Home & Garden,482.16,8,49,West,Strategy C,3857.28
+883,2020-05-28,43,Electronics,309.77,4,29,North,Strategy A,1239.08
+884,2020-12-28,32,Sports & Outdoors,157.02,1,66,West,Strategy A,157.02
+885,2020-03-15,10,Electronics,478.51,8,53,South,Strategy D,3828.08
+886,2020-05-03,19,Home & Garden,200.73,6,29,South,Strategy B,1204.38
+887,2020-08-02,24,Sports & Outdoors,351.78,8,67,West,Strategy C,2814.24
+888,2020-11-12,20,Clothing,320.72,1,65,South,Strategy A,320.72
+889,2020-08-17,26,Home & Garden,476.93,4,67,South,Strategy C,1907.72
+890,2020-09-07,6,Clothing,458.16,2,67,East,Strategy C,916.32
+891,2020-04-03,26,Electronics,82.52,1,68,West,Strategy C,82.52
+892,2020-06-18,46,Clothing,51.99,9,65,South,Strategy D,467.91
+893,2020-02-10,48,Sports & Outdoors,406.72,3,68,South,Strategy C,1220.16
+894,2020-07-07,25,Sports & Outdoors,453.42,5,63,North,Strategy B,2267.1
+895,2020-07-28,45,Beauty & Health,251.56,4,47,West,Strategy D,1006.24
+896,2020-06-28,27,Clothing,348.47,6,54,East,Strategy D,2090.82
+897,2020-10-23,44,Beauty & Health,44.2,4,68,West,Strategy A,176.8
+898,2020-02-29,33,Home & Garden,117.7,5,28,North,Strategy A,588.5
+899,2020-01-30,31,Electronics,83.19,4,60,North,Strategy C,332.76
+900,2020-08-13,15,Home & Garden,304.57,4,44,North,Strategy B,1218.28
+901,2020-04-04,8,Electronics,106.79,8,29,South,Strategy B,854.32
+902,2020-08-26,33,Clothing,39.32,7,59,East,Strategy B,275.24
+903,2020-06-14,2,Sports & Outdoors,158.08,5,25,North,Strategy C,790.4000000000001
+904,2020-08-04,48,Clothing,341.83,9,50,North,Strategy D,3076.47
+905,2020-09-29,46,Electronics,293.15,9,45,East,Strategy C,2638.35
+906,2020-12-21,44,Beauty & Health,172.06,2,25,North,Strategy A,344.12
+907,2020-06-16,27,Electronics,418.4,2,38,South,Strategy D,836.8
+908,2020-06-06,16,Beauty & Health,145.37,6,35,North,Strategy B,872.22
+909,2020-03-06,5,Home & Garden,137.67,1,28,South,Strategy A,137.67
+910,2020-10-06,11,Sports & Outdoors,284.37,5,46,West,Strategy A,1421.85
+911,2020-07-19,22,Home & Garden,244.33,7,24,West,Strategy B,1710.3100000000002
+912,2020-03-28,40,Clothing,228.53,4,46,West,Strategy D,914.12
+913,2020-10-20,43,Beauty & Health,86.33,3,34,East,Strategy D,258.99
+914,2020-08-05,44,Beauty & Health,257.28,4,22,South,Strategy C,1029.12
+915,2020-12-11,31,Home & Garden,136.92,1,23,West,Strategy C,136.92
+916,2020-05-14,23,Sports & Outdoors,202.17,6,42,East,Strategy B,1213.02
+917,2020-08-04,1,Sports & Outdoors,369.45,1,62,East,Strategy A,369.45
+918,2020-04-11,18,Home & Garden,469.06,3,66,South,Strategy B,1407.18
+919,2020-10-24,13,Sports & Outdoors,389.19,3,50,North,Strategy A,1167.57
+920,2020-02-13,28,Clothing,208.76,9,64,West,Strategy B,1878.84
+921,2020-04-20,44,Electronics,300.59,9,30,West,Strategy B,2705.31
+922,2020-08-27,48,Beauty & Health,375.78,1,19,North,Strategy B,375.78
+923,2020-10-05,23,Beauty & Health,212.97,9,65,North,Strategy B,1916.73
+924,2020-12-31,32,Beauty & Health,186.52,8,30,North,Strategy C,1492.16
+925,2020-01-12,35,Electronics,76.27,2,43,North,Strategy B,152.54
+926,2020-04-29,35,Clothing,370.77,7,18,West,Strategy A,2595.39
+927,2020-10-09,43,Home & Garden,420.87,7,23,South,Strategy A,2946.09
+928,2020-02-18,5,Sports & Outdoors,165.13,3,30,East,Strategy A,495.39
+929,2020-07-18,37,Sports & Outdoors,393.92,3,48,North,Strategy B,1181.76
+930,2020-08-27,20,Electronics,309.0,2,58,West,Strategy C,618.0
+931,2020-07-01,45,Beauty & Health,394.2,4,35,West,Strategy D,1576.8
+932,2020-04-06,18,Sports & Outdoors,211.56,6,46,West,Strategy D,1269.36
+933,2020-12-22,49,Home & Garden,376.31,6,46,East,Strategy A,2257.86
+934,2020-12-04,48,Sports & Outdoors,210.17,3,29,North,Strategy C,630.51
+935,2020-03-28,7,Beauty & Health,53.49,2,47,North,Strategy D,106.98
+936,2020-01-03,7,Home & Garden,279.78,7,19,North,Strategy A,1958.46
+937,2020-09-21,49,Beauty & Health,232.62,3,58,South,Strategy C,697.86
+938,2020-09-23,10,Beauty & Health,133.91,6,18,East,Strategy A,803.46
+939,2020-09-18,29,Electronics,447.14,2,62,West,Strategy C,894.28
+940,2020-10-21,14,Beauty & Health,197.6,5,68,South,Strategy B,988.0
+941,2020-04-10,10,Home & Garden,29.17,4,45,East,Strategy C,116.68
+942,2020-04-27,22,Electronics,197.25,4,33,North,Strategy A,789.0
+943,2020-02-29,3,Electronics,218.01,2,61,North,Strategy A,436.02
+944,2020-06-13,10,Home & Garden,432.2,6,34,West,Strategy B,2593.2
+945,2020-09-18,47,Electronics,401.6,5,44,North,Strategy A,2008.0
+946,2020-02-08,37,Home & Garden,107.98,4,31,West,Strategy D,431.92
+947,2020-06-12,29,Sports & Outdoors,421.12,4,43,South,Strategy D,1684.48
+948,2020-03-29,1,Electronics,131.48,8,59,East,Strategy D,1051.84
+949,2020-07-26,11,Sports & Outdoors,177.55,9,41,East,Strategy C,1597.95
+950,2020-12-06,14,Electronics,47.64,5,25,East,Strategy B,238.2
+951,2020-09-22,44,Beauty & Health,37.12,4,37,South,Strategy D,148.48
+952,2020-05-12,3,Home & Garden,343.62,3,56,East,Strategy D,1030.86
+953,2020-01-25,38,Beauty & Health,462.44,5,19,West,Strategy A,2312.2
+954,2020-04-04,8,Sports & Outdoors,251.58,6,61,East,Strategy A,1509.48
+955,2020-12-05,24,Home & Garden,423.61,4,58,West,Strategy D,1694.44
+956,2020-03-18,31,Home & Garden,398.94,5,22,South,Strategy C,1994.7
+957,2020-09-24,18,Sports & Outdoors,335.69,5,33,South,Strategy C,1678.45
+958,2020-03-22,4,Home & Garden,489.33,2,39,East,Strategy C,978.66
+959,2020-06-03,48,Home & Garden,403.07,4,37,East,Strategy C,1612.28
+960,2020-06-24,35,Electronics,144.67,2,46,South,Strategy D,289.34
+961,2020-04-08,17,Clothing,396.62,9,51,South,Strategy A,3569.58
+962,2020-01-22,19,Beauty & Health,349.4,3,28,South,Strategy D,1048.1999999999998
+963,2020-06-19,43,Clothing,205.77,9,42,South,Strategy C,1851.93
+964,2020-05-25,19,Home & Garden,47.63,2,43,South,Strategy B,95.26
+965,2020-04-11,29,Clothing,115.04,7,25,West,Strategy B,805.2800000000001
+966,2020-09-01,36,Electronics,400.65,2,38,South,Strategy D,801.3
+967,2020-07-02,27,Sports & Outdoors,131.76,2,53,West,Strategy D,263.52
+968,2020-04-10,50,Sports & Outdoors,498.95,2,41,West,Strategy A,997.9
+969,2020-07-15,40,Clothing,350.05,5,32,North,Strategy C,1750.25
+970,2020-04-21,43,Electronics,243.84,5,33,East,Strategy D,1219.2
+971,2020-08-14,47,Sports & Outdoors,289.51,8,22,East,Strategy A,2316.08
+972,2020-09-24,6,Clothing,309.33,1,61,East,Strategy A,309.33
+973,2020-04-07,29,Clothing,484.78,2,54,South,Strategy D,969.56
+974,2020-08-26,44,Beauty & Health,89.25,8,48,North,Strategy B,714.0
+975,2020-01-12,20,Electronics,143.47,8,50,East,Strategy C,1147.76
+976,2020-01-26,11,Beauty & Health,357.7,7,57,North,Strategy D,2503.9
+977,2020-04-07,11,Clothing,127.53,3,60,North,Strategy A,382.59
+978,2020-12-17,10,Beauty & Health,436.94,3,39,South,Strategy D,1310.82
+979,2020-10-28,28,Beauty & Health,179.8,3,69,East,Strategy B,539.4000000000001
+980,2020-09-19,36,Clothing,98.61,8,19,West,Strategy B,788.88
+981,2020-03-30,12,Sports & Outdoors,33.33,2,68,West,Strategy A,66.66
+982,2020-12-10,33,Home & Garden,301.84,7,41,North,Strategy C,2112.88
+983,2020-02-08,39,Sports & Outdoors,414.39,8,18,South,Strategy D,3315.12
+984,2020-02-21,32,Electronics,144.16,7,32,West,Strategy D,1009.12
+985,2020-01-17,23,Sports & Outdoors,459.59,3,45,West,Strategy C,1378.77
+986,2020-08-06,28,Clothing,381.29,2,31,East,Strategy A,762.58
+987,2020-09-16,22,Beauty & Health,40.04,9,55,South,Strategy B,360.36
+988,2020-12-12,34,Electronics,290.59,4,52,North,Strategy C,1162.36
+989,2020-05-02,45,Electronics,288.05,1,30,West,Strategy A,288.05
+990,2020-09-15,42,Electronics,109.16,9,20,East,Strategy C,982.44
+991,2020-05-13,44,Beauty & Health,173.93,8,68,East,Strategy A,1391.44
+992,2020-09-28,36,Sports & Outdoors,234.56,3,51,East,Strategy C,703.6800000000001
+993,2020-11-30,42,Beauty & Health,33.56,4,32,East,Strategy D,134.24
+994,2020-06-29,24,Home & Garden,83.39,2,35,East,Strategy B,166.78
+995,2020-12-25,41,Electronics,90.36,4,59,South,Strategy A,361.44
+996,2020-09-20,24,Clothing,195.83,6,62,East,Strategy A,1174.98
+997,2020-06-28,9,Beauty & Health,376.21,5,25,South,Strategy A,1881.05
+998,2020-12-24,42,Electronics,417.34,4,45,East,Strategy D,1669.36
+999,2020-09-06,46,Beauty & Health,89.8,3,41,North,Strategy A,269.4
