@@ -33,6 +33,45 @@ from transformers import pipeline
 
 
 
+#read from url
+import pandas as pd
+import requests
+from io import BytesIO
+from PyPDF2 import PdfFileReader
+
+def read_file_from_url(url):
+  # Get the file extension from the url
+  ext = url.split(".")[-1]
+
+  # Get the file content from the url as bytes
+  response = requests.get(url)
+  content = response.content
+
+  # If the file extension is csv, read it as a pandas dataframe
+  if ext == "csv":
+    df = pd.read_csv(BytesIO(content))
+    return df
+
+  # If the file extension is pdf, read it as a PyPDF2 reader object
+  elif ext == "pdf":
+    reader = PdfFileReader(BytesIO(content))
+    return reader
+
+  # Otherwise, raise an exception
+  else:
+    raise ValueError(f"Unsupported file extension: {ext}")
+
+
+
+
+
+
+
+
+
+
+
+
 def generate_prompt(question):
     promptquery = (
        """
@@ -130,11 +169,6 @@ def extract_python_code(text):
         return matches[0]
 
 
-def get_insight_prompts(agent):
-    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
-    result = agent(prompt)
-    return result.get('output')
-    
 
 def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):
     from langchain.chat_models import ChatOpenAI
@@ -142,7 +176,7 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
         model=model,
         temperature=temperature,
         max_tokens=max_tokens,
-        top_p=top_p,
+        # top_p=top_p,
         openai_api_key = st.secrets["openai_key"]
 
     )
@@ -153,25 +187,32 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
         verbose=True,
         return_intermediate_steps=True,
         agent_type=AgentType.OPENAI_FUNCTIONS,
-        handle_parsing_errors=False,
+        handle_parsing_errors=handle_error,
     )
     
     return pandas_df_agent
+    
+def intermediate_response(answer):
+    if answer["intermediate_steps"]:
+        action = answer["intermediate_steps"][-1][0].tool_input["query"]
+        st.write(f"Executed the code ```{action}```")
+    return answer["output"]
 
 
-
-def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, max_tokens=1048, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
     openai.api_key = st.secrets["openai_key"]
+    prompt_temp1 =  lambda x: x + "Your answers should be based on the provided dataframe {}".format(df)
+
     if not openai:
         pass
 
     """
     A function that answers data questions from a dataframe.
     """
-    plot_words = ["plot", "graph", "chart", "diagram", "figure","grafica","gráfica"]
+    plot_words = ["plot", "graph", "chart", "diagram", "figure","grafica","gráfica","matplotlib"]
     #if "plot" in st.session_state.messages[-1]["content"].lower() or "graph" in st.session_state.messages[-1]["content"].lower():
     if any(word in st.session_state.messages[-1]["content"].lower() for word in plot_words):
         code_prompt = """
@@ -205,25 +246,30 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
         else:
             code = code.replace("fig.show()", "")
             code += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  # noqa: E501
-            # st.write(f"```{code}") #WRITE IT HERE?
+            #st.write(f"```{code}")
             exec(code)
             return response["choices"][0]["message"]["content"]
     else:
-        
         pandas_df_agent = get_agent(df)
-        try:
-            answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
-            if answer["intermediate_steps"]:
-                action = answer["intermediate_steps"][-1][0].tool_input["query"]
-                st.write(f"Executed the code ```{action}```")
-            return answer["output"]
-        except OutputParserException as e:
-            error_msg = """OutputParserException error occured in LangChain agent.
-                Refine your query. """ + e
-            return error_msg
-        except Exception as e:  # noqa: E722
-            answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
-            return answer
+        answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
+        if answer["intermediate_steps"]:
+            return intermediate_response(answer)
+        else:
+            return answer['output']
+
+        # try:
+        #     answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
+        #     if answer["intermediate_steps"]:
+        #         action = answer["intermediate_steps"][-1][0].tool_input["query"]
+        #         st.write(f"Executed the code ```{action}```")
+        #     return answer["output"]
+        # except OutputParserException:
+        #     error_msg = """OutputParserException error occured in LangChain agent.
+        #         Refine your query."""
+        #     return error_msg
+        # except:  # noqa: E722
+        #     answer = "Unknown error occured in LangChain agent. Refine your query"
+        #     return answer
 
 
 
@@ -360,9 +406,3 @@ def generate_trends_and_patterns_one(df):
 
     return trends_and_patterns
 
-
-
-
-
-    
-    

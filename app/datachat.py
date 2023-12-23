@@ -136,6 +136,20 @@ def get_insight_prompts(agent):
     return result.get('output')
     
 
+
+def handle_error(error):
+    import ast
+    
+    error2 = ast.literal_eval(error).get("arguments")
+    
+    if error2:
+        figidx = error2.find("fig.show()") 
+        res = error2[:figidx] if figidx!=-1 else error2
+        return res
+    else:
+        return str(error)
+    
+
 def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):
     from langchain.chat_models import ChatOpenAI
     llm = ChatOpenAI(
@@ -153,21 +167,37 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
         verbose=True,
         return_intermediate_steps=True,
         agent_type=AgentType.OPENAI_FUNCTIONS,
-        handle_parsing_errors=False,
+        handle_parsing_errors=handle_error,
     )
     
     return pandas_df_agent
 
+#If the code has matplotlib The solution should be given using plotly and only plotly so chage it. Do not use matplotlib
+
+def intermediate_response(answer):
+    if answer["intermediate_steps"]:
+        action = answer["intermediate_steps"][-1][0].tool_input["query"]
+        st.write(f"Executed the code ```{action}```")
+    return answer["output"]
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
+
+def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=3500, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
     openai.api_key = st.secrets["openai_key"]
+    
+    # prompt_temp1 = lambda x: "You are an expert in python and data analysis help with: "+x + """  If you encounter any parsing errors try to solve them on your own, as a tip check json formatting from your answets. If your response includes any plotting or code in matplotlib please execute it but using plotly instead, don't use matplotlib at all. 
+    # If the response has the word fig.show remove it and append this to the code to be executed: st.plotly_chart(fig, theme='streamlit', use_container_width=True) if you do this execute the generated code with exec(code).
+    # Remember all of your answers should be based on the provided dataframe {}""".format(df)
+    
+    prompt_temp1 =  lambda x: x + "Your answers should be based on the provided dataframe {}".format(df)
+    
+    
     if not openai:
         pass
-
+    
     """
     A function that answers data questions from a dataframe.
     """
@@ -176,11 +206,12 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
     if any(word in st.session_state.messages[-1]["content"].lower() for word in plot_words):
         code_prompt = """
             Generate the code <code> for plotting the previous data in plotly,
+            the code should always refer to the given loaded dataframe {}
             in the format requested. The solution should be given using plotly
             and only plotly. Do not use matplotlib.
             Return the code <code> in the following
             format ```python <code>```
-        """
+        """.format(df)
 
         st.session_state.messages.append({
             "role": "assistant",
@@ -211,19 +242,44 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
     else:
         
         pandas_df_agent = get_agent(df)
-        try:
-            answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
-            if answer["intermediate_steps"]:
-                action = answer["intermediate_steps"][-1][0].tool_input["query"]
-                st.write(f"Executed the code ```{action}```")
-            return answer["output"]
-        except OutputParserException as e:
-            error_msg = """OutputParserException error occured in LangChain agent.
-                Refine your query. """ + e
-            return error_msg
-        except Exception as e:  # noqa: E722
-            answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
-            return answer
+        answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
+        if answer["intermediate_steps"]:
+            return intermediate_response(answer)
+        else:
+            return answer['output']
+            
+        # try:
+        #     answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
+        #     if answer["intermediate_steps"]:
+        #        return intermediate_response(answer)
+        # except OutputParserException as e:
+        #     error_msg = """OutputParserException error occured in LangChain agent.
+        #         Refine your query. """ + e
+        #     return error_msg
+        # except Exception as e:  # noqa: E722
+        #     answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
+        #     st.write(answer)
+        #     import re
+        #     pattern = r"\{.*?\}"
+        #     match = re.search(pattern, str(e))
+        #     if match:
+        #         result = match.group()
+        #         st.write(result)
+        #         try:
+        #             import ast
+        #             answer2=pandas_df_agent("Execute the following code with exec(code).: " +prompt_temp1(handle_error(result)))
+        #             if answer2["intermediate_steps"]:
+        #                 return intermediate_response(answer2)
+        #         except Exception as ex1:
+        #             print(ex1)
+        #             # st.write("second exceptionS")
+        #             st.write(ex1)
+        #             answer3=pandas_df_agent("Execute the following code.: " +handle_error(re.search(pattern,str(ex1)).group()))
+        #             if answer3["intermediate_steps"]:
+        #                 return intermediate_response(answer3)
+        #             else:
+        #                 return answer3['output']
+                    
 
 
 
