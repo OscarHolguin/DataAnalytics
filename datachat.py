@@ -214,7 +214,7 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
 def intermediate_response(answer):
     if answer["intermediate_steps"]:
         action = answer["intermediate_steps"][-1][0].tool_input["query"]
-        st.write(f"Executed the code ```{action}```")
+        print(f"Executed the code ```{action}```")
         try:
             if "plotly" in action:
                 action = action.replace("fig.show()", "")
