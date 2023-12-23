@@ -172,7 +172,17 @@ def get_insight_prompts(agent):
     result = agent(prompt)
     return result.get('output')
 
-
+def handle_error(error):
+    import ast
+    
+    error2 = ast.literal_eval(error).get("arguments")
+    
+    if error2:
+        figidx = error2.find("fig.show()") 
+        res = error2[:figidx] if figidx!=-1 else error2
+        return res
+    else:
+        return str(error)
 
 def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):
     from langchain.chat_models import ChatOpenAI
