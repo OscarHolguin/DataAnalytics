@@ -270,11 +270,24 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
             return response["choices"][0]["message"]["content"]
     else:
         pandas_df_agent = get_agent(df)
-        answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
-        if answer["intermediate_steps"]:
-            return intermediate_response(answer)
-        else:
-            return answer['output']
+        try:
+            answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
+            if answer["intermediate_steps"]:
+                return intermediate_response(answer)
+            else:
+                return answer['output']
+        except ValueError as ve:
+            import re
+            pattern = r"\{.*?\}"
+            match = re.search(pattern, str(ve))
+            if match:
+                result = match.group()
+                answer2 = pandas_df_agent(("Execute the following code with exec(code) : "+ prompt_temp1(handle_error(result))))
+                if answer2["intermediate_steps"]:
+                    return intermediate_response(answer2)
+                else:
+                    return answer2['output']   
+
 
         # try:
         #     answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
