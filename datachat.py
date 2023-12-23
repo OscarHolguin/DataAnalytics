@@ -156,8 +156,6 @@ def write_response(response_dict: dict):
 
 
 
-
-
 #CODE FOR LANGCHAIN PANDAS DATAFRAME AGENT
 def extract_python_code(text):
     import re
@@ -167,6 +165,12 @@ def extract_python_code(text):
         return None
     else:
         return matches[0]
+
+
+def get_insight_prompts(agent):
+    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
+    result = agent(prompt)
+    return result.get('output')
 
 
 
@@ -191,7 +195,7 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
     )
     
     return pandas_df_agent
-    
+
 def intermediate_response(answer):
     if answer["intermediate_steps"]:
         action = answer["intermediate_steps"][-1][0].tool_input["query"]
