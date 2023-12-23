@@ -315,8 +315,8 @@ if file_ext =='csv':
             
                     with st.sidebar: 
                         for sug in suggestions_s:
-                            clickables[sug] = st.button(sug+ " ➤ " +, type="primary")
-                            
+                            clickables[sug] = st.button(sug+ " ➤ " , type="primary")
+
                         # for i,clickable in enumerate(clickables):
                             if clickables[sug]:
             
