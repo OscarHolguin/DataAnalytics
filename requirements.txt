@@ -27,3 +27,4 @@ langchain-experimental
 openai<1
 chromadb==0.3.29
 tiktoken
+PyPDF2
