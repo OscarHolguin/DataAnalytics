@@ -108,6 +108,42 @@ st.set_page_config(page_title = pagetitle,
 
 
 
+st.markdown(
+    """
+    <style>
+    button[kind="primary"] {
+        background: 5px darkblue;
+        border: none;
+        padding: 0!important;
+        color: white !important;
+        text-decoration: none;
+        cursor: pointer;
+        border: none !important;
+    }
+    button[kind="primary"]:hover {
+        text-decoration: click over me;
+        color: orange !important;
+    }
+    button[kind="primary"]:focus {
+        outline: none !important;
+        box-shadow: none !important;
+        color: blue !important;
+    }
+    /* Add this selector to create a box around the button with kind=primary */
+    div.stButton > button[kind=primary] {
+        border: 2px darkblue;
+        border-radius: 10px;
+        box-shadow: 0 0 5px black;
+        background-color: darkblue;
+        margin: 10px;
+        padding: 5px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
 
 
 st.title('BrAIn')
