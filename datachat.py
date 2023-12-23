@@ -215,6 +215,13 @@ def intermediate_response(answer):
     if answer["intermediate_steps"]:
         action = answer["intermediate_steps"][-1][0].tool_input["query"]
         st.write(f"Executed the code ```{action}```")
+        try:
+            if "plotly" in action:
+                action = action.replace("fig.show()", "")
+                action += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  
+            exec(action)
+        except Exception as e:
+            print(str(e))
     return answer["output"]
 
 
