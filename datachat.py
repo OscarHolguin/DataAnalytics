@@ -39,6 +39,11 @@ import requests
 from io import BytesIO
 from PyPDF2 import PdfFileReader
 
+#download nltk resource
+import nltk
+nltk.download('punkt')
+
+
 def read_file_from_url(url):
   # Get the file extension from the url
   ext = url.split(".")[-1]
