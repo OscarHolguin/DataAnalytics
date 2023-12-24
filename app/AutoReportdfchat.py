@@ -422,8 +422,8 @@ if file_ext =='csv':
     
     if st.session_state.df is not None and chat_toggle:
         pdfagent1 = get_agent(st.session_state.df)
-        if st.sidebar.toggle("suggest insights"):
-            st.sidebar.write("Suggested inisghts")
+        if st.sidebar.toggle("Suggest insights :bulb:"):
+            st.sidebar.subheader("Suggested Inisghts ::bar_chart: :chart_with_downwards_trend:")
             suggestions = get_insight_prompts(pdfagent1)
             suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
             suggestions_s = [x for x in suggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]

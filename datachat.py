@@ -289,7 +289,7 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
             match = re.search(pattern, str(ve))
             if match:
                 result = match.group()
-                answer2 = pandas_df_agent(("Execute the following code with exec(code) : "+ prompt_temp1(handle_error(result))))
+                answer2 = pandas_df_agent((f"Get the result of {prompt} by executing the following code : "+ prompt_temp1(handle_error(result))))
                 if answer2["intermediate_steps"]:
                     return intermediate_response(answer2)
                 else:
