@@ -446,9 +446,6 @@ if file_ext =='csv':
         #         fig.savefig("plot.png")  
                     
    
-
-
-
 elif file_ext =='pdf':
     st.sidebar.header("PDF options")
     extractimgs = st.sidebar.checkbox("extract_images")
@@ -456,7 +453,7 @@ elif file_ext =='pdf':
     if extractimgs:
         imgs = True
     bytes_data = data_file.read()  # read the content of the file in binary
-    tmppath = os.path.join("/tmp", data_file.name) if not urlfile else urlfile
+    tmppath = os.path.join("/tmp", data_file.name)
     with open(tmppath, "wb") as f:
         f.write(bytes_data)
     parser = PDFParser(tmppath,extract_images= imgs, max_tokens = 1048, chunk_overlap=64)
@@ -482,10 +479,13 @@ elif file_ext =='pdf':
     if st.sidebar.toggle("Generate NER"):
         
         nertype = st.radio(
-            "Select NER extraction type",
-            ["spacy","huggingface"],
-        captions = ["spacy model for NER","uses distil bert ner"])
-    
+    "Select NER extraction type",
+    ["spacy","huggingface"],
+    captions = ["spacy model for NER","uses distil bert ner"])
+        
+        
+
+        
         dfne = generate_ner(documents,nertype)
         dfne10 = dfne.sample(10)
         st.dataframe(dfne10)
@@ -497,33 +497,7 @@ elif file_ext =='pdf':
         
         components.html(HtmlFile.read(), height=1000)
 
-    #if st.toggle('pdfchat'):
-    if True:
-        st.session_state.prompt_history = []
 
-        if "messages" in st.session_state: 
-            print('messages found')
-        else:
-           if "messages" not in st.session_state.keys():
-               st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your file?"}]
-        
-        if "messages" in st.session_state:
-            for message in st.session_state.messages:
-                with st.chat_message(message["role"]):
-                    st.write(message["content"])
-            if prompt := st.chat_input():
-                st.session_state.messages.append({"role": "user", "content": prompt})
-                with st.chat_message("user"):
-                    st.write(prompt)
-            
-            if st.session_state.messages[-1]["role"] != "assistant":
-                if prompt:
-                    with st.chat_message("assistant"):
-                        with st.spinner("Thinking..."):
-                            response =  generate_responsepdf(documents,prompt)
-                            st.write(response)
-                            message = {"role": "assistant", "content": response}
-                            st.session_state.messages.append(message) 
         
         
         

@@ -131,7 +131,7 @@ def extract_python_code(text):
 
 
 def get_insight_prompts(agent):
-    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
+    prompt = "Based on the given dataframe give me 5 prompts to get plots of inisghts I can analyze, be brief only 1 sentence per prompt"
     result = agent(prompt)
     return result.get('output')
     
@@ -177,12 +177,12 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
 def intermediate_response(answer):
     if answer["intermediate_steps"]:
         action = answer["intermediate_steps"][-1][0].tool_input["query"]
-        st.write(f"Executed the code ```{action}```")
+        # st.write(f"Executed the code ```{action}```")
     return answer["output"]
 
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=3500, top_p=0.5,openail=True):
+def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -192,7 +192,7 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
     # If the response has the word fig.show remove it and append this to the code to be executed: st.plotly_chart(fig, theme='streamlit', use_container_width=True) if you do this execute the generated code with exec(code).
     # Remember all of your answers should be based on the provided dataframe {}""".format(df)
     
-    prompt_temp1 =  lambda x: x + "Your answers should be based on the provided dataframe {}".format(df)
+    prompt_temp1 =  lambda x: x + "Your answers should be based on the provided dataframe {} Dont generate data get data only from the dataframe".format(df)
     
     
     if not openai:
@@ -206,12 +206,11 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
     if any(word in st.session_state.messages[-1]["content"].lower() for word in plot_words):
         code_prompt = """
             Generate the code <code> for plotting the previous data in plotly,
-            the code should always refer to the given loaded dataframe {}
             in the format requested. The solution should be given using plotly
             and only plotly. Do not use matplotlib.
             Return the code <code> in the following
             format ```python <code>```
-        """.format(df)
+        """
 
         st.session_state.messages.append({
             "role": "assistant",
@@ -243,6 +242,7 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
         
         pandas_df_agent = get_agent(df)
         try:
+            print("THIS IS THE PROMPT", prompt_temp1(prompt))
             answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
             if answer["intermediate_steps"]:
                 return intermediate_response(answer)
@@ -254,7 +254,12 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
             match = re.search(pattern, str(ve))
             if match:
                 result = match.group()
-                answer2 = pandas_df_agent((f"Get the result of {prompt} by executing the following code : "+ prompt_temp1(handle_error(result))))
+                prompt_parsed = prompt_temp1(handle_error(result))
+                if "plot" or "matplotlib" in prompt_parsed:
+                    answer2 = pandas_df_agent((f"Get the result of {prompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed+
+                                               "Note: dont use matplotlib use plotly and display it with this st.plotly_chart(fig, theme='streamlit', use_container_width=True)"))
+                else:
+                    answer2 = pandas_df_agent((f"Get the result of {prompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed))
                 if answer2["intermediate_steps"]:
                     return intermediate_response(answer2)                       
         # try:

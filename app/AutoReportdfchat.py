@@ -76,6 +76,10 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
 from reports_template import Reports
 #
 from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,get_agent, get_insight_prompts
+from filechat import generate_responsepdf, get_pdf_prompts, get_pdf_agent
+
+
+
 reports = Reports()
 
 import hmac
@@ -311,6 +315,10 @@ def generate_chat_response(df,prompt,openail=True):
     return generate_response(df,prompt,openail=True)
 
 
+@st.cache_resource
+def generate_chatpdf_response(_agent,prompt):
+    return generate_responsepdf(_agent,prompt)
+
 # import streamlit_pills as sp
 
 # from streamlit_pills import pills
@@ -427,22 +435,17 @@ if file_ext =='csv':
             suggestions = get_insight_prompts(pdfagent1)
             suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
             suggestions_s = [x for x in suggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
-            print(suggestions_s[0])
+            # print(suggestions_s[0])
             clickables = {}
     
             with st.sidebar: 
                 for sug in suggestions_s:
                     clickables[sug] = st.button(sug + " ➤ ", type="primary")
                 # for i,clickable in enumerate(clickables):
-                    if clickables[sug]:
-    
-                          st.session_state.messages.append({"role": "user", "content": sug})
-                          with st.chat_message("assistant"):
-                              # with st.spinner("Thinking..."):
-                                  response =  generate_chat_response(df,sug,openail=True)
+
                                   # st.write(response)
-                                  message = {"role": "assistant", "content": response}
-                                  st.session_state.messages.append(message) 
+                                  # message = {"role": "assistant", "content": response}
+                                  # st.session_state.messages.append(message) 
 
         # suggestionins = ["Give the best insight for this data","plot the best insight","Calculate the best metric","Provide an in detail analysis for a stakeholder"]
         st.session_state.prompt_history = []
@@ -468,6 +471,18 @@ if file_ext =='csv':
 
             
             if st.session_state.messages[-1]["role"] != "assistant":
+                if not prompt:
+                                        
+                    for sug in suggestions_s:
+                        if clickables[sug]:
+                            # with st.chat_message("user"):
+                            #     st.write(clickables[sug])
+                            # # st.session_state.messages.append({"role": "user", "content": sug})
+                            # with st.chat_message("assistant"):
+                            #     with st.spinner("Thinking..."):
+                            #         response =  generate_chat_response(df,sug,openail=True)
+                            #         st.write(response)
+                            prompt = clickables[sug]
                 if prompt:
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
@@ -493,10 +508,10 @@ if file_ext =='csv':
                                 aggregated_data = aggregate_data(st.session_state.df, columns)
                                 st.subheader("Aggregated Data:")
                                 st.write(aggregated_data)
+                
                         
-                        
-                        
-                        
+
+
                         
                     #To generate images if needed
                     fig = plt.gcf()
@@ -509,6 +524,9 @@ if file_ext =='csv':
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
                     st.session_state.response_history = response_history
+                    
+
+                        
     
                     
         if st.sidebar.button("History"):
@@ -606,6 +624,54 @@ elif file_ext =='pdf':
         HtmlFile = open("entity.html", 'r', encoding='utf-8')
         
         components.html(HtmlFile.read(), height=1000)
+    
+    if True:
+        
+        st.session_state.prompt_history = []
+        qa_agent = get_pdf_agent(documents,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5)
+        if st.sidebar.toggle("Suggest insights :bulb:"):
+            st.sidebar.subheader("Suggested Inisghts:")
+            psuggestions = get_pdf_prompts(qa_agent)
+            psuggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(psuggestions)]))]
+            psuggestions_s = [x for x in psuggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
+            print(psuggestions_s[0])
+            pclickables = {}
+    
+            with st.sidebar: 
+                for psug in psuggestions_s:
+                    pclickables[psug] = st.button(psug + " ➤ ", type="primary")
+                    if pclickables[psug]:
+    
+                          st.session_state.messages.append({"role": "user", "content": psug})
+                          with st.chat_message("assistant"):
+                                  response =  generate_chatpdf_response(qa_agent,psug)
+                                  message = {"role": "assistant", "content": response}
+                                  st.session_state.messages.append(message) 
+    
+
+        if "messages" in st.session_state: 
+            print('messages found')
+        else:
+           if "messages" not in st.session_state.keys():
+               st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your file?"}]
+        
+        if "messages" in st.session_state:
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.write(message["content"])
+            if prompt := st.chat_input():
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                with st.chat_message("user"):
+                    st.write(prompt)
+            
+            if st.session_state.messages[-1]["role"] != "assistant":
+                if prompt:
+                    with st.chat_message("assistant"):
+                        with st.spinner("Thinking..."):
+                            response =  generate_chatpdf_response(qa_agent,prompt)
+                            st.write(response)
+                            message = {"role": "assistant", "content": response}
+                            st.session_state.messages.append(message) 
         
         
 

@@ -31,6 +31,10 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoConfig
 import transformers
 from transformers import pipeline
 
+from langchain.agents.agent_toolkits import SQLDatabaseToolkit
+from langchain.agents import AgentExecutor,create_sql_agent
+
+
 
 
 #read from url
@@ -66,6 +70,48 @@ def read_file_from_url(url):
   else:
     raise ValueError(f"Unsupported file extension: {ext}")
 
+
+
+from sqlalchemy import create_engine
+from sqlalchemy.engine.url import URL
+from langchain.sql_database import SQLDatabase
+
+
+
+def llmdb(sqlServerName ,sqlDatabase,userName,password):
+    db_config = {  
+    'drivername': 'mssql+pyodbc',  
+    'username':userName + '@' + sqlServerName,  
+    'password': password,  
+    'host': sqlServerName,  
+    'port': 1433,  
+    'database': sqlDatabase,  
+    'query': {'driver': 'ODBC Driver 18 for SQL Server'}}
+    db_url = URL.create(**db_config)
+    db = SQLDatabase.from_uri(db_url)
+    return db
+    
+
+def build_llm(model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,apikey ="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"):
+    from langchain.chat_models import ChatOpenAI
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        # top_p=top_p,
+        openai_api_key = apikey)
+    return llm
+
+
+
+def sqlagent(llm,db):
+    toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+    agent_executor = create_sql_agent(
+        llm=llm,
+        toolkit=toolkit,
+        verbose=True,
+        agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
+    return agent_executor
 
 
 

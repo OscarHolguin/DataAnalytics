@@ -1,0 +1,266 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 3000px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 3000px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "white"}, "id": "0", "label": "0", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "CARDINAL", "label": "CARDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1", "label": "1", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1 1", "label": "1 1", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1.1", "label": "1.1", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1.2", "label": "1.2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1.3", "label": "1.3", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1.4", "label": "1.4", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1.5", "label": "1.5", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1.6", "label": "1.6", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "10", "label": "10", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "11", "label": "11", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "12", "label": "12", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "13", "label": "13", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "15", "label": "15", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "17", "label": "17", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "18", "label": "18", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "19", "label": "19", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "2", "label": "2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "21", "label": "21", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "23", "label": "23", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "25", "label": "25", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "3", "label": "3", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "4", "label": "4", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "5", "label": "5", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "6", "label": "6", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "7", "label": "7", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "8", "label": "8", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "9", "label": "9", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "E1 E2", "label": "E1 E2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "One", "label": "One", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ele\u00ad", "label": "ele\u00ad", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "five", "label": "five", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "one", "label": "one", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "three", "label": "three", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "two", "label": "two", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "\u2203x", "label": "\u2203x", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "11 Roughly", "label": "11 Roughly", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "QUANTITY", "label": "QUANTITY", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "12 kit", "label": "12 kit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "14 kit", "label": "14 kit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "16 kit", "label": "16 kit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "20 kit", "label": "20 kit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "22 kit", "label": "22 kit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "24 kit", "label": "24 kit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "MONEY", "label": "MONEY", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1982", "label": "1982", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "DATE", "label": "DATE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1987", "label": "1987", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1994", "label": "1994", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "1998", "label": "1998", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "2 2", "label": "2 2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "2 2 4", "label": "2 2 4", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "2010", "label": "2010", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Chalmers 1996", "label": "Chalmers 1996", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "early 2000s", "label": "early 2000s", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Aristotelian", "label": "Aristotelian", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "NORP", "label": "NORP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Greek", "label": "Greek", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "H2O", "label": "H2O", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "i.e", "label": "i.e", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Bealer 1999", "label": "Bealer 1999", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ORG", "label": "ORG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "F", "label": "F", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "FS", "label": "FS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Frege", "label": "Frege", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Identity", "label": "Identity", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Logical", "label": "Logical", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Metaphysics", "label": "Metaphysics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Physics", "label": "Physics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Quine", "label": "Quine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "are.2", "label": "are.2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "a\u2032", "label": "a\u2032", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "a\u2032 b\u2032 c\u2032", "label": "a\u2032 b\u2032 c\u2032", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "sort eidictic consider metaphysics", "label": "sort eidictic consider metaphysics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Different", "label": "Different", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "PERSON", "label": "PERSON", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "E. Take", "label": "E. Take", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Foster", "label": "Foster", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "George Bealer", "label": "George Bealer", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Kit Fine", "label": "Kit Fine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Law Identity \u2200x", "label": "Law Identity \u2200x", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Petaf", "label": "Petaf", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Ruth Chang", "label": "Ruth Chang", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "S.10", "label": "S.10", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "XYZ", "label": "XYZ", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "XYZ Say", "label": "XYZ Say", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "pri\u00ad", "label": "pri\u00ad", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "PRODUCT", "label": "PRODUCT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "b\u2032 b\u2032", "label": "b\u2032 b\u2032", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "\u00ad", "label": "\u00ad", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Geneva", "label": "Geneva", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "GPE", "label": "GPE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "Roughly", "label": "Roughly", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "ORDINAL", "label": "ORDINAL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "first", "label": "first", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "second", "label": "second", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "third", "label": "third", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "The Law Identity \u2200x", "label": "The Law Identity \u2200x", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "WORK_OF_ART", "label": "WORK_OF_ART", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "chapter 1", "label": "chapter 1", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "white"}, "id": "LAW", "label": "LAW", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "0", "to": "CARDINAL", "width": 1}, {"from": "CARDINAL", "to": "1", "width": 1}, {"from": "CARDINAL", "to": "1 1", "width": 1}, {"from": "CARDINAL", "to": "1.1", "width": 1}, {"from": "CARDINAL", "to": "1.2", "width": 1}, {"from": "CARDINAL", "to": "1.3", "width": 1}, {"from": "CARDINAL", "to": "1.4", "width": 1}, {"from": "CARDINAL", "to": "1.5", "width": 1}, {"from": "CARDINAL", "to": "1.6", "width": 1}, {"from": "CARDINAL", "to": "10", "width": 1}, {"from": "CARDINAL", "to": "11", "width": 1}, {"from": "CARDINAL", "to": "12", "width": 1}, {"from": "CARDINAL", "to": "13", "width": 1}, {"from": "CARDINAL", "to": "15", "width": 1}, {"from": "CARDINAL", "to": "17", "width": 1}, {"from": "CARDINAL", "to": "18", "width": 1}, {"from": "CARDINAL", "to": "19", "width": 1}, {"from": "CARDINAL", "to": "2", "width": 1}, {"from": "CARDINAL", "to": "21", "width": 1}, {"from": "CARDINAL", "to": "23", "width": 1}, {"from": "CARDINAL", "to": "25", "width": 1}, {"from": "CARDINAL", "to": "3", "width": 1}, {"from": "CARDINAL", "to": "4", "width": 1}, {"from": "CARDINAL", "to": "5", "width": 1}, {"from": "CARDINAL", "to": "6", "width": 1}, {"from": "CARDINAL", "to": "7", "width": 1}, {"from": "CARDINAL", "to": "8", "width": 1}, {"from": "CARDINAL", "to": "9", "width": 1}, {"from": "CARDINAL", "to": "E1 E2", "width": 1}, {"from": "CARDINAL", "to": "One", "width": 1}, {"from": "CARDINAL", "to": "ele\u00ad", "width": 1}, {"from": "CARDINAL", "to": "five", "width": 1}, {"from": "CARDINAL", "to": "one", "width": 1}, {"from": "CARDINAL", "to": "three", "width": 1}, {"from": "CARDINAL", "to": "two", "width": 1}, {"from": "CARDINAL", "to": "\u2203x", "width": 1}, {"from": "11 Roughly", "to": "QUANTITY", "width": 1}, {"from": "QUANTITY", "to": "12 kit", "width": 1}, {"from": "QUANTITY", "to": "14 kit", "width": 1}, {"from": "QUANTITY", "to": "16 kit", "width": 1}, {"from": "QUANTITY", "to": "20 kit", "width": 1}, {"from": "QUANTITY", "to": "22 kit", "width": 1}, {"from": "QUANTITY", "to": "24 kit", "width": 1}, {"from": "13", "to": "MONEY", "width": 1}, {"from": "1982", "to": "DATE", "width": 1}, {"from": "DATE", "to": "1987", "width": 1}, {"from": "DATE", "to": "1994", "width": 1}, {"from": "DATE", "to": "1998", "width": 1}, {"from": "DATE", "to": "2 2", "width": 1}, {"from": "DATE", "to": "2 2 4", "width": 1}, {"from": "DATE", "to": "2010", "width": 1}, {"from": "DATE", "to": "Chalmers 1996", "width": 1}, {"from": "DATE", "to": "early 2000s", "width": 1}, {"from": "Aristotelian", "to": "NORP", "width": 1}, {"from": "NORP", "to": "Greek", "width": 1}, {"from": "NORP", "to": "H2O", "width": 1}, {"from": "NORP", "to": "i.e", "width": 1}, {"from": "Bealer 1999", "to": "ORG", "width": 1}, {"from": "ORG", "to": "F", "width": 1}, {"from": "ORG", "to": "FS", "width": 1}, {"from": "ORG", "to": "Frege", "width": 1}, {"from": "ORG", "to": "Identity", "width": 1}, {"from": "ORG", "to": "Logical", "width": 1}, {"from": "ORG", "to": "Metaphysics", "width": 1}, {"from": "ORG", "to": "Physics", "width": 1}, {"from": "ORG", "to": "Quine", "width": 1}, {"from": "ORG", "to": "are.2", "width": 1}, {"from": "ORG", "to": "a\u2032", "width": 1}, {"from": "ORG", "to": "a\u2032 b\u2032 c\u2032", "width": 1}, {"from": "ORG", "to": "sort eidictic consider metaphysics", "width": 1}, {"from": "Different", "to": "PERSON", "width": 1}, {"from": "PERSON", "to": "E. Take", "width": 1}, {"from": "PERSON", "to": "Foster", "width": 1}, {"from": "PERSON", "to": "George Bealer", "width": 1}, {"from": "PERSON", "to": "Kit Fine", "width": 1}, {"from": "PERSON", "to": "Law Identity \u2200x", "width": 1}, {"from": "PERSON", "to": "Metaphysics", "width": 1}, {"from": "PERSON", "to": "Petaf", "width": 1}, {"from": "PERSON", "to": "Ruth Chang", "width": 1}, {"from": "PERSON", "to": "S.10", "width": 1}, {"from": "PERSON", "to": "XYZ", "width": 1}, {"from": "PERSON", "to": "XYZ Say", "width": 1}, {"from": "PERSON", "to": "pri\u00ad", "width": 1}, {"from": "F", "to": "PRODUCT", "width": 1}, {"from": "PRODUCT", "to": "b\u2032 b\u2032", "width": 1}, {"from": "PRODUCT", "to": "\u00ad", "width": 1}, {"from": "Geneva", "to": "GPE", "width": 1}, {"from": "GPE", "to": "H2O", "width": 1}, {"from": "Roughly", "to": "ORDINAL", "width": 1}, {"from": "ORDINAL", "to": "first", "width": 1}, {"from": "ORDINAL", "to": "second", "width": 1}, {"from": "ORDINAL", "to": "third", "width": 1}, {"from": "The Law Identity \u2200x", "to": "WORK_OF_ART", "width": 1}, {"from": "chapter 1", "to": "LAW", "width": 1}, {"from": "LAW", "to": "ele\u00ad", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.015,
+            "damping": 0.4,
+            "gravitationalConstant": -31,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "repulsion": {
+            "centralGravity": 0.33,
+            "damping": 0.95,
+            "nodeDistance": 420,
+            "springConstant": 0.1,
+            "springLength": 110
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
