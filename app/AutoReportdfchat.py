@@ -319,6 +319,11 @@ def generate_chat_response(df,prompt,openail=True):
 def generate_chatpdf_response(_agent,prompt):
     return generate_responsepdf(_agent,prompt)
 
+
+@st.cache_resource
+def pdfsuggestions(_qa_agent):
+    return get_pdf_prompts(_qa_agent)
+
 # import streamlit_pills as sp
 
 # from streamlit_pills import pills
@@ -631,7 +636,7 @@ elif file_ext =='pdf':
         qa_agent = get_pdf_agent(documents,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5)
         if st.sidebar.toggle("Suggest insights :bulb:"):
             st.sidebar.subheader("Suggested Inisghts:")
-            psuggestions = get_pdf_prompts(qa_agent)
+            psuggestions = pdfsuggestions(qa_agent)
             psuggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(psuggestions)]))]
             psuggestions_s = [x for x in psuggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
             print(psuggestions_s[0])
