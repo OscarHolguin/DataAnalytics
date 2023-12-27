@@ -19,9 +19,15 @@ from langchain.memory import ConversationBufferMemory
 
 
 
-def generate_responsepdf(texts,query,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5):
+def get_pdf_prompts(qa):
+    prompt = "Based on my pdf text give me 5 suggested prompts to get insights I can analyze from my text, be brief only 1 sentence per prompt"
+    result =  qa({"question": prompt}).get('answer')
+    return result
 
 
+
+def get_pdf_agent(texts,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5):
+    
     openai.api_key = openai_api_key = st.secrets["openai_key"]
     
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
@@ -51,9 +57,15 @@ def generate_responsepdf(texts,query,model="gpt-3.5-turbo-0613",temperature=0.0 
 
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     qa = ConversationalRetrievalChain.from_llm(llm, db.as_retriever(), memory=memory)
+    
+    return qa
+
+
+
+def generate_responsepdf(qa,query):
+
     result = qa({"question": query}).get('answer')
     return result
-
 # query = ''
 # while query!='exit':
 

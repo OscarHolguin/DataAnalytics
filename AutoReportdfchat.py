@@ -61,7 +61,8 @@ os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 from reports_template import Reports
 #
 from datachat import generate_response,write_response,generate_responsedf,generate_insights_one,generate_trends_and_patterns_one,aggregate_data,get_agent, get_insight_prompts
-from filechat import generate_responsepdf
+from filechat import generate_responsepdf, get_pdf_prompts, get_pdf_agent
+
 
 reports = Reports()
 
@@ -265,7 +266,9 @@ def load_csv(file,**kwargs):
 def generate_chat_response(df,prompt,openail=True):
     return generate_response(df,prompt,openail=True)
 
-    
+@st.cache_resource
+def generate_chatpdf_response(_agent,prompt):
+    return generate_responsepdf(_agent,prompt)
 
 
 if file_ext =='csv':
@@ -479,13 +482,10 @@ elif file_ext =='pdf':
     if st.sidebar.toggle("Generate NER"):
         
         nertype = st.radio(
-    "Select NER extraction type",
-    ["spacy","huggingface"],
-    captions = ["spacy model for NER","uses distil bert ner"])
-        
-        
-
-        
+            "Select NER extraction type",
+            ["spacy","huggingface"],
+        captions = ["spacy model for NER","uses distil bert ner"])
+    
         dfne = generate_ner(documents,nertype)
         dfne10 = dfne.sample(10)
         st.dataframe(dfne10)
@@ -496,6 +496,54 @@ elif file_ext =='pdf':
         HtmlFile = open("entity.html", 'r', encoding='utf-8')
         
         components.html(HtmlFile.read(), height=1000)
+    
+    if True:
+        
+        st.session_state.prompt_history = []
+        qa_agent = get_pdf_agent(documents,model="gpt-3.5-turbo-0613",temperature=0.0 ,max_tokens=1048 ,top_p=0.5)
+        if st.sidebar.toggle("Suggest insights :bulb:"):
+            st.sidebar.subheader("Suggested Inisghts:")
+            psuggestions = get_pdf_prompts(qa_agent)
+            psuggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(psuggestions)]))]
+            psuggestions_s = [x for x in psuggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
+            print(psuggestions_s[0])
+            pclickables = {}
+    
+            with st.sidebar: 
+                for psug in psuggestions_s:
+                    pclickables[psug] = st.button(psug + " ➤ ", type="primary")
+                    if pclickables[psug]:
+    
+                          st.session_state.messages.append({"role": "user", "content": psug})
+                          with st.chat_message("assistant"):
+                                  response =  generate_chatpdf_response(qa_agent,psug)
+                                  message = {"role": "assistant", "content": response}
+                                  st.session_state.messages.append(message) 
+    
+
+        if "messages" in st.session_state: 
+            print('messages found')
+        else:
+           if "messages" not in st.session_state.keys():
+               st.session_state.messages = [{"role": "assistant", "content": "Hi! How can I help you with your file?"}]
+        
+        if "messages" in st.session_state:
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.write(message["content"])
+            if prompt := st.chat_input():
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                with st.chat_message("user"):
+                    st.write(prompt)
+            
+            if st.session_state.messages[-1]["role"] != "assistant":
+                if prompt:
+                    with st.chat_message("assistant"):
+                        with st.spinner("Thinking..."):
+                            response =  generate_chatpdf_response(qa_agent,prompt)
+                            st.write(response)
+                            message = {"role": "assistant", "content": response}
+                            st.session_state.messages.append(message) 
 
 
         
