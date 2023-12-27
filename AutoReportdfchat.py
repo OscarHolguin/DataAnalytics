@@ -545,7 +545,6 @@ elif file_ext =='pdf':
                             message = {"role": "assistant", "content": response}
                             st.session_state.messages.append(message) 
 
-
         
         
         
