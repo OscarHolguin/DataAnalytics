@@ -350,7 +350,7 @@ if file_ext =='csv':
     if st.session_state.df is not None and chat_toggle:
         
         pdfagent1 = get_agent(st.session_state.df)
-        if st.sidebar.toggle("Suggest Insights :bulb:"):
+        if sinsights:= st.sidebar.toggle("Suggest insights :bulb:"):
                     st.sidebar.write("Suggested inisghts : :bar_chart: :chart_with_downwards_trend:")
                     suggestions = get_insight_prompts(pdfagent1)
                     suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
