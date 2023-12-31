@@ -194,20 +194,6 @@ def st_display_sweetviz(report_html,width=1500,height=2000):
 	components.html(page,width=width,height=height,scrolling=True)
     
 
-# #default df but maybe load file(?)
-#df = dfs[0][["WindowTimeStamp_Start","WindowTimeStamp_End","DeviceName","Vibration","Voltage","AirPressure","Current_amps"]]
-#@st.cache_resource
-
-
-data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
-file_ext = option_chosen = "null"
-if data_file is not None:
-    file_name = data_file.name
-    file_ext = file_name.split(".")[-1]
-
-
-
-
 
 @st.cache_resource
 def get_pyg_renderer(df) -> "StreamlitRenderer":
