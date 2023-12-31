@@ -31,6 +31,96 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoConfig
 import transformers
 from transformers import pipeline
 
+from langchain.agents.agent_toolkits import SQLDatabaseToolkit
+from langchain.agents import AgentExecutor,create_sql_agent
+
+
+
+
+#read from url
+import pandas as pd
+import requests
+from io import BytesIO
+from PyPDF2 import PdfFileReader
+
+#download nltk resource
+import nltk
+nltk.download('punkt')
+
+
+def read_file_from_url(url):
+  # Get the file extension from the url
+  ext = url.split(".")[-1]
+
+  # Get the file content from the url as bytes
+  response = requests.get(url)
+  content = response.content
+
+  # If the file extension is csv, read it as a pandas dataframe
+  if ext == "csv":
+    df = pd.read_csv(BytesIO(content))
+    return df
+
+  # If the file extension is pdf, read it as a PyPDF2 reader object
+  elif ext == "pdf":
+    reader = PdfFileReader(BytesIO(content))
+    return reader
+
+  # Otherwise, raise an exception
+  else:
+    raise ValueError(f"Unsupported file extension: {ext}")
+
+
+
+from sqlalchemy import create_engine
+from sqlalchemy.engine.url import URL
+from langchain.sql_database import SQLDatabase
+
+
+
+def llmdb(sqlServerName ,sqlDatabase,userName,password):
+    db_config = {  
+    'drivername': 'mssql+pyodbc',  
+    'username':userName + '@' + sqlServerName,  
+    'password': password,  
+    'host': sqlServerName,  
+    'port': 1433,  
+    'database': sqlDatabase,  
+    'query': {'driver': 'ODBC Driver 18 for SQL Server'}}
+    db_url = URL.create(**db_config)
+    db = SQLDatabase.from_uri(db_url)
+    return db
+    
+
+def build_llm(model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,apikey ="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"):
+    from langchain.chat_models import ChatOpenAI
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        # top_p=top_p,
+        openai_api_key = apikey)
+    return llm
+
+
+
+def sqlagent(llm,db):
+    toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+    agent_executor = create_sql_agent(
+        llm=llm,
+        toolkit=toolkit,
+        verbose=True,
+        agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
+    return agent_executor
+
+
+
+
+
+
+
+
+
 
 
 def generate_prompt(question):
@@ -117,8 +207,6 @@ def write_response(response_dict: dict):
 
 
 
-
-
 #CODE FOR LANGCHAIN PANDAS DATAFRAME AGENT
 def extract_python_code(text):
     import re
@@ -131,11 +219,9 @@ def extract_python_code(text):
 
 
 def get_insight_prompts(agent):
-    prompt = "Based on the given dataframe give me 5 prompts to get plots of inisghts I can analyze, be brief only 1 sentence per prompt"
+    prompt = "Based on my dataframe give me 5 prompts to get insights I can analyze for my data, be brief only 1 sentence per prompt"
     result = agent(prompt)
     return result.get('output')
-    
-
 
 def handle_error(error):
     import ast
@@ -148,7 +234,6 @@ def handle_error(error):
         return res
     else:
         return str(error)
-    
 
 def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5):
     from langchain.chat_models import ChatOpenAI
@@ -172,14 +257,18 @@ def get_agent(df,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=
     
     return pandas_df_agent
 
-#If the code has matplotlib The solution should be given using plotly and only plotly so chage it. Do not use matplotlib
-
 def intermediate_response(answer):
     if answer["intermediate_steps"]:
         action = answer["intermediate_steps"][-1][0].tool_input["query"]
-        # st.write(f"Executed the code ```{action}```")
+        print(f"Executed the code ```{action}```")
+        try:
+            if "plotly" in action:
+                action = action.replace("fig.show()", "")
+                action += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  
+            exec(action)
+        except Exception as e:
+            print(str(e))
     return answer["output"]
-
 
 
 def generate_response(df, vprompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
@@ -294,7 +383,6 @@ def generate_response(df, vprompt,model="gpt-3.5-turbo", temperature=0.0, max_to
         #                 return intermediate_response(answer3)
         #             else:
         #                 return answer3['output']
-                    
 
 
 
@@ -431,9 +519,3 @@ def generate_trends_and_patterns_one(df):
 
     return trends_and_patterns
 
-
-
-
-
-    
-    

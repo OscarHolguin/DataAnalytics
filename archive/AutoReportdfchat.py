@@ -12,8 +12,8 @@ CHAT ENABLED PDF VERSION
 
 import asyncio
 
-import nltk
 
+import nltk
 import plotly_express as px
 import streamlit as st
 import pandas as pd
@@ -22,6 +22,7 @@ from langchain.embeddings import HuggingFaceEmbeddings
 import pyodbc
 from langchain.vectorstores import Chroma
 import urllib
+import pylab
 import numpy as np
 import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
@@ -39,7 +40,7 @@ import streamlit.components.v1 as components
 
 
 from streamlit_d3graph import d3graph
-import d3graph
+#import d3graph
 
 import networkx as nx
 
@@ -49,27 +50,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, TextSplitter
 import uuid
 import spacy
 
-import pathlib
-
-from pandasai.responses.streamlit_response import StreamlitResponse
-
-
-#######################
-#THIS IS FOR TESTING
-sqlServer = {'sqlServerName': 'euwdsrg03rsql01.database.windows.net',
- 'sqlDatabase': 'EUWDSRG03RRSG02ADB01_Copy',
- 'userName': 'dbWSS',
- 'password': 'braf0wNVtixu3?IhU=hmrCeLzmzX>Wlo'}
 
 
 
 
-# PROD_MxD_PDM_DeviceFailureV2DataTable
-sqlServerName,sqlDatabase,userName,password = sqlServer.get('sqlServerName'),sqlServer.get('sqlDatabase'),sqlServer.get('userName'), sqlServer.get('password')
-
-
-
-os.environ['HUGGINGFACEHUB_API_TOKEN'] = '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'
+os.environ['HUGGINGFACEHUB_API_TOKEN'] = st.secrets["huggingface"]
 
 
 ############################
@@ -79,43 +64,37 @@ from datachat import generate_response,write_response,generate_responsedf,genera
 from filechat import generate_responsepdf, get_pdf_prompts, get_pdf_agent
 
 
-
 reports = Reports()
 
 import hmac
 
 
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the passward is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
 
 
-# import matplotlib
-# matplotlib.use('TkAgg')
-
-# def check_password():
-#     """Returns `True` if the user had the correct password."""
-
-#     def password_entered():
-#         """Checks whether a password entered by the user is correct."""
-#         if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
-#             st.session_state["password_correct"] = True
-#             del st.session_state["password"]  # Don't store the password.
-#         else:
-#             st.session_state["password_correct"] = False
-
-#     # Return True if the passward is validated.
-#     if st.session_state.get("password_correct", False):
-#         return True
-
-#     # Show input for password.
-#     st.text_input(
-#         "Password", type="password", on_change=password_entered, key="password"
-#     )
-#     if "password_correct" in st.session_state:
-#         st.error("😕 Password incorrect")
-#     return False
-
-
-# if not check_password():
-#     st.stop()  # Do not continue if check_password is not True.
+if not check_password():
+    st.stop()  # Do not continue if check_password is not True.
 
 
 company = "CompanyA"
@@ -130,31 +109,6 @@ st.set_page_config(page_title = pagetitle,
 
 
 
-# st.markdown(
-#     """
-#     <style>
-#     button[kind="primary"] {
-#         background: none!important;
-#         border: none;
-#         padding: 0!important;
-#         color: white !important;
-#         text-decoration: none;
-#         cursor: pointer;
-#         border: none !important;
-#     }
-#     button[kind="primary"]:hover {
-#         text-decoration: click over me;
-#         color: blue !important;
-#     }
-#     button[kind="primary"]:focus {
-#         outline: none !important;
-#         box-shadow: none !important;
-#         color: blue !important;
-#     }
-#     </style>
-#     """,
-#     unsafe_allow_html=True,
-# )
 st.markdown(
     """
     <style>
@@ -191,33 +145,12 @@ st.markdown(
 )
 
 
-st.title('Data Analysis')
+
+
+st.title('BrAIn')
+st.subheader("Your AI Data Analyst")
 #st.image('https://djnsalesianos.mx/wp-content/uploads/2019/04/logodjnnuevo.png',width=800)
 
-
-#@st.cache_data(ttl=10)
-@st.cache_resource
-def read_sql(sqlServerName ,sqlDatabase,userName,password,tablename,sqlPort = 1433,query =None,pandas=False)->pd.DataFrame:
-    query = query if query else f"(SELECT * FROM {tablename})"# AS subquery"
-    try:
-        if pandas:
-            cnxn = pyodbc.connect(DRIVER="{ODBC Driver 17 for SQL Server}", SERVER=sqlServerName, DATABASE=sqlDatabase, UID=userName, PWD=password, STORE_DRVRESULTS=0)
-            df = pd.read_sql(query,cnxn)
-            return df
-        #df.write.jdbc(sqlServerUrl, "PDM_AD_PredictionTable", write_mode, connectionProperties)
-        else:
-            connstr = f"DRIVER=ODBC Driver 17 for SQL Server, SERVER={sqlServerName}, DATABASE={sqlDatabase}, UID={userName}, PWD={password}, STORE_DRVRESULTS=0"
-            connection_string = urllib.parse.quote_plus(connstr)
-            connection_string = "mssql+pyodbc:///?odbc_connect=%s" % connection_string
-            return connection_string
-    except Exception as e:
-        return str(e)
-
-
-sqldf = lambda table: read_sql(sqlServerName ,sqlDatabase,userName,password,table,sqlPort = 1433,pandas = True)
-tables = ["PROD_MxD_PDM_DeviceFailureV2DataTable","PROD_MxD_PDM_DeviceFailureV2PredictionTable","PROD_MxD_DDM_AssetDataTable","PROD_MxD_DDM_DowntimeDataTable"]
-
-# dfs=[sqldf(table) for table in tables]
 
 
 
@@ -225,11 +158,30 @@ left,mid,right = st.columns([1,3,1],gap='large')
 
 
 
+st.markdown('### ** Upload CSV or PDF file 👇 **')
+
+if not st.toggle("From url"):
+    data_file = st.file_uploader("Choose from your files :file_folder:",type=['csv','pdf'])
+    file_ext = option_chosen = "null"
+    if data_file is not None:
+        file_name = data_file.name
+        file_ext = file_name.split(".")[-1]
+        urlflag = urlfile = False
+
+else:
+    
+        urlfile = st.text_input("Provide your CSV or PDF from a valid url")
+        urlflag = True
+        st.write("You added ",urlfile)
+        file_ext = urlfile.split(".")[-1]
+    
+
+
 
 # st.sidebar.header('Seleccion de datos')
 
 @st.cache_resource
-def st_display_sweetviz(report_html,width=1500,height=2000):
+def st_display_sweetviz(report_html,width=1200,height=2000):
 	report_file = codecs.open(report_html,'r')
 	page = report_file.read()
     #components.html(page,scrolling =True)
@@ -238,14 +190,9 @@ def st_display_sweetviz(report_html,width=1500,height=2000):
 
 # #default df but maybe load file(?)
 #df = dfs[0][["WindowTimeStamp_Start","WindowTimeStamp_End","DeviceName","Vibration","Voltage","AirPressure","Current_amps"]]
+
 #@st.cache_resource
 
-
-data_file = st.file_uploader("Choose between CSV or PDF",type=['csv','pdf'])
-file_ext = option_chosen = "null"
-if data_file is not None:
-    file_name = data_file.name
-    file_ext = file_name.split(".")[-1]
 
 
 
@@ -310,10 +257,14 @@ def generate_wordcloud(text):
     wordcloud = WordCloud().generate(text)
     return wordcloud
 
+@st.cache_data
+def load_csv(file,**kwargs):
+    df = pd.read_csv(file, encoding='utf-8')
+    return df
+
 @st.cache_resource
 def generate_chat_response(df,prompt,openail=True):
     return generate_response(df,prompt,openail=True)
-
 
 @st.cache_resource
 def generate_chatpdf_response(_agent,prompt):
@@ -324,69 +275,30 @@ def generate_chatpdf_response(_agent,prompt):
 def pdfsuggestions(_qa_agent):
     return get_pdf_prompts(_qa_agent)
 
-# import streamlit_pills as sp
-
-# from streamlit_pills import pills
-# with st.sidebar:
-#     selected = pills("Label", ["Option 1", "Option 2", "Option 3"], ["🌀", "🎈", "🌈"])
-#     selected2 = pills("Label2", ["Option 12", "Option 22", "Option 32"], ["🌀", "🎈", "🌈"])
-#     st.help(pills)
-#     st.write(selected)
-    
-    
-#@st.cache_resource
-def write_suggestions(suggestions):
-    from streamlit_pills import pills
-    selections={}
-    # with st.sidebar:
-    selected = pills("Suggestions for chat",suggestions,)
-    st.write(selected)
-    return selected
-    # with st.chat_message("user"):
-    #       st.write(selected)
-        
-        
-        # for n,suggestion in enumerate(suggestions):
-        #     selections[n] = pills(f"Suggestion {n}", [suggestion], ["🌀"])
-        # st.write(selections)
-        
-
-    
-
-
-# Define a callback function that takes the selected suggestion as an argument
-def on_submit(suggestion):
-    # Do something with the suggestion, such as sending it to a chatbot
-    st.write(f"You have selected: {suggestion}")
-    
-
-
 
 if file_ext =='csv':
-    #tmppath = os.path.join("\tmp", data_file.name)
-    if 'toggle' not in st.session_state:
-        st.session_state.Chat = False
-    tmppath = data_file.name
+    #tmppath = os.path.join("/tmp", data_file.name)
     response_history = st.session_state.get("response_history", [])
 
-    st.sidebar.header('Select automatic report style')
+    df= load_csv(data_file,encoding ="utf-8") if not urlfile else load_csv(urlfile,encoding ="utf-8")
 
-    df= pd.read_csv(data_file,encoding ="utf-8")
-    df.to_csv(tmppath)
     st.session_state.df = df
     st.dataframe(df.head())
     menu = ["Home","Report","Retro_Report","Create"]
-    chat_toggle = st.sidebar.toggle("Chat")
+    chat_toggle = st.sidebar.toggle("AI Chat")
     index = 0 if chat_toggle else None # Set index to 0 if toggle is True, otherwise None
     
+    st.sidebar.header('Select automatic report style')
     option_chosen = st.sidebar.selectbox("Report Style:", menu,index)
     option_chosen = "Home" if option_chosen == None else option_chosen
 
     
     import streamlit.components.v1 as components 
+    from streamlit_ydata_profiling import st_profile_report
     
     if option_chosen.lower()=='retro_report':
         chat_toggle = False
+
         r1 = reports.retro_report(df)
         r1.show_html(filepath='./EDA.html', open_browser=False, layout='vertical')#, scale=1.0)
         st_display_sweetviz("EDA.html")
@@ -396,7 +308,7 @@ if file_ext =='csv':
         
     
     elif option_chosen.lower()=='report':
-            from streamlit_ydata_profiling import st_profile_report
+            chat_toggle = False
 
             correlations={
             "auto": {"calculate": True},
@@ -424,6 +336,8 @@ if file_ext =='csv':
     
     
     elif option_chosen.lower() == "create":
+        chat_toggle = False
+
         from pygwalker.api.streamlit import StreamlitRenderer, init_streamlit_comm
         
 
@@ -434,30 +348,31 @@ if file_ext =='csv':
     ##chat section
     
     if st.session_state.df is not None and chat_toggle:
+        
         pdfagent1 = get_agent(st.session_state.df)
         if sinsights:= st.sidebar.toggle("Suggest insights :bulb:"):
-            st.sidebar.subheader("Suggested Inisghts ::bar_chart: :chart_with_downwards_trend:")
-            suggestions = get_insight_prompts(pdfagent1)
-            suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
-            suggestions_s = [x for x in suggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
-            # print(suggestions_s[0])
-            clickables = {}
-    
-            with st.sidebar: 
-                for sug in suggestions_s:
-                    clickables[sug] = st.button(sug + " ➤ ", type="primary")
-                    
+                    st.sidebar.write("Suggested inisghts : :bar_chart: :chart_with_downwards_trend:")
+                    suggestions = get_insight_prompts(pdfagent1)
+                    suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
+                    suggestions_s = [x for x in suggestions_s if x not in [str(n)+' .' for n in list(range(1,6))]]
+                    clickables = {}
+            
+                    with st.sidebar: 
+                        for sug in suggestions_s:
+                            clickables[sug] = st.button(sug+ ':arrow_right:' , type="primary")
 
-
-                                  # st.write(response)
-                                  # message = {"role": "assistant", "content": response}
-                                  # st.session_state.messages.append(message) 
-
-        # suggestionins = ["Give the best insight for this data","plot the best insight","Calculate the best metric","Provide an in detail analysis for a stakeholder"]
+                        # for i,clickable in enumerate(clickables):
+                            if clickables[sug]:
+            
+                                  st.session_state.messages.append({"role": "user", "content": sug})
+                                  with st.chat_message("assistant"):
+                                      # with st.spinner("Thinking..."):
+                                          response =  generate_chat_response(df,sug,openail=True)
+                                          # st.write(response)
+                                          message = {"role": "assistant", "content": response}
+                                          st.session_state.messages.append(message) 
+        
         st.session_state.prompt_history = []
-
-                            
-                            
 
         if "messages" in st.session_state:
             print('messages found')
@@ -470,26 +385,13 @@ if file_ext =='csv':
             for message in st.session_state.messages:
                 with st.chat_message(message["role"]):
                     st.write(message["content"])
-            
             if prompt := st.chat_input():
-
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 with st.chat_message("user"):
                     st.write(prompt)
 
             
             if st.session_state.messages[-1]["role"] != "assistant":
-                if not prompt:
-                    for sug in suggestions_s:
-                        if clickables[sug]:
-                            # with st.chat_message("user"):
-                            #     st.write(clickables[sug])
-                            # # st.session_state.messages.append({"role": "user", "content": sug})
-                            # with st.chat_message("assistant"):
-                            #     with st.spinner("Thinking..."):
-                            #         response =  generate_chat_response(df,sug,openail=True)
-                            #         st.write(response)
-                            prompt = clickables[sug]
                 if prompt:
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
@@ -515,10 +417,10 @@ if file_ext =='csv':
                                 aggregated_data = aggregate_data(st.session_state.df, columns)
                                 st.subheader("Aggregated Data:")
                                 st.write(aggregated_data)
-                
-                
-
-
+                        
+                        
+                        
+                        
                         
                     #To generate images if needed
                     fig = plt.gcf()
@@ -550,58 +452,27 @@ if file_ext =='csv':
                                     response_history.append(response)
                                     st.session_state.response_history = response_history
 
-
-                        
-    
                     
-        if st.sidebar.button("History"):
-            st.subheader("Prompt history:")
-            st.write(st.session_state.prompt_history)
+        #st.sidebar.subheader("Prompt history:")
+        #st.sidebar.write(st.session_state.prompt_history)
         
-        # st.subheader("Prompt response:")
-        # for response in response_history:
-        #     st.write(response)
+        #st.sidebar.subheader("Prompt response:")
+        #for response in response_history:
+        #    st.write(response)
  
-        if st.sidebar.button("Clear"):
-            st.session_state.prompt_history = []
-            st.session_state.response_history = []
-            st.session_state.df = None
+        # if st.sidebar.button("Clear"):
+        #     st.session_state.prompt_history = []
+        #     st.session_state.response_history = []
+        #     st.session_state.df = None
         
-        if st.sidebar.button("Save Results", key=0):
-            with open("historical_data.txt", "w") as f:
-                for response in response_history:
-                    f.write(response + "\n")
-            if fig is not None:
-                fig.savefig("plot.png")  
+        # if st.sidebar.button("Save Results", key=0):
+        #     with open("historical_data.txt", "w") as f:
+        #         for response in response_history:
+        #             f.write(response + "\n")
+        #     if fig is not None:
+        #         fig.savefig("plot.png")  
                     
    
-
-      #PANDAS AI CHAT  
-      # st.subheader("Peek into the uploaded dataframe:")
-      # st.write(st.session_state.df.head(2))
-    
-      # with st.form("Question"):
-      #     question = st.text_area("Question", value="", help="Enter your queries here")
-      #     answer = st.text_area("Answer", value="")
-      #     submitted = st.form_submit_button("Submit")
-      #     if submitted:
-      #         
-      # with st.spinner():
-      #   llm = OpenAI(api_token=st.session_state.openai_key)
-      #   pandas_ai = PandasAI(llm)
-      #   x = pandas_ai.run(st.session_state.df, prompt=question)
-      # fig = plt.gcf()
-      # fig, ax = plt.subplots(figsize=(10, 6))
-      # plt.tight_layout()
-      # if fig.get_axes() and fig is not None:
-      #   st.pyplot(fig)
-      #   fig.savefig("plot.png")
-      # st.write(x)
-      # st.session_state.prompt_history.append(question)
-      # response_history.append(x) # Append the response to the list
-      # st.session_state.response_history = response_history
-
-
 elif file_ext =='pdf':
     st.sidebar.header("PDF options")
     extractimgs = st.sidebar.checkbox("extract_images")
@@ -697,7 +568,43 @@ elif file_ext =='pdf':
                             st.write(response)
                             message = {"role": "assistant", "content": response}
                             st.session_state.messages.append(message) 
+
+        
         
         
 
 
+
+
+
+
+
+
+
+
+
+
+      #PANDAS AI CHAT  
+      # st.subheader("Peek into the uploaded dataframe:")
+      # st.write(st.session_state.df.head(2))
+    
+      # with st.form("Question"):
+      #     question = st.text_area("Question", value="", help="Enter your queries here")
+      #     answer = st.text_area("Answer", value="")
+      #     submitted = st.form_submit_button("Submit")
+      #     if submitted:
+      #         
+      # with st.spinner():
+      #   llm = OpenAI(api_token=st.session_state.openai_key)
+      #   pandas_ai = PandasAI(llm)
+      #   x = pandas_ai.run(st.session_state.df, prompt=question)
+      # fig = plt.gcf()
+      # fig, ax = plt.subplots(figsize=(10, 6))
+      # plt.tight_layout()
+      # if fig.get_axes() and fig is not None:
+      #   st.pyplot(fig)
+      #   fig.savefig("plot.png")
+#      st.write(x)
+#      st.session_state.prompt_history.append(question)
+#      response_history.append(x) # Append the response to the list
+#      st.session_state.response_history = response_history
