@@ -51,7 +51,6 @@ import spacy
 
 import pathlib
 
-from pandasai.responses.streamlit_response import StreamlitResponse
 
 
 #######################
