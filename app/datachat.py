@@ -182,7 +182,7 @@ def intermediate_response(answer):
 
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
+def generate_response(df, vprompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
@@ -192,7 +192,7 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
     # If the response has the word fig.show remove it and append this to the code to be executed: st.plotly_chart(fig, theme='streamlit', use_container_width=True) if you do this execute the generated code with exec(code).
     # Remember all of your answers should be based on the provided dataframe {}""".format(df)
     
-    prompt_temp1 =  lambda x: x + "Your answers should be based on the provided dataframe {} Dont generate data get data only from the dataframe".format(df)
+    prompt_temp1 =  lambda x: x + "Remember i need you to base your answers on the provided dataframe {} Dont generate data on your own and dont make up anything get data only from the provided dataframe".format(df)
     
     
     if not openai:
@@ -201,20 +201,21 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
     """
     A function that answers data questions from a dataframe.
     """
-    plot_words = ["plot", "graph", "chart", "diagram", "figure","grafica","gráfica"]
+    plot_words = ["plot", "graph", "chart", "diagram", "figure","grafica","gráfica","histogram"]
     #if "plot" in st.session_state.messages[-1]["content"].lower() or "graph" in st.session_state.messages[-1]["content"].lower():
     if any(word in st.session_state.messages[-1]["content"].lower() for word in plot_words):
-        code_prompt = """
-            Generate the code <code> for plotting the previous data in plotly,
+        code_prompt = f"""
+            Generate the code <code> for plotting the previous data from the dataframe {df} in plotly,
             in the format requested. The solution should be given using plotly
             and only plotly. Do not use matplotlib.
             Return the code <code> in the following
             format ```python <code>```
         """
+        
 
         st.session_state.messages.append({
             "role": "assistant",
-            "content": prompt +" "+code_prompt
+            "content": vprompt +" "+code_prompt
         })
         response = openai.ChatCompletion.create(
             model=model,
@@ -242,8 +243,8 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
         
         pandas_df_agent = get_agent(df)
         try:
-            print("THIS IS THE PROMPT", prompt_temp1(prompt))
-            answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
+            print("THIS IS THE PROMPT", prompt_temp1(vprompt))
+            answer = pandas_df_agent(prompt_temp1(vprompt)) #pandas_df_agent(st.session_state.messages)
             if answer["intermediate_steps"]:
                 return intermediate_response(answer)
             else:
@@ -256,10 +257,10 @@ def generate_response(df, prompt,model="gpt-3.5-turbo", temperature=0.0, max_tok
                 result = match.group()
                 prompt_parsed = prompt_temp1(handle_error(result))
                 if "plot" or "matplotlib" in prompt_parsed:
-                    answer2 = pandas_df_agent((f"Get the result of {prompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed+
+                    answer2 = pandas_df_agent((f"Get the result of {vprompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed+
                                                "Note: dont use matplotlib use plotly and display it with this st.plotly_chart(fig, theme='streamlit', use_container_width=True)"))
                 else:
-                    answer2 = pandas_df_agent((f"Get the result of {prompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed))
+                    answer2 = pandas_df_agent((f"Get the result of {vprompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed))
                 if answer2["intermediate_steps"]:
                     return intermediate_response(answer2)                       
         # try:

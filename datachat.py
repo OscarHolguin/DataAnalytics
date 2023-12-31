@@ -271,40 +271,47 @@ def intermediate_response(answer):
     return answer["output"]
 
 
-def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, max_tokens=1048, top_p=0.5,openail=True):
+def generate_response(df, vprompt,model="gpt-3.5-turbo", temperature=0.0, max_tokens=2500, top_p=0.5,openail=True):
     import openai
     from langchain.chat_models import ChatOpenAI
     from langchain.schema.output_parser import OutputParserException
     openai.api_key = st.secrets["openai_key"]
-    prompt_temp1 =  lambda x: x + "Your answers should be based on the provided dataframe {}".format(df)
-
+    
+    # prompt_temp1 = lambda x: "You are an expert in python and data analysis help with: "+x + """  If you encounter any parsing errors try to solve them on your own, as a tip check json formatting from your answets. If your response includes any plotting or code in matplotlib please execute it but using plotly instead, don't use matplotlib at all. 
+    # If the response has the word fig.show remove it and append this to the code to be executed: st.plotly_chart(fig, theme='streamlit', use_container_width=True) if you do this execute the generated code with exec(code).
+    # Remember all of your answers should be based on the provided dataframe {}""".format(df)
+    
+    prompt_temp1 =  lambda x: x + "Remember i need you to base your answers on the provided dataframe {} Dont generate data on your own and dont make up anything get data only from the provided dataframe".format(df)
+    
+    
     if not openai:
         pass
-
+    
     """
     A function that answers data questions from a dataframe.
     """
-    plot_words = ["plot", "graph", "chart", "diagram", "figure","grafica","gráfica","matplotlib"]
+    plot_words = ["plot", "graph", "chart", "diagram", "figure","grafica","gráfica","histogram"]
     #if "plot" in st.session_state.messages[-1]["content"].lower() or "graph" in st.session_state.messages[-1]["content"].lower():
     if any(word in st.session_state.messages[-1]["content"].lower() for word in plot_words):
-        code_prompt = """
-            Generate the code <code> for plotting the previous data in plotly,
+        code_prompt = f"""
+            Generate the code <code> for plotting the previous data from the dataframe {df} in plotly,
             in the format requested. The solution should be given using plotly
             and only plotly. Do not use matplotlib.
             Return the code <code> in the following
             format ```python <code>```
         """
+        
 
         st.session_state.messages.append({
             "role": "assistant",
-            "content": prompt +" "+code_prompt
+            "content": vprompt +" "+code_prompt
         })
         response = openai.ChatCompletion.create(
             model=model,
             messages=st.session_state.messages,
             temperature=temperature,
             max_tokens=max_tokens,
-            top_p=top_p,
+            # top_p=top_p,
         )
         code = extract_python_code(response["choices"][0]["message"]["content"])
         if code is None:
@@ -318,13 +325,15 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
         else:
             code = code.replace("fig.show()", "")
             code += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  # noqa: E501
-            #st.write(f"```{code}")
+            # st.write(f"```{code}") #WRITE IT HERE?
             exec(code)
             return response["choices"][0]["message"]["content"]
     else:
+        
         pandas_df_agent = get_agent(df)
         try:
-            answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
+            print("THIS IS THE PROMPT", prompt_temp1(vprompt))
+            answer = pandas_df_agent(prompt_temp1(vprompt)) #pandas_df_agent(st.session_state.messages)
             if answer["intermediate_steps"]:
                 return intermediate_response(answer)
             else:
@@ -335,26 +344,45 @@ def generate_response(df, prompt,model="gpt-3.5-turbo-0613", temperature=0.0, ma
             match = re.search(pattern, str(ve))
             if match:
                 result = match.group()
-                answer2 = pandas_df_agent((f"Get the result of {prompt} by executing the following code : "+ prompt_temp1(handle_error(result))))
-                if answer2["intermediate_steps"]:
-                    return intermediate_response(answer2)
+                prompt_parsed = prompt_temp1(handle_error(result))
+                if "plot" or "matplotlib" in prompt_parsed:
+                    answer2 = pandas_df_agent((f"Get the result of {vprompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed+
+                                               "Note: dont use matplotlib use plotly and display it with this st.plotly_chart(fig, theme='streamlit', use_container_width=True)"))
                 else:
-                    return answer2['output']   
-
-
+                    answer2 = pandas_df_agent((f"Get the result of {vprompt} by using tool python_repl_ast and executing the following code : "+ prompt_parsed))
+                if answer2["intermediate_steps"]:
+                    return intermediate_response(answer2)                       
         # try:
-        #     answer = pandas_df_agent(prompt) #pandas_df_agent(st.session_state.messages)
+        #     answer = pandas_df_agent(prompt_temp1(prompt)) #pandas_df_agent(st.session_state.messages)
         #     if answer["intermediate_steps"]:
-        #         action = answer["intermediate_steps"][-1][0].tool_input["query"]
-        #         st.write(f"Executed the code ```{action}```")
-        #     return answer["output"]
-        # except OutputParserException:
+        #        return intermediate_response(answer)
+        # except OutputParserException as e:
         #     error_msg = """OutputParserException error occured in LangChain agent.
-        #         Refine your query."""
+        #         Refine your query. """ + e
         #     return error_msg
-        # except:  # noqa: E722
-        #     answer = "Unknown error occured in LangChain agent. Refine your query"
-        #     return answer
+        # except Exception as e:  # noqa: E722
+        #     answer = f"Unknown error occured in LangChain agent. Refine your query {e}"
+        #     st.write(answer)
+        #     import re
+        #     pattern = r"\{.*?\}"
+        #     match = re.search(pattern, str(e))
+        #     if match:
+        #         result = match.group()
+        #         st.write(result)
+        #         try:
+        #             import ast
+        #             answer2=pandas_df_agent("Execute the following code with exec(code).: " +prompt_temp1(handle_error(result)))
+        #             if answer2["intermediate_steps"]:
+        #                 return intermediate_response(answer2)
+        #         except Exception as ex1:
+        #             print(ex1)
+        #             # st.write("second exceptionS")
+        #             st.write(ex1)
+        #             answer3=pandas_df_agent("Execute the following code.: " +handle_error(re.search(pattern,str(ex1)).group()))
+        #             if answer3["intermediate_steps"]:
+        #                 return intermediate_response(answer3)
+        #             else:
+        #                 return answer3['output']
 
 
 

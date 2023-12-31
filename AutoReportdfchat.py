@@ -433,6 +433,25 @@ if file_ext =='csv':
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
                     st.session_state.response_history = response_history
+            else:
+                if sinsights:
+                    for sug in suggestions_s:
+                        if clickables[sug]:
+                            with st.chat_message("user"):
+                                st.session_state.messages.append({"role": "user", "content": sug})
+                                st.write(sug)
+                            promptinsight = sug
+                            with st.chat_message("assistant"):
+                                with st.spinner("Thinking..."):
+                                    response =  generate_chat_response(st.session_state.df,promptinsight,openail=True)
+                                    st.write(response)
+                                    message = {"role": "assistant", "content": response}
+                                    st.session_state.messages.append(message)
+                                    
+                                    st.session_state.prompt_history.append(prompt)
+                                    response_history.append(response)
+                                    st.session_state.response_history = response_history
+
                     
         #st.sidebar.subheader("Prompt history:")
         #st.sidebar.write(st.session_state.prompt_history)

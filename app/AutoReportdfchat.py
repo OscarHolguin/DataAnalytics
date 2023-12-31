@@ -435,7 +435,7 @@ if file_ext =='csv':
     
     if st.session_state.df is not None and chat_toggle:
         pdfagent1 = get_agent(st.session_state.df)
-        if st.sidebar.toggle("Suggest insights :bulb:"):
+        if sinsights:= st.sidebar.toggle("Suggest insights :bulb:"):
             st.sidebar.subheader("Suggested Inisghts ::bar_chart: :chart_with_downwards_trend:")
             suggestions = get_insight_prompts(pdfagent1)
             suggestions_s = [n for n in nltk.sent_tokenize(' '.join([x for x in nltk.word_tokenize(suggestions)]))]
@@ -446,7 +446,8 @@ if file_ext =='csv':
             with st.sidebar: 
                 for sug in suggestions_s:
                     clickables[sug] = st.button(sug + " ➤ ", type="primary")
-                # for i,clickable in enumerate(clickables):
+                    
+
 
                                   # st.write(response)
                                   # message = {"role": "assistant", "content": response}
@@ -455,6 +456,8 @@ if file_ext =='csv':
         # suggestionins = ["Give the best insight for this data","plot the best insight","Calculate the best metric","Provide an in detail analysis for a stakeholder"]
         st.session_state.prompt_history = []
 
+                            
+                            
 
         if "messages" in st.session_state:
             print('messages found')
@@ -477,7 +480,6 @@ if file_ext =='csv':
             
             if st.session_state.messages[-1]["role"] != "assistant":
                 if not prompt:
-                                        
                     for sug in suggestions_s:
                         if clickables[sug]:
                             # with st.chat_message("user"):
@@ -514,7 +516,7 @@ if file_ext =='csv':
                                 st.subheader("Aggregated Data:")
                                 st.write(aggregated_data)
                 
-                        
+                
 
 
                         
@@ -529,7 +531,25 @@ if file_ext =='csv':
                     st.session_state.prompt_history.append(prompt)
                     response_history.append(response)
                     st.session_state.response_history = response_history
-                    
+            else:
+                if sinsights:
+                    for sug in suggestions_s:
+                        if clickables[sug]:
+                            with st.chat_message("user"):
+                                st.session_state.messages.append({"role": "user", "content": sug})
+                                st.write(sug)
+                            promptinsight = sug
+                            with st.chat_message("assistant"):
+                                with st.spinner("Thinking..."):
+                                    response =  generate_chat_response(st.session_state.df,promptinsight,openail=True)
+                                    st.write(response)
+                                    message = {"role": "assistant", "content": response}
+                                    st.session_state.messages.append(message)
+                                    
+                                    st.session_state.prompt_history.append(prompt)
+                                    response_history.append(response)
+                                    st.session_state.response_history = response_history
+
 
                         
     
