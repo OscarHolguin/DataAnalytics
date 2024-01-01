@@ -546,7 +546,7 @@ if file_ext =='csv':
                                     message = {"role": "assistant", "content": response}
                                     st.session_state.messages.append(message)
                                     
-                                    st.session_state.prompt_history.append(prompt)
+                                    st.session_state.prompt_history.append(sug)
                                     response_history.append(response)
                                     st.session_state.response_history = response_history
 

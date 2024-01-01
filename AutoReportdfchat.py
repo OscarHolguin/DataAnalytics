@@ -498,25 +498,7 @@ if file_ext =='csv':
                         
     
                     
-        if st.sidebar.button("History"):
-            st.subheader("Prompt history:")
-            st.write(st.session_state.prompt_history)
-        
-        # st.subheader("Prompt response:")
-        # for response in response_history:
-        #     st.write(response)
- 
-        if st.sidebar.button("Clear"):
-            st.session_state.prompt_history = []
-            st.session_state.response_history = []
-            st.session_state.df = None
-        
-        if st.sidebar.button("Save Results", key=0):
-            with open("historical_data.txt", "w") as f:
-                for response in response_history:
-                    f.write(response + "\n")
-            if fig is not None:
-                fig.savefig("plot.png")  
+       
                     
    
 
