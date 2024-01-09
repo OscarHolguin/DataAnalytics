@@ -13,7 +13,7 @@ CHAT ENABLED PDF VERSION
 import asyncio
 
 import nltk
-
+nltk.download('punkt')
 import plotly_express as px
 import streamlit as st
 import pandas as pd
