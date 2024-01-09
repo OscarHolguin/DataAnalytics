@@ -18,7 +18,7 @@ import plotly_express as px
 import streamlit as st
 import pandas as pd
 from langchain.document_loaders import PyPDFLoader, UnstructuredPDFLoader, OnlinePDFLoader
-from langchain.embeddings import HuggingFaceEmbeddings
+# from langchain.embeddings import HuggingFaceEmbeddings
 import pyodbc
 from langchain.vectorstores import Chroma
 import urllib
