@@ -150,9 +150,11 @@ st.markdown(
 
 
 
-st.title('BrAIn')
+#st.title('BrAIn')
+st.title(":bar_chart: :clipboard:")
+st.image('https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png',width=400)
+
 st.subheader("Your AI Data Analyst")
-#st.image('https://djnsalesianos.mx/wp-content/uploads/2019/04/logodjnnuevo.png',width=800)
 
 
 
@@ -161,7 +163,7 @@ left,mid,right = st.columns([1,3,1],gap='large')
 
 
 
-st.markdown('### ** Upload CSV or PDF file 👇 **')
+#st.markdown('### ** Upload CSV or PDF file 👇 **')
 
 if not st.toggle("From url"):
     data_file = st.file_uploader("Choose from your files :file_folder:",type=['csv','pdf'])
