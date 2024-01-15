@@ -156,6 +156,9 @@ st.title(":bar_chart: :clipboard:")
 
 st.subheader("AI Data Analyst")
 #st.markdown('![Alt Text](https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif)')
+aiurl= "https://www.commercient.com/wp-content/uploads/2019/12/deepLearning.gif"
+
+st.markdown(f'<img src={aiurl} alt="ai gif" width="400" height="200">', unsafe_allow_html=True)
 
 st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="400" height="200">', unsafe_allow_html=True)
 
