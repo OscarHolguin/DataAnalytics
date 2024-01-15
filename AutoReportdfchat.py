@@ -105,7 +105,7 @@ pagetitle = "Auto Analytics "
 
 
 st.set_page_config(page_title = pagetitle,
-                   #page_icon = "https://djnsalesianos.mx/wp-content/uploads/2019/09/salesians-100x100.jpg",
+                   page_icon = "https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png",
                    layout="wide",
                    initial_sidebar_state="expanded", 
     )
@@ -154,10 +154,10 @@ st.markdown(
 st.title(":bar_chart: :clipboard:")
 #st.image('https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png',width=400)
 
-st.subheader("Your AI Data Analyst")
+st.subheader("AI Data Analyst")
 #st.markdown('![Alt Text](https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif)')
 
-st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="200" height="100">', unsafe_allow_html=True)
+st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="400" height="200">', unsafe_allow_html=True)
 
 
 left,mid,right = st.columns([1,3,1],gap='large')
