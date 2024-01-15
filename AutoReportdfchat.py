@@ -160,7 +160,7 @@ aiurl= "https://cdn.dribbble.com/users/43762/screenshots/1193020/line-graph-drib
 
 st.markdown(f'<img src={aiurl} alt="ai gif" width="500" height="250">', unsafe_allow_html=True)
 
-st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="500" height="250">', unsafe_allow_html=True)
+#st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="500" height="250">', unsafe_allow_html=True)
 
 
 left,mid,right = st.columns([1,3,1],gap='large')
