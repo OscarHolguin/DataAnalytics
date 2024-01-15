@@ -158,9 +158,9 @@ st.subheader("AI Data Analyst")
 #st.markdown('![Alt Text](https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif)')
 aiurl= "https://www.commercient.com/wp-content/uploads/2019/12/deepLearning.gif"
 
-st.markdown(f'<img src={aiurl} alt="ai gif" width="400" height="200">', unsafe_allow_html=True)
+st.markdown(f'<img src={aiurl} alt="ai gif" width="300" height="200">', unsafe_allow_html=True)
 
-st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="400" height="200">', unsafe_allow_html=True)
+st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="300" height="200">', unsafe_allow_html=True)
 
 
 left,mid,right = st.columns([1,3,1],gap='large')
