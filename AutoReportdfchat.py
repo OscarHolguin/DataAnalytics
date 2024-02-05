@@ -175,7 +175,7 @@ aiurl2= "https://miro.medium.com/v2/resize:fit:640/format:webp/0*1fOKSM9na9IBROx
 
 
 
-st.markdown(f'<img src={aiurl} alt="ai gif" width="500" height="250">', unsafe_allow_html=True)
+#st.markdown(f'<img src={aiurl} alt="ai gif" width="500" height="250">', unsafe_allow_html=True)
 
 #st.markdown('<img src="https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif" alt="data gif" width="500" height="250">', unsafe_allow_html=True)
 
