@@ -157,7 +157,7 @@ st.image('https://www.thinkdatadynamics.com/dark/assets/imgs/logo-light.png',wid
 
 hide_st_style = """
             <style>
-            #MainMenu {visibility: hidden;}
+            MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
             </style>
