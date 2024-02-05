@@ -64,6 +64,10 @@ sqlServer = {'sqlServerName': 'euwdsrg03rsql01.database.windows.net',
 
 
 
+
+
+
+
 # PROD_MxD_PDM_DeviceFailureV2DataTable
 sqlServerName,sqlDatabase,userName,password = sqlServer.get('sqlServerName'),sqlServer.get('sqlDatabase'),sqlServer.get('userName'), sqlServer.get('password')
 
@@ -128,6 +132,15 @@ st.set_page_config(page_title = pagetitle,
                    initial_sidebar_state="expanded", 
     )
 
+
+
+
+aiurl= "https://cdn.dribbble.com/users/43762/screenshots/1193020/line-graph-dribbbble.gif"
+aiurl2= "https://miro.medium.com/v2/resize:fit:640/format:webp/0*1fOKSM9na9IBROxm.gif" #"https://www.commercient.com/wp-content/uploads/2019/12/deepLearning.gif"
+
+st.markdown(f'<img src={aiurl2} alt="ai2 gif" >', unsafe_allow_html=True)
+st.image(aiurl,use_column_width=True)
+#st.markdown(f'<img src={aiurl} alt="ai gif" width="500" height="250">', unsafe_allow_html=True)
 
 
 # st.markdown(

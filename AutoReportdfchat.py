@@ -105,7 +105,7 @@ pagetitle = "Auto Analytics "
 
 
 st.set_page_config(page_title = pagetitle,
-                   page_icon = "https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png",
+                   page_icon = "https://www.thinkdatadynamics.com/dark/assets/imgs/logo-light.png",#"https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png",
                    layout="wide",
                    initial_sidebar_state="expanded", 
     )
@@ -160,6 +160,9 @@ aiurl= "https://cdn.dribbble.com/users/43762/screenshots/1193020/line-graph-drib
 aiurl2= "https://miro.medium.com/v2/resize:fit:640/format:webp/0*1fOKSM9na9IBROxm.gif" #"https://www.commercient.com/wp-content/uploads/2019/12/deepLearning.gif"
 
 #st.markdown(f'<img src={aiurl2} alt="ai2 gif" width="500" height="250">', unsafe_allow_html=True)
+
+
+st.markdown("https://www.thinkdatadynamics.com/dark/assets/imgs/logo-light.png")
 
 st.markdown(f'<img src={aiurl} alt="ai gif" width="500" height="250">', unsafe_allow_html=True)
 
