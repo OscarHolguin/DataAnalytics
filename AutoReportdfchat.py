@@ -166,7 +166,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 #st.image('https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png',width=400)
 
-st.subheader("AI Data Analyst")
+#st.subheader("AI Data Analyst")
 #st.markdown('![Alt Text](https://miro.medium.com/max/1400/1*Owa2rsDG6Rwv1IM_RdsL3A.gif)')
 aiurl= "https://cdn.dribbble.com/users/43762/screenshots/1193020/line-graph-dribbbble.gif"
 aiurl2= "https://miro.medium.com/v2/resize:fit:640/format:webp/0*1fOKSM9na9IBROxm.gif" #"https://www.commercient.com/wp-content/uploads/2019/12/deepLearning.gif"
