@@ -152,7 +152,7 @@ st.markdown(
 
 #st.title('BrAIn')
 st.title(":bar_chart: :clipboard:")
-st.image('https://www.thinkdatadynamics.com/dark/assets/imgs/logo-light.png')
+st.image('https://www.thinkdatadynamics.com/dark/assets/imgs/logo-light.png',width=350)
 
 #st.image('https://static.wixstatic.com/media/d75272_496750661bda495c8beaea93cf6dfcab~mv2.png/v1/fill/w_230,h_60,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Asset%201Logo.png',width=400)
 
