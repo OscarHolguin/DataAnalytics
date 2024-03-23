@@ -129,8 +129,43 @@ st.markdown(
 
 
 
+if "app_stopped" not in st.session_state:
+    st.session_state["app_stopped"] = False 
+elif st.session_state["app_stopped"]:
+    st.session_state["app_stopped"] = False
 
-#st.title('BrAIn')
+
+def Running():
+    with st.spinner("running"):
+        time.sleep(60)
+
+def stopRunning():
+    try:
+        st.session_state["app_stopped"] = True
+    except:
+        pass
+def reset_conversation():
+    try:
+        st.session_state.conversation = None
+        st.session_state.chat_history = None
+        vecrag,llmrca,loaded_embeddings,rag2 = importinits()
+        st.session_state.messages = [{"role": "assistant", "content": "Hi this is your Copilot! How can I help you?"}]
+
+        #st.cache_data.clear
+        st.empty()
+    except:
+        pass
+def continue_generating():
+    st.session_state.messages.append({"role": "user", "content": "Continue Generating"})
+    with st.chat_message("assistant"):
+        response =  stream_response(get_copilot_response("Continue Generating"))
+        message = {"role": "assistant", "content": response}
+        st.session_state.messages.append(message) 
+
+if st.session_state["app_stopped"]:
+    print("stopping this NOW")
+    st.stop()
+
 st.title(":bar_chart: :clipboard:")
 st.image('https://www.thinkdatadynamics.com/dark/assets/imgs/logo-light.png',width=350)
 
@@ -150,40 +185,43 @@ st.header("",divider="rainbow")
 left,mid,right = st.columns([1,3,1],gap='large')
 
 
-if not st.toggle("From url"):
-    data_files = st.file_uploader("Choose from your files :file_folder:",type=['csv','xlsx'],accept_multiple_files=True)
-    file_ext = option_chosen = "null"
-    if data_files is not None:
-        file_names = []
-        file_exts = []
-        for data_file in data_files:
-            file_name = data_file.name
-            file_names.append(file_name)
-            file_ext = file_name.split(".")[-1]
-            file_exts.append(file_ext)
-            urlflag = urlfile = False
-    else:
-        #add clear session state here  this gets the last file modified from excel or csv in memory
-        st.session_state.conversation = []
-        st.session_state.chat_history = []
+#if not st.toggle("From url"):
+data_files = st.file_uploader("Choose from your files :file_folder:",type=['csv','xlsx'],accept_multiple_files=True)
+file_ext = option_chosen = "null"
+if data_files is not None:
+    file_names = []
+    file_exts = []
+    for data_file in data_files:
+        file_name = data_file.name
+        file_names.append(file_name)
+        file_ext = file_name.split(".")[-1]
+        file_exts.append(file_ext)
+        urlflag = urlfile = False
+else:
+    #add clear session state here  this gets the last file modified from excel or csv in memory
+    st.session_state.conversation = []
+    st.session_state.chat_history = []
 
-        try:
-            all_files = glob.glob(os.path.join('*.csv')) + glob.glob(os.path.join( '*.xlsx'))
-            data_file = max(all_files, key=os.path.getctime)
-            file_name= data_file.split(".")[0]
-            file_ext = "csv"
-            urlflag = urlfile = False
-        #file_ext = file_name.split(".")[-1]
-        #urlflag = urlfile = False
-        except:
-            pass
+    try:
+        all_files = glob.glob(os.path.join('*.csv')) + glob.glob(os.path.join( '*.xlsx'))
+        data_file = max(all_files, key=os.path.getctime)
+        file_name= data_file.split(".")[0]
+        file_ext = "csv"
+        urlflag = urlfile = False
+    #file_ext = file_name.split(".")[-1]
+    #urlflag = urlfile = False
+    except:
+        pass
 
-else:    
-        urlfile = st.text_input("Provide your CSV or Excel from a valid url")
-        urlflag = True
-        st.write("You added ",urlfile)
-        file_ext = urlfile.split(".")[-1]
-        file_name = urlfile
+# else:    
+#         urlfile = st.text_input("Provide your CSV or Excel from a valid url")
+#         urlflag = True
+#         st.write("You added ",urlfile)
+#         file_ext = urlfile.split(".")[-1]
+#         file_name = urlfile
+#         data_files = [file_name]
+#         file_names = [file_name]
+#         file_exts = [file_ext]
 #elif from database
         
 
@@ -254,7 +292,17 @@ else:
 
 
     
+col1, col2, col3  = st.sidebar.columns(3)
 
+#STOP
+col1.button("Stop 🛑",on_click=stopRunning)
+
+#Continue running
+#col2.button("Run ▶️", on_click=Running)
+
+
+#RESET CONVERSATION (CLEAR IT)  
+col3.button('Reset', on_click=reset_conversation)
     
 import streamlit.components.v1 as components 
     ##chat section
@@ -325,7 +373,7 @@ if st.session_state.dfs is not None:
                             exec(response)
                         except Exception as e:
                             print(e)
-                            st.write_stream(stream_response(response))
+                            st.write_stream(stream_response(e))
 
                         message = {"role": "assistant", "content": response}
                         st.session_state.messages.append(message) 
