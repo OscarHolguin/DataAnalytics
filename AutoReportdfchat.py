@@ -231,7 +231,7 @@ def generate_chat_response(df,prompt,openail=True):
     return generate_response(df,prompt,openail=True)
     
     
-#@st.cache_resource
+@st.cache_resource
 def write_suggestions(suggestions):
     from streamlit_pills import pills
     selections={}
@@ -370,10 +370,11 @@ if st.session_state.dfs is not None:
                         response =  generate_chat_response(dfs,prompt,openail=True)
                         try:
                             #try executing the code first
+                            print(response)
                             exec(response)
                         except Exception as e:
-                            print(e)
-                            st.write_stream(stream_response(e))
+                            print(str(e))
+                            st.write_stream(stream_response(response))
 
                         message = {"role": "assistant", "content": response}
                         st.session_state.messages.append(message) 

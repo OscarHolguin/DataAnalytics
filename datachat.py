@@ -336,7 +336,9 @@ def generate_response(dfs, vprompt,model="gpt-3.5-turbo", temperature=0.0, max_t
             return "Couldn't plot the data"
         else:
             code = code.replace("fig.show()", "")#"fig.write_html(r'plot1.html',full_html = True)")
-            code += """st.plotly_chart(fig, theme='streamlit', use_container_width=True)"""  # noqa: E501
+            code.replace("""st.plotly_chart(fig, theme='plotly', use_container_width=True)""","")
+            if """st.plotly_chart(""" not in code:
+                code+="""st.plotly_chart(fig, theme='streamlit', use_container_width=True)""" 
             #st.write_(f"```{code}") #WRITE IT HERE?
             st.write_stream(stream_response_(response["choices"][0]["message"]["content"]))
             #imagecode = """fig.write_image(r"plot1.html",format='html',engine='kaleido')"""

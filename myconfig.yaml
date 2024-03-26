@@ -1,0 +1,5 @@
+theme:
+  name: dark
+variables:
+  interactions:
+    enable: False
